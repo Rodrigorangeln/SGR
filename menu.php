@@ -26,9 +26,11 @@
     <a class="nav-item nav-link" id="menu_embalagem" href="embalagem.php">Embalagem</a>
     <a class="nav-item nav-link" id="menu_expedicao" href="expedicao">Expedição</a>
   </div>
-
-<!--     <ul class="navbar-nav ml-auto nav navbar-nav navbar-right">
-      <li><a class="nav-item nav-link" href="logout.php">Sair</a></li>
-    </ul> -->
-
+  
+  <span class="col-3 text-right">
+    <b class="text-white"> <?php echo date('d-m-Y'); ?> </b>
+  </span>
+  <!--     <ul class="navbar-nav ml-auto nav navbar-nav navbar-right">
+    <li><a class="nav-item nav-link" href="logout.php">Sair</a></li>
+  </ul> -->
 </nav>

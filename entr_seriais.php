@@ -69,9 +69,9 @@ $cli_atual = $row["cod_cliente"];
 				<tbody>
     				<tr id='addr0' data-id="0" class="hidden">
               <td data-name="1serial" class="col-sm-6">
-                  <input type="text" name='1serial0' placeholder='Serial 1' maxlength="25" class="form-control" onkeyup="maiuscula(this)"/>
+                  <input type="text" name='1serial0' placeholder='Serial 1' maxlength="25" class="form-control" onkeyup="maiuscula(this)" onblur="verifica2serial(name)"/> 
               </td>
-              <td data-name="2serial" class="col-sm-6">
+              <td id="2serial" data-name="2serial" class="col-sm-6">
                   <input type="text" name='2serial0' placeholder='Serial 2' maxlength="25" class="form-control" onkeyup="maiuscula(this)" onblur="add_row.click(); gravaSeriais(name);"/>
               </td>
               <td data-name="del">

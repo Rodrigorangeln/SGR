@@ -13,6 +13,9 @@
  -->
 
 <?php
+session_start();
+$user = $_SESSION['user'];
+
 require_once 'db_connect.php';
 
 if (isset($_POST['btn-Cadastrar'])):
@@ -28,8 +31,8 @@ if (isset($_POST['btn-Cadastrar'])):
         $cod_modelo = mysqli_escape_string($connect, $_POST['cod'.$i]);
         $quant = mysqli_escape_string($connect, $_POST['quant'.$i]);
 
-        $sql = "INSERT INTO recep_nf (nf, RRM, cod_cliente, nf_emissao, nf_entrada, cod_modelo, quant) VALUES 
-        ('$NF','$RRM', '$cod_cliente', '$dt_emissao', '$dt_entrada', '$cod_modelo', '$quant')";
+        $sql = "INSERT INTO recep_nf (nf, RRM, cod_cliente, nf_emissao, nf_entrada, cod_modelo, quant, user) VALUES 
+        ('$NF','$RRM', '$cod_cliente', '$dt_emissao', '$dt_entrada', '$cod_modelo', '$quant', '$user')";
 
         mysqli_query($connect, $sql);
       }

@@ -11,8 +11,12 @@ $resultQuery = mysqli_query($connect, $query);
 
 if($resultQuery->num_rows)
 {
-$_SESSION['user'] = $user;
-$_SESSION['pass'] = $pass;
+  $_SESSION['user'] = $user;
+  $_SESSION['pass'] = $pass;
+
+  $row = mysqli_fetch_assoc($resultQuery);
+  $_SESSION['name'] = $row['name'];
+
 header('location:recep_NF.php');
 }
 else{

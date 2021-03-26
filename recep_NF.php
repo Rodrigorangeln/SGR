@@ -9,13 +9,10 @@ if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['pass']) == true)
   unset($_SESSION['pass']);
   header('location:index.php');
   }
-
-//$logged = $_SESSION['name'];
-
-
-include 'menu.php';
-
-require_once 'db_connect.php';
+ 
+  include 'menu.php';
+  
+  require_once 'db_connect.php';
 
 $query = "SELECT cod_cliente, razao_social FROM cd_clientes";
 $resultQuery = mysqli_query($connect, $query);

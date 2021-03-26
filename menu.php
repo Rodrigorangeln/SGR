@@ -28,7 +28,9 @@
   </div>
   
   <span class="col-3 text-right">
-    <b class="text-white"> <?php echo date('d-m-Y'); ?> </b>
+    <b class="text-white" id="user"> <?php echo $_SESSION['name']." | "; ?> </b>
+    <b class="text-white"> <?php echo date('d-m-Y')." | "; ?> </b>
+    <a class="text-white" href="logoff.php"> Sair </a>
   </span>
   <!--     <ul class="navbar-nav ml-auto nav navbar-nav navbar-right">
     <li><a class="nav-item nav-link" href="logout.php">Sair</a></li>

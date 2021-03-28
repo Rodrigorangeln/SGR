@@ -12,7 +12,7 @@ $s1 = $_POST['serial1'];
 $s2 = $_POST['serial2'];
 $loc = 1; // Posto Teste inicial
 
-$query = "INSERT INTO seriais (rrm, cod_modelo, serial1, serial2, local, user_entr) VALUES 
-('$rrm','$cod_modelo', '$s1', '$s2', '$loc', '$user')";
+$query = "INSERT INTO seriais (rrm, cod_modelo, serial1, serial2, local, user_entr, dt_entr) VALUES 
+('$rrm','$cod_modelo', '$s1', '$s2', '$loc', '$user', now())";
 mysqli_query($connect, $query);
 	

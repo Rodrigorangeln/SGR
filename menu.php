@@ -4,7 +4,7 @@
 <head>
   <title>SGR - Nortcom</title>
   <script src="./js/jquery-3.5.1.min.js"></script>
-  <!-- <script src="./js/popper.min.js"></script> -->
+  <script src="./js/popper.min.js"></script>
   <link href="./css/bootstrap.min.css" rel="stylesheet">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
@@ -24,12 +24,20 @@
     <a class="nav-item nav-link" id="menu_cosmetica" href="cosmetica.php">Cosmética</a>
     <a class="nav-item nav-link" id="menu_teste_final" href="teste_final.php">Teste Final</a>
     <a class="nav-item nav-link" id="menu_embalagem" href="embalagem.php">Embalagem</a>
-    <a class="nav-item nav-link" id="menu_expedicao" href="expedicao">Expedição</a>
+    <a class="nav-item nav-link" id="menu_expedicao" href="#">Expedição</a>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="menu_relatorios" href="#">Relatórios</a>
+      <div class="dropdown-menu bg-primary">
+        <a class="dropdown-item bg-primary text-white" href="report_produtividade.php">Produtividade</a>
+<!--         <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Link isolado</a> -->
+      </div>
+    </li>
   </div>
-  
-  <span class="col-3 text-right">
-    <b class="text-white" id="user"> <?php echo $_SESSION['name']." | "; ?> </b>
-    <b class="text-white"> <?php echo date('d-m-Y')." | "; ?> </b>
+
+  <span class="col-2 text-right">
+    <b class="text-white" id="user"> <?php echo $_SESSION['name'] . " | "; ?> </b>
+    <b class="text-white"> <?php echo date('d-m-Y'); ?> </b>
     <a class="text-white" href="logoff.php"> Sair </a>
   </span>
   <!--     <ul class="navbar-nav ml-auto nav navbar-nav navbar-right">

@@ -10,8 +10,6 @@ if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['pass']) == true)
   header('location:index.php');
   }
 
-//$logged = $_SESSION['name'];
-
 include 'menu.php';
 
 require_once 'db_connect.php';

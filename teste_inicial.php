@@ -43,7 +43,7 @@ $resultQueryEletr = mysqli_query($connect, $queryE); */
     <div class="col-sm-5">
         <div class="form-group">
             <label>Serial 1</label>
-            <input class="form-control col-sm-10" id="1serial" maxlength="25" placeholder="Serial 1">
+            <input class="form-control col-sm-10" id="1serial" maxlength="25" placeholder="Serial 1" onkeyup='maiuscula(this)'>
         </div>
         <div class="form-group">
             <label>Serial 2</label>

@@ -1,4 +1,6 @@
 <?php
+session_start();
+$user = $_SESSION['user'];
 require_once 'db_connect.php';
 
 $acao = $_POST['acao'];
@@ -12,7 +14,7 @@ switch ($acao) {
 		echo busca_sintomas($_POST['cod_mod'], $connect);
 		break;
 	case "aprovado":
-		echo aprovado($_POST['s1'], $connect);
+		aprovado($user, $_POST['s1'], $connect);
 		break;
 	}
 
@@ -49,8 +51,8 @@ function busca_sintomas($cod_mod, $connect){
 	return json_encode($return);
 }
 
-function aprovado($s1, $connect){
-	$query3 = "UPDATE seriais SET local = '6' WHERE serial1 = '$s1'";
+function aprovado($user, $s1, $connect){
+	$query3 = "UPDATE seriais SET user_testefinal = '$user', dt_testefinal = now(), local = '6' WHERE serial1 = '$s1'";
 	mysqli_query($connect, $query3);
 }
 

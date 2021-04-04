@@ -47,7 +47,7 @@ $(document).ready(function () {
 
         if (erro == 0) {
             $.ajax({
-                url: 'buscaReportProdutividade.php',
+                url: 'buscaReport.php',
                 method: 'POST',
                 data: { colab1: $("#colaborador1").val(), colab2: $("#colaborador2").val(), dtInicio: $("#dt_inicio").val(), dtFinal: $("#dt_final").val(), acao: "produtividade" },
                 dataType: 'json',

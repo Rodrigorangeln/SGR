@@ -1,4 +1,6 @@
 <?php
+session_start();
+$user = $_SESSION['user'];
 require_once 'db_connect.php';
 
 $acao = $_POST['acao'];
@@ -12,7 +14,7 @@ switch ($acao) {
 		busca_componentes($_POST['cod_mod'], $_POST['cod_sintoma'], $connect);
 		break;
 	case "grava_eletrica":
-		grava_eletrica($_POST['s1'], $_POST['rrm'], $_POST['defeito1'], $_POST['defeito2'], $_POST['defeito3'], $_POST['componente1'], $_POST['componente2'], $_POST['componente3'], $_POST['radio1'], $_POST['radio2'], $_POST['radio3'], $connect);
+		grava_eletrica($user, $_POST['s1'], $_POST['rrm'], $_POST['defeito1'], $_POST['defeito2'], $_POST['defeito3'], $_POST['componente1'], $_POST['componente2'], $_POST['componente3'], $_POST['radio1'], $_POST['radio2'], $_POST['radio3'], $connect);
 		break;
 	}
 
@@ -52,9 +54,9 @@ function busca_componentes($cod_mod, $cod_sintoma, $connect){
 }
 
 
-function grava_eletrica ($s1, $rrm, $defeito1, $defeito2, $defeito3, $componente1, $componente2, $componente3, $radio1, $radio2, $radio3, $connect){
+function grava_eletrica ($user, $s1, $rrm, $defeito1, $defeito2, $defeito3, $componente1, $componente2, $componente3, $radio1, $radio2, $radio3, $connect){
 
-	$query3 = "UPDATE seriais SET dt_eletrica = now(), t_eletr1 = '$defeito1', eletr1comp = '$componente1', eletr1interv = '$radio1', local = '4' WHERE serial1 = '$s1' and rrm = '$rrm'";
+	$query3 = "UPDATE seriais SET user_eletrica = '$user', dt_eletrica = now(), t_eletr1 = '$defeito1', eletr1comp = '$componente1', eletr1interv = '$radio1', local = '4' WHERE serial1 = '$s1' and rrm = '$rrm'";
 	mysqli_query($connect, $query3);
 
 	if ($defeito2 <> ""){

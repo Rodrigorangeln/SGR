@@ -1,4 +1,7 @@
 <?php
+session_start();
+$user = $_SESSION['user'];
+
 require_once 'db_connect.php';
 
 $serial1 = $_POST['serial1'];
@@ -20,10 +23,10 @@ if ($cosm1 == "0000 - sem defeito")
 // Se não for preenchido, o local será (4) cosmética. É regra o serial sempre passar no setor de cosmética.
 
 if ($elet1 != ""){
-    $query = "UPDATE seriais SET dt_testeinicial = now(), local = '3', t_cosm1 = '$cosm1', t_cosm2 = '$cosm2', t_cosm3 = '$cosm3', t_cosm4 = '$cosm4', t_eletr1 = '$elet1', t_eletr2 = '$elet2' 
+    $query = "UPDATE seriais SET user_testeinicial = '$user', dt_testeinicial = now(), local = '3', t_cosm1 = '$cosm1', t_cosm2 = '$cosm2', t_cosm3 = '$cosm3', t_cosm4 = '$cosm4', t_eletr1 = '$elet1', t_eletr2 = '$elet2' 
     WHERE serial1 = '$serial1' and rrm = '$rrm'";
 }else {
-    $query = "UPDATE seriais SET dt_testeinicial = now(), local = '4', t_cosm1 = '$cosm1', t_cosm2 = '$cosm2', t_cosm3 = '$cosm3', t_cosm4 = '$cosm4', t_eletr1 = '$elet1', t_eletr2 = '$elet2' 
+    $query = "UPDATE seriais SET user_testeinicial = '$user', dt_testeinicial = now(), local = '4', t_cosm1 = '$cosm1', t_cosm2 = '$cosm2', t_cosm3 = '$cosm3', t_cosm4 = '$cosm4', t_eletr1 = '$elet1', t_eletr2 = '$elet2' 
     WHERE serial1 = '$serial1' and rrm = '$rrm'";
 }
 

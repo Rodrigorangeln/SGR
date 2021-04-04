@@ -8,6 +8,9 @@ switch ($acao) {
     case "produtividade":
         echo produtividade($connect, $_POST['colab1'], $_POST['colab2'], $_POST['dtInicio'], $_POST['dtFinal']);
         break;
+    case "serial":
+        echo serial($connect, $_POST['serial']);
+        break;
 }
 
 
@@ -38,4 +41,8 @@ function produtividade($connect, $colab1, $colab2, $dtInicio, $dtFinal)
     }
 
     return json_encode($retorno);
+}
+
+function serial($connect, $serial){
+
 }

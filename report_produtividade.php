@@ -11,7 +11,7 @@ if ((!isset($_SESSION['user']) == true) and (!isset($_SESSION['pass']) == true))
 include 'menu.php';
 require_once 'db_connect.php';
 
-$query = "SELECT registration, name FROM cd_usuarios order by name";
+$query = "SELECT registration, name FROM cd_usuarios where ativo = '1' order by name";
 $resultQuery = mysqli_query($connect, $query);
 $resultQuery2 = mysqli_query($connect, $query);
 

@@ -2,21 +2,13 @@
 
 session_start();
 
-if ((!isset($_SESSION['user']) == true) and (!isset($_SESSION['pass']) == true)) {
+if ((!isset($_SESSION['user']) == true) and (!isset($_SESSION['pass']) == true) or ($_SESSION['nivel'] <> '0')) {
     unset($_SESSION['user']);
     unset($_SESSION['pass']);
     header('location:index.php');
 }
 
 include 'menu.php';
-require_once 'db_connect.php';
-
-$query = "SELECT registration, name FROM cd_usuarios order by name";
-$resultQuery = mysqli_query($connect, $query);
-$resultQuery2 = mysqli_query($connect, $query);
-
-/* $queryAparelhos = "SELECT cod, modelo FROM db_sgr.cd_aparelhos";
-$resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
 
 ?>
 <span class="d-block p-2 bg-primary text-white text-center">>>> HISTÓRICO do SERIAL <<< </span>
@@ -28,12 +20,7 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
             <div class="container-fluid mt-5 ml-4">
                 <div class="row">
                     <div class="col-sm-3">
-
-                        <!--   <div id="caixa"></div> -->
-                        <!-- style='display: block' -->
-                        <!-- none -->
                         <div class="form-group">
-                            <!-- <label>Selecione 1 ou 2 colaboradores:</label> -->
                             <input id="serial" class="form-control" maxlength="25" placeholder="Entre com o serial" onkeyup="maiuscula(this)">
                         </div>
 

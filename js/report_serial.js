@@ -11,22 +11,28 @@ $(document).ready(function () {
     $("#serial").focus()
 
     $("#consultar").on("click", function () {
-        alert ("teste")
-        /* $.ajax({
+        $.ajax({
             url: 'buscaReport.php',
             method: 'POST',
             data: { serial: $("#serial").val(), acao: "serial" },
             dataType: 'json',
         }).done(function (retorno) {
             $("#label").prop('hidden', false)
-            $("#report_colab1").html($("#colaborador1").val())
-            $("#quant_colab1").html("-> " + retorno[0])
+            $("#rrm").html(retorno['rrm'])
+            $("#dt_input").html(retorno['dt_input'])
+            $("#func_input").html(retorno['func_input'])
+            $("#dt_testeInicial").html(retorno['dt_testeinicial'])
+            $("#func_testeInicial").html(retorno['func_testeinicial'])
+            $("#dt_eletrica").html(retorno['dt_eletrica'])
+            $("#func_eletrica").html(retorno['func_eletrica'])
+            $("#dt_cosmetica").html(retorno['dt_cosmetica'])
+            $("#func_cosmetica").html(retorno['func_cosmetica'])
+            $("#dt_testeFinal").html(retorno['dt_testefinal'])
+            $("#func_testeFinal").html(retorno['func_testefinal'])
 
-            if ($("#colaborador2").val() != "0") {
-                $("#report_colab2").html($("#colaborador2").val())
-                $("#quant_colab2").html("-> " + retorno[1])
-            }
-        }) */
+            //FALTA POPULAR EMBALAGEM e EXPEDIÇÃO. Esses postos ainda não foram implementados.
+
+        })
 
     })
 

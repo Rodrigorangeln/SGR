@@ -138,6 +138,9 @@ $resultQueryCosm = mysqli_query($connect, $queryC);
                 <div class="d-flex flex-row-reverse mt-4">
                     <button id="confirmar" class="btn btn-primary" type="button">Confirmar</button>
                 </div>
+                <div class="d-flex flex-row-reverse mt-4">
+                    <button id="sconserto" class="btn btn-danger" type="button">Sem conserto</button>
+                </div>
             </div>
 
         </div>
@@ -145,3 +148,23 @@ $resultQueryCosm = mysqli_query($connect, $queryC);
 </body>
 
 </html>
+
+<div class="modal fade" id="ModalSemConserto" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModal">Sem conserto?</h5>
+<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body">
+        Confirma que serial <strong><span id="serial"></span></strong> não tem conserto?
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn_confirmar" class="btn btn-primary">Confirmo</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>

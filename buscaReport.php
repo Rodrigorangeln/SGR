@@ -71,5 +71,9 @@ function buscaColaborador($connect, $registration)
     $resultQuery_colab = mysqli_query($connect, $query_colab);
     $row_colab = mysqli_fetch_assoc($resultQuery_colab);
 
-    return ($row_colab['name']);
+    if ($row_colab <> ""){
+        return ($row_colab['name']);
+    } else {
+        return ('-');
+    }
 }

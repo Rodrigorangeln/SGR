@@ -17,63 +17,62 @@ $(document).ready(function () {
 
     $("#1serial").focus()
 
-    $("#1serial").on("blur", function() {
-        if ($("#1serial").val() == ""){
+    $("#1serial").on("blur", function () {
+        if ($("#1serial").val() == "") {
             limpa_campos()
-        } else{
+        } else {
 
             $.ajax({
                 url: 'busca_testeinicial.php',
                 method: 'POST',
-                data: {s1: $("#1serial").val(), acao: "buscaSerial"},
+                data: { s1: $("#1serial").val(), acao: "buscaSerial" },
                 dataType: 'json',
-                success: (function(result){
-                    if (result[0] != "Serial não encontrado"){
+                success: (function (result) {
+                    if (result[0] != "Serial não encontrado") {
                         $("#2serial").val(result[0])
                         $("#rrm").val(result[1])
                         $("#modelo").val(result[2])
-                        $("#cod_mod").val(result[3])                        
-                        
+                        $("#cod_mod").val(result[3])
+
                         $.ajax({
                             url: 'busca_testeinicial.php',
                             method: 'POST',
-                            data: {cod_mod: result[3], acao: "buscaSintomas"},
+                            data: { cod_mod: result[3], acao: "buscaSintomas" },
                             dataType: 'json',
-                            success: (function(resultSintomas){          
-                                
+                            success: (function (resultSintomas) {
+
                                 document.querySelectorAll('#def_elet0 option').forEach(option => option.remove())
                                 $('#def_elet0').append('<option></option>');
                                 $('#def_elet0').append('<option>0000 - sem defeito</option>');
-                                
+
                                 document.querySelectorAll('#def_elet1 option').forEach(option => option.remove())
                                 $('#def_elet1').append('<option></option>');
 
                                 resultSintomas.forEach((sintoma) => {
-                                option = new Option(sintoma, sintoma.toLowerCase());
-                                option2 = new Option(sintoma, sintoma.toLowerCase());
-                                def_elet0.options[def_elet0.options.length] = option;
-                                def_elet1.options[def_elet1.options.length] = option2;
+                                    option = new Option(sintoma, sintoma.toLowerCase());
+                                    option2 = new Option(sintoma, sintoma.toLowerCase());
+                                    def_elet0.options[def_elet0.options.length] = option;
+                                    def_elet1.options[def_elet1.options.length] = option2;
                                 });
 
                             })
                         })
                     }
-                    else{                    
-                        $("#erroserial").fadeTo(2000, 500).slideUp(500, function(){
-                        $(".alert").slideUp(1000);
+                    else {
+                        $("#erroserial").fadeTo(2000, 500).slideUp(500, function () {
+                            $(".alert").slideUp(1000);
                         })
                         limpa_campos()
                         $("#1serial").focus()
                     }
                 })
             })
-        }        
+        }
     })
 
-
-//// AO SELECIONAR "0000 - sem defeito" OS COMBOBOXs DE BAIXO SÃO DESABILITADOS
-    $("select[name=def_cosm0]").on("change", function() {
-        if ($("select[name=def_cosm0]").val() == "0000 - sem defeito"){
+    //// AO SELECIONAR "0000 - sem defeito" OS COMBOBOXs DE BAIXO SÃO DESABILITADOS
+    $("select[name=def_cosm0]").on("change", function () {
+        if ($("select[name=def_cosm0]").val() == "0000 - sem defeito") {
             $("select[name=def_cosm1]").prop('disabled', true)
             $("select[name=def_cosm2]").prop('disabled', true)
             $("select[name=def_cosm3]").prop('disabled', true)
@@ -84,8 +83,8 @@ $(document).ready(function () {
         }
     })
 
-    $("select[name=def_elet0]").on("change", function() {
-        if ($("select[name=def_elet0").val() == "0000 - sem defeito"){
+    $("select[name=def_elet0]").on("change", function () {
+        if ($("select[name=def_elet0").val() == "0000 - sem defeito") {
             $("select[name=def_elet1]").prop('disabled', true)
         } else {
             $("select[name=def_elet1]").prop('disabled', false)
@@ -93,8 +92,8 @@ $(document).ready(function () {
     })
 
 
-    $("#confirmar").on("click", function() {
-        if ($("#1serial").val() != "" && ($("#2serial").val() != "" && $("select[name=def_cosm0]").val() != "" && $("select[name=def_elet0]").val() != "")){
+    $("#confirmar").on("click", function () {
+        if ($("#1serial").val() != "" && ($("#2serial").val() != "" && $("select[name=def_cosm0]").val() != "" && $("select[name=def_elet0]").val() != "")) {
             var serial1 = $("#1serial").val()
             var rrm = $("#rrm").val()
             var cosm1 = $("select[name=def_cosm0]").val()
@@ -107,7 +106,7 @@ $(document).ready(function () {
             $.ajax({
                 url: 'grava_testeinicial.php',
                 method: 'POST',
-                data: {serial1, rrm, cosm1, cosm2, cosm3, cosm4, elet1, elet2},
+                data: { serial1, rrm, cosm1, cosm2, cosm3, cosm4, elet1, elet2 },
                 dataType: 'json',
                 /* success: (function(){
                     $("#testeok").fadeTo(2000, 500).slideUp(500, function(){
@@ -117,19 +116,19 @@ $(document).ready(function () {
                     limpa_campos()
                     $("#1serial").focus()
                     }) */
-                })
-            $("#testeok").fadeTo(2000, 500).slideUp(500, function(){
-            $(".alert").slideUp(1000);
+            })
+            $("#testeok").fadeTo(2000, 500).slideUp(500, function () {
+                $(".alert").slideUp(1000);
             })
             $("#1serial").val("")
             limpa_campos()
             $("#1serial").focus()
         }
     })
-        
+
 })
 
-function limpa_campos(){
+function limpa_campos() {
     //$("#1serial").val("")
     $("#2serial").val("")
     $("#rrm").val("")
@@ -150,8 +149,8 @@ function limpa_campos(){
         method: 'POST',
         data: {cod_modelo: $("#cod_modelo").val() , acao: "buscaSintomas"},
         dataType: 'json',
-        success: (function(resultSintomas){          
-            //alert (resultSintomas)  
+        success: (function(resultSintomas){
+            //alert (resultSintomas)
 
             document.querySelectorAll('#def_elet0 option').forEach(option => option.remove())
             $('#def_elet0').append('<option></option>');
@@ -167,7 +166,7 @@ function limpa_campos(){
             });
 
         })
-    })  
+    })
 
 }*/
 
@@ -184,7 +183,7 @@ function limpa_campos(){
                 else {
                     $("#checkPainel").prop("checked", false)
                 }
-            }  
+            }
             if ((e.which == 116) || (e.which == 84)){  //letras t e T
                 if ($("#checkTampa").is(":checked") == false){
                     $("#checkTampa").prop("checked", true)
@@ -192,7 +191,7 @@ function limpa_campos(){
                 else {
                     $("#checkTampa").prop("checked", false)
                 }
-            } 
+            }
             if ((e.which == 99) || (e.which == 67)){ //letras c e C
                 if ($("#checkChassi").is(":checked") == false){
                     $("#checkChassi").prop("checked", true)
@@ -209,5 +208,5 @@ function limpa_campos(){
                     $("#checkEtiqueta").prop("checked", false)
                 }
             }
-             
+
         }); */

@@ -73,7 +73,8 @@ mysqli_close($connect);
         <span id="quant"></span> -->
       </div>
       <div class="modal-footer">
-        <button type="button" id="btn_report_seriais" class="btn btn-primary">Relatório</button>
+        <button type="button" id="btn_excel" class="btn btn-primary">Gerar Excel</button>
+        <button type="button" id="btn_report_seriais" class="btn btn-primary">Visualizar</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
       </div>
     </div>

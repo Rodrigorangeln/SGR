@@ -62,29 +62,29 @@ $resultQueryEletr = mysqli_query($connect, $queryE); */
 
     <div class="ml-1 col-sm-3">
         <strong>Defeito COSMÉTICO:</strong>
-        <select name="def_cosm0" class="form-control mt-2">
+        <select name="def_cosm0" class="form-control mt-2"tabindex="-1"> <!-- tabindex="-1" temporário -->
             <option></option>
-            <option value="0">0000 - sem defeito</option>
+            <option value="0" selected>0000 - sem defeito</option>  <!-- SELECTED temporário. Enquanto "Confirmar" não é implementado -->
             <?php while($row = mysqli_fetch_assoc($resultQueryCosm)) { ?>
             <option><?php echo $row["cod"]." - ".$row["descr"]?></option>
             <?php } 
             $resultQueryCosm = mysqli_query($connect, $queryC);?>
         </select>
-        <select name="def_cosm1" class="form-control mt-2" tabindex="-1">
+        <select name="def_cosm1" class="form-control mt-2" tabindex="-1" disabled> <!-- DISABLED temporário. -->
             <option></option>
             <?php while($row = mysqli_fetch_assoc($resultQueryCosm)) { ?>
             <option><?php echo $row["cod"]." - ".$row["descr"]?></option>
             <?php }
             $resultQueryCosm = mysqli_query($connect, $queryC);?>
         </select>
-        <select name="def_cosm2" class="form-control mt-2" tabindex="-1">
+        <select name="def_cosm2" class="form-control mt-2" tabindex="-1" disabled> <!-- DISABLED temporário. -->
             <option></option>
             <?php while($row = mysqli_fetch_assoc($resultQueryCosm)) { ?>
             <option><?php echo $row["cod"]." - ".$row["descr"]?></option>
             <?php } 
             $resultQueryCosm = mysqli_query($connect, $queryC);?>
         </select>
-        <select name="def_cosm3" class="form-control mt-2" tabindex="-1">
+        <select name="def_cosm3" class="form-control mt-2" tabindex="-1" disabled> <!-- DISABLED temporário. -->
             <option></option>
             <?php while($row = mysqli_fetch_assoc($resultQueryCosm)) { ?>
             <option><?php echo $row["cod"]." - ".$row["descr"]?></option>
@@ -96,15 +96,15 @@ $resultQueryEletr = mysqli_query($connect, $queryE); */
 
     <div class="ml-3 col-sm-3">
     <strong>Defeito ELÉTRICO:</strong>
-    <select id="def_elet0" name="def_elet0" class="form-control mt-2">
+    <select id="def_elet0" name="def_elet0" class="form-control mt-2" tabindex="-1"> <!-- tabindex="-1" temporário -->
         <option></option>
         <option value="0">0000 - sem defeito</option>
     </select>
-    <select id="def_elet1" name="def_elet1" class="form-control mt-2" tabindex="-1">
+    <select id="def_elet1" name="def_elet1" class="form-control mt-2" tabindex="-1" disabled> <!-- DISABLED temporário -->
         <option></option>
     </select>
     <div class="d-flex flex-row-reverse mt-5">        
-        <button id="aprovado" class="btn btn-success" type="button" disabled>Aprovado</button>
+        <button id="aprovado" class="btn btn-success" type="button">Aprovado</button> <!-- Incluir DISABLED -->
         &nbsp &nbsp
         <button id="confirmar" class="btn btn-primary" type="button" disabled>Confirmar</button>
     </div>

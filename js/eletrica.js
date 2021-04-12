@@ -250,7 +250,6 @@ $(document).ready(function () {
             setTimeout(function () { $('#ModalSemConserto').modal('hide'); }, 2000);
             $("#1serial").val("")
             limpa_campos();
-
         })
     })
 

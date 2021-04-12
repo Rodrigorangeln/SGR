@@ -38,7 +38,13 @@ $(document).ready(function () {
         rrm = $("#rrm").html()
         window.location.href = "report_seriais.php?cliente="+cliente+"&nf="+nf+"&rrm="+rrm
     })
-
+    
+    $("#btn_excel").on("click", function() {
+        cliente = $("#cliente").html()
+        nf = $("#NF").html()
+        rrm = $("#rrm").html()
+        window.location.href = "geraExcelSeriais.php?cliente="+cliente+"&nf="+nf+"&rrm="+rrm
+    })
 })
 
 

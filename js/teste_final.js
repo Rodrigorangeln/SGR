@@ -48,7 +48,7 @@ $(document).ready(function () {
                                 
                                 document.querySelectorAll('#def_elet0 option').forEach(option => option.remove())
                                 $('#def_elet0').append('<option></option>');
-                                $('#def_elet0').append('<option value="0">0000 - sem defeito</option>');
+                                $('#def_elet0').append('<option value="0" selected>0000 - sem defeito</option>'); //SELECTED temporário
 
                                 document.querySelectorAll('#def_elet1 option').forEach(option => option.remove())
                                 $('#def_elet1').append('<option></option>');

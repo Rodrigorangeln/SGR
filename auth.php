@@ -36,5 +36,5 @@ if ($resultQuery->num_rows) {
   unset($_SESSION['pass']);
 
   session_destroy();
-  header('location:index.php');
+  header('location:index.php?erro=falhalogin');
 }

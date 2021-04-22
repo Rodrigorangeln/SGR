@@ -15,6 +15,7 @@ include 'menu.php';
 require_once 'db_connect.php';
 
 $query = "SELECT cod_cliente, razao_social FROM cd_clientes";
+mysqli_set_charset($connect,"utf8");
 $resultQuery = mysqli_query($connect, $query);
 
 /* $queryAparelhos = "SELECT cod, modelo FROM db_sgr.cd_aparelhos";

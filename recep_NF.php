@@ -1,4 +1,9 @@
+<html lang="pt-br">
 
+<head>
+    <meta charset="utf-8">
+
+</head>
 <?php
 
 session_start();
@@ -15,6 +20,7 @@ if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['pass']) == true)
   require_once 'db_connect.php';
 
 $query = "SELECT cod_cliente, razao_social FROM cd_clientes";
+mysqli_set_charset($connect,"utf8"); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 $resultQuery = mysqli_query($connect, $query);
 
 $queryRRM = "SELECT RRM FROM recep_nf where RRM = (SELECT MAX(RRM) FROM recep_nf)";

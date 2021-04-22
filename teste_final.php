@@ -15,6 +15,7 @@ include 'menu.php';
 require_once 'db_connect.php';
 
 $queryC = "SELECT cod, descr FROM cd_cosmetica where ativo = 1";
+mysqli_set_charset($connect,"utf8");
 $resultQueryCosm = mysqli_query($connect, $queryC);
 
 /* $queryE = "SELECT cod, descr FROM cd_eletrica where ativo = 1";

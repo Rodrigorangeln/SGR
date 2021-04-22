@@ -7,6 +7,11 @@ $('#menu_embalagem').addClass('active lead')
     }    
 }); */
 
+function maiuscula(z) {
+    v = z.value.toUpperCase().trim();
+    z.value = v;
+}
+
 $(document).ready(function () {
     $(".alert").hide() //ESCONDE ALERTAS
 
@@ -71,7 +76,7 @@ $(document).ready(function () {
             if ($("#radio_n").is(":checked")) {
                 while (cont < quant_seriais) {
                     //$("#serial1").append ('<input id = "serial1-'+cont+'" class="form-control mt-2" onblur="getserial(id); verifica_serial_cliente(id);" data-toggle="popover-cliente" data-trigger="manual" data-placement="right" data-html="true" data-content="<strong>Serial não é desse cliente</strong>"></input>')
-                    $("#serial1").append('<input id = "serial1-' + cont + '" class="form-control mt-2" maxlength="18" onblur="getserial(id)";></input>')
+                    $("#serial1").append('<input id = "serial1-' + cont + '" class="form-control mt-2" maxlength="18" onblur="getserial(id)"; onkeyup="maiuscula(this)"></input>')
                     $("#serial2").append('<input id = "serial2-' + cont + '"class="form-control mt-2" disabled></input>')
                     cont++
                 }
@@ -79,7 +84,7 @@ $(document).ready(function () {
                 $("#smartcard").prop('hidden', false)
                 while (cont < quant_seriais) {
                     //$("#serial1").append ('<input id = "serial1-'+cont+'" class="form-control mt-2" onblur="getserial(id); verifica_serial_cliente(id);" data-toggle="popover-cliente" data-trigger="manual" data-placement="right" data-html="true" data-content="<strong>Serial não é desse cliente</strong>"></input>')
-                    $("#serial1").append('<input id = "serial1-' + cont + '" class="form-control mt-2" maxlength="18" onblur="getserial(id)";></input>')
+                    $("#serial1").append('<input id = "serial1-' + cont + '" class="form-control mt-2" maxlength="18" onblur="getserial(id)"; onkeyup="maiuscula(this)"></input>')
                     $("#serial2").append('<input id = "serial2-' + cont + '"class="form-control mt-2" disabled></input>')
                     $("#smartcard").append('<input id = "smartcard-' + cont + '" class="form-control mt-2"></input>')
                     cont++
@@ -96,20 +101,43 @@ $(document).ready(function () {
 
 
     $("#finalizar").on("click", function () {
-        for (i = 0; i < $('#quant').val(); i++) { 
+        erro = 0
+        for (i = 0; i < $('#quant').val(); i++) {
             if ($("#serial1-" + i).hasClass("is-invalid")) {
                 $('#ModalSerialInvalido').modal('toggle')
                 i = quant
+                erro = 1
             }
             if ($("#serial2-" + i).val() == "") {
                 $('#ModalSerial2').modal('toggle')
                 i = quant
+                erro = 1
             }
             if ($("#smartcard-" + i).val() == "") {
                 $('#ModalSmartCard').modal('toggle')
                 i = quant
+                erro = 1
             }
         }
+
+        if (erro == 0) {
+            $.ajax({
+                url: 'geraEtiquetas.php',
+                method: 'POST',
+                data: { modelo: $("#modelo").val(), serial1: $("#serial1-0").val(), serial2: $("#serial2-0").val() },
+                dataType: 'json',
+            }).always(function () {
+                alert("Arquivo de etiquetas gerado")
+            })
+        }
+
+
+
+
+
+
+
+
 
     })
 
@@ -140,7 +168,7 @@ function numero_caixa() {
 function getserial(id) {
     var serial1 = $("#" + id).val()
     var serial2 = id.replace("serial1", "serial2");
-    if (serial1 == ""){
+    if (serial1 == "") {
         $("#" + id).removeClass("is-invalid")
         $("#" + serial2).val("")
     }
@@ -149,17 +177,17 @@ function getserial(id) {
 
         array = []
         var quant = $("#quant").val()
-        for (i = 0; i < quant; i++) { 
+        for (i = 0; i < quant; i++) {
             if ($("#serial1-" + i).val() != "") {
                 array.push($("#serial1-" + i).val())
             }
         }
-        var semRepetidos = array.filter(function(el, i) {  //PREENCHE novo array sem os itens repetidos
+        var semRepetidos = array.filter(function (el, i) {  //PREENCHE novo array sem os itens repetidos
             return array.indexOf(el) === i;
         });
-        
+
         serialrepetido = 0
-        if (semRepetidos.length < array.length){
+        if (semRepetidos.length < array.length) {
             $("#" + id).addClass("is-invalid")
             $("#" + serial2).val("EXISTE SERIAL REPETIDO");
             serialrepetido = 1
@@ -167,7 +195,7 @@ function getserial(id) {
         }
 
 
-        if (serialrepetido == 0){
+        if (serialrepetido == 0) {
             $.ajax({
                 url: 'busca_embalagem.php',
                 method: 'POST',
@@ -199,7 +227,7 @@ function getserial(id) {
 
         }
 
-        
+
     }
 
 }

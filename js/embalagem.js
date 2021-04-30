@@ -14,6 +14,21 @@ function maiuscula(z) {
 
 $(document).ready(function () {
     $(".alert").hide() //ESCONDE ALERTAS
+    var zebraPrinter;
+    ///// ZEBRA PRINTER ////////////
+    BrowserPrint.getDefaultDevice('printer', function (printer) {
+        //alert(printer.name);
+        zebraPrinter = printer;
+        //printer.send('^XA^FO200,200^A0N36,36^FDTest Nortcom^FS^XZ');
+    },
+
+        function (error_response) {
+            alert("Erro de comunicação com a impressora Zebra.");
+        }
+
+    );
+    ////////// FIM ZEBRA PRINTER ////////
+
 
     $("#cliente").focus()
 
@@ -67,6 +82,8 @@ $(document).ready(function () {
         } else {
             $("#serial1").prop('hidden', false)
             $("#serial2").prop('hidden', false)
+            $("#btn_imp_etiqueta_caixa").prop('hidden', false)
+            $("#btn_imp_etiquetas").prop('hidden', false)
             $("#finalizar").prop('hidden', false)
 
             numero_caixa()
@@ -100,7 +117,7 @@ $(document).ready(function () {
     })
 
 
-    $("#finalizar").on("click", function () {
+    $("#btn_imp_etiquetas").on("click", function () {
         erro = 0
         for (i = 0; i < $('#quant').val(); i++) {
             if ($("#serial1-" + i).hasClass("is-invalid")) {
@@ -121,23 +138,28 @@ $(document).ready(function () {
         }
 
         if (erro == 0) {
-            $.ajax({
+            /* $.ajax({
                 url: 'geraEtiquetas.php',
                 method: 'POST',
                 data: { modelo: $("#modelo").val(), serial1: $("#serial1-0").val(), serial2: $("#serial2-0").val() },
                 dataType: 'json',
             }).always(function () {
                 alert("Arquivo de etiquetas gerado")
-            })
+            }) */
+
+            var startLabel = "^XA^MMT^PW639^LL0240^LS0^FO20,12^A3,22"
+            var modelo = "^FDMODELO: " + $("#modelo").val() + "^FS^BY3,3,30^FT27,71^BCN,,Y,N"
+            var endLabel = "^FT27,124^A0N,17,19^FH\^FDSERIAL:^FS^FT26,211^A0N,16,16^FH\^FDCM MAC:^FS^PQ1,0,1,Y^XZ"
+
+            for (i = 0; i < $("#quant").val(); i++) {
+
+                var seriais = "^FD" + $("#serial1-" + i).val() + "^FS^BY3,3,34^FT27,176^BCN,,Y,N^FD" + $("#serial2-" + i).val() + "^FS"
+
+                zebraPrinter.send(startLabel + modelo + seriais + endLabel)
+            }
+
+
         }
-
-
-
-
-
-
-
-
 
     })
 
@@ -147,9 +169,6 @@ $(document).ready(function () {
     }) */
 
 })
-
-
-
 
 
 function numero_caixa() {

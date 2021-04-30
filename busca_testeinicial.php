@@ -37,7 +37,8 @@ function busca_testeinicial($s1, $connect){
 
 function busca_sintomas($cod_mod, $connect){
 	$query2 = "SELECT distinct sintoma from cd_eletrica where cod_mod = '$cod_mod' order by sintoma";
-
+	
+	mysqli_set_charset($connect,"utf8");
 	$resultQuery = mysqli_query($connect, $query2);
 	$return = array();
 	while($rows = mysqli_fetch_assoc($resultQuery)){

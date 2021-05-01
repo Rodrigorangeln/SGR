@@ -1,58 +1,58 @@
 $('#menu_recep').addClass('active lead')
 
 /* Impede que o ENTER submeta o form */
-$(document).keypress(function(e) {
+$(document).keypress(function (e) {
     //if(e.which == 13) e.preventDefault();
     //if ($("input[name='quant0']").val() == "") e.preventDefault()
-}); 
+});
 
 
 /* Adiciona e exclui dinamicamente linhas para inclusão de modelos */
-$(document).ready(function() {
+$(document).ready(function () {
 
-///* Evita digitação de letras */////////    
-    $(document).keypress(function(e) {
+    ///* Evita digitação de letras */////////    
+    $(document).keypress(function (e) {
         var chr = String.fromCharCode(e.which);
         if ("1234567890".indexOf(chr) < 0)
-          return false;
+            return false;
     })
-//////////////////////////////////////////////////    
+    //////////////////////////////////////////////////    
 
 
 
-    $("#add_row").on("click", function() {
+    $("#add_row").on("click", function () {
         // Dynamic Rows Code
-        
+
         // Get max row id and set new id
         var newid = 0;
-        $.each($("#tab_logic tr"), function() {
+        $.each($("#tab_logic tr"), function () {
             if (parseInt($(this).data("id")) > newid) {
                 newid = parseInt($(this).data("id"));
             }
         });
-        
+
         newid++;
-        
+
         var tr = $("<tr></tr>", {
-            id: "addr"+newid,
+            id: "addr" + newid,
             "data-id": newid
 
         });
 
- 
+
         // loop through each td and create new elements with name of newid
-        $.each($("#tab_logic tbody tr:nth(0) td"), function() {
+        $.each($("#tab_logic tbody tr:nth(0) td"), function () {
             var td;
             var cur_td = $(this);
-            
+
             var children = cur_td.children();
-            
+
             // add new td and element if it has a nane
             if ($(this).data("name") !== undefined) {
                 td = $("<td></td>", {
                     "data-name": $(cur_td).data("name")
                 });
-                
+
                 var c = $(cur_td).find($(children[0]).prop('tagName')).clone().val("");
                 c.attr("name", $(cur_td).data("name") + newid);
                 c.appendTo($(td));
@@ -61,10 +61,10 @@ $(document).ready(function() {
                 td = $("<td></td>", {
                     'text': $('#tab_logic tr').length
                 }).appendTo($(tr));
-            }       
+            }
         });
 
-      
+
         // add delete button and td
         /*
         $("<td></td>").append(
@@ -74,66 +74,69 @@ $(document).ready(function() {
                 })
         ).appendTo($(tr));
         */
-        
+
         //IMPEDE CÓDIGO DO MODELO INVÁLIDO
         aux = newid - 1
-        if (($("input[name='modelo"+aux+"']").val() == "") || ($("input[name='modelo"+aux+"']").val() == "Modelo não encontrado" ) || ($("input[name='quant"+aux+"']").val() == "")){
-            $("select[name='cod"+aux+"']").focus()
+        if (($("input[name='modelo" + aux + "']").val() == "") || ($("input[name='modelo" + aux + "']").val() == "Modelo não encontrado") || ($("input[name='quant" + aux + "']").val() == "")) {
+            $("select[name='cod" + aux + "']").focus()
         } else {
             // add the new row
             $(tr).prependTo($('#tab_logic'));
         }
 
-        
-        
-        $(tr).find("td button.row-remove").on("click", function() {
+
+
+        $(tr).find("td button.row-remove").on("click", function () {
             /* $("select[name='cod"+newid+"']").val("")   
             $("input[name='modelo"+newid+"']").val("")  
             $("input[name='quant"+newid+"']").val("") */
 
-            if (($("input[name='modelo"+newid+"']").val() != "") && ($("input[name='modelo"+newid+"']").val() != "Modelo não encontrado"))
+            if (($("input[name='modelo" + newid + "']").val() != "") && ($("input[name='modelo" + newid + "']").val() != "Modelo não encontrado"))
                 $(this).closest("tr").remove();
 
-        });   
-        
+            calculaTotal();
+        });
 
-        $("button[name='del0']").on("click",function(){
+
+        $("button[name='del0']").on("click", function () {
             if (($("input[name='modelo0']").val() != "") && ($("input[name='modelo0']").val() != "Modelo não encontrado"))
                 $(this).closest("tr").remove();
+
+            calculaTotal();
         })
 
 
         //$("input[name='cod"+newid+"']").focus(); //Foca no próximo código de modelo
-        $("select[name='cod"+newid+"']").focus(); //Foca no próximo código de modelo
+        $("select[name='cod" + newid + "']").focus(); //Foca no próximo código de modelo
 
-        
+        calculaTotal()
 
-});
+    });
 
-$("#btn_Cadastrar").on("click", function(e) {
-    if ($("input[name='quant0']").val() == "") e.preventDefault()
-    if (($("select.input[name='cod0'] select").val() == ""))
-        e.preventDefault()
-    
-});
+    $("#btn_Cadastrar").on("click", function (e) {
+        if ($("input[name='quant0']").val() == "") e.preventDefault()
+        if (($("select.input[name='cod0'] select").val() == ""))
+            e.preventDefault()
+
+    });
 
 
 
 
     // Sortable Code
-    var fixHelperModified = function(e, tr) {
+    var fixHelperModified = function (e, tr) {
         var $originals = tr.children();
         var $helper = tr.clone();
-    
-        $helper.children().each(function(index) {
+
+        $helper.children().each(function (index) {
             $(this).width($originals.eq(index).width())
         });
-        
+
         return $helper;
     };
-  
+
     $(".table-sortable tbody").sortable({
-        helper: fixHelperModified      
+        helper: fixHelperModified
     }).disableSelection();
 
     $(".table-sortable thead").disableSelection();
@@ -147,14 +150,14 @@ $("#btn_Cadastrar").on("click", function(e) {
 });
 
 
-    function getModelo(name){
-    var x_modelo = $("select[name="+name+"]").val();
+function getModelo(name) {
+    var x_modelo = $("select[name=" + name + "]").val();
     $.ajax({
         url: 'buscaModelo.php',
         method: 'POST',
-        data: {cod_mod: x_modelo},
+        data: { cod_mod: x_modelo },
         dataType: 'json',
-        success: (function(result){
+        success: (function (result) {
             switch (name) {
                 case "cod0":
                     $("input[name='modelo0']").val(result);
@@ -207,23 +210,33 @@ $("#btn_Cadastrar").on("click", function(e) {
             }
         })
     })
+}
+
+
+/* function SomenteNumeros()
+{
+  var tecla = window.event.keyCode;
+  tecla     = String.fromCharCode(tecla);
+  if(!((tecla >= "0") && (tecla <= "9")))
+  {
+    window.event.keyCode = 0;
+  }
+}
+
+document.getElementById("NF").onkeypress = function(e) {
+    var chr = String.fromCharCode(e.which);
+    if ("1234567890".indexOf(chr) < 0)
+      return false;
+  }; */
+
+function calculaTotal() {
+    var total = 0
+    //total = parseInt($("input[name='quant0']").val()) + parseInt($("input[name='quant1']").val())
+    for (i = 0; i < 15; i++) {
+        if (($("input[name='quant" + i + "']").val() != "") && ($("input[name='quant" + i + "']").val() != null)) {
+            total = total + parseInt($("input[name='quant" + i + "']").val())
+        }
     }
+    $("#total").html(total)
 
-
-    /* function SomenteNumeros()
-    { 
-      var tecla = window.event.keyCode;
-      tecla     = String.fromCharCode(tecla);
-      if(!((tecla >= "0") && (tecla <= "9")))
-      {
-        window.event.keyCode = 0;
-      }
-    }
-
-    document.getElementById("NF").onkeypress = function(e) {
-        var chr = String.fromCharCode(e.which);
-        if ("1234567890".indexOf(chr) < 0)
-          return false;
-      }; */
-
-    
+}

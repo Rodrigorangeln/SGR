@@ -183,6 +183,7 @@ $nextRRM = $row["RRM"] + 1;
 				</tbody>
 			</table>
 		</div>
+    <label class="mt-3 ml-3">Total:&nbsp;&nbsp;<span class="display-4"><strong id="total"></strong></span></label>
 	</div>
 	
 </div>

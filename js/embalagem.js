@@ -103,7 +103,7 @@ $(document).ready(function () {
                     //$("#serial1").append ('<input id = "serial1-'+cont+'" class="form-control mt-2" onblur="getserial(id); verifica_serial_cliente(id);" data-toggle="popover-cliente" data-trigger="manual" data-placement="right" data-html="true" data-content="<strong>Serial não é desse cliente</strong>"></input>')
                     $("#serial1").append('<input id = "serial1-' + cont + '" class="form-control mt-2" maxlength="18" onblur="getserial(id)"; onkeyup="maiuscula(this)"></input>')
                     $("#serial2").append('<input id = "serial2-' + cont + '"class="form-control mt-2" disabled></input>')
-                    $("#smartcard").append('<input id = "smartcard-' + cont + '" class="form-control mt-2"></input>')
+                    $("#smartcard").append('<input id = "smartcard-' + cont + '" class="form-control mt-2" onblur="tab(id)"; onkeyup="maiuscula(this)"></input>')
                     cont++
                 }
             }
@@ -163,12 +163,106 @@ $(document).ready(function () {
 
     })
 
-    /* x = 0
-    $(document).on('blur', '#serial1-'+x, function(){
-        alert ("testeTAB")
-    }) */
+    $("#btn_imp_etiqueta_caixa").on("click", function () {
+        erro = 0
+        for (i = 0; i < $('#quant').val(); i++) {
+            if ($("#serial1-" + i).hasClass("is-invalid")) {
+                $('#ModalSerialInvalido').modal('toggle')
+                i = quant
+                erro = 1
+            }
+            if ($("#serial2-" + i).val() == "") {
+                $('#ModalSerial2').modal('toggle')
+                i = quant
+                erro = 1
+            }
+            if ($("#smartcard-" + i).val() == "") {
+                $('#ModalSmartCard').modal('toggle')
+                i = quant
+                erro = 1
+            }
+        }
+
+        if (erro == 0) {
+
+            var cod = $("#modelo").val().substring(0, 8)
+
+            $.ajax({
+                url: 'busca_embalagem.php',
+                method: 'POST',
+                data: { cod, acao: "busca_modelo" },
+                dataType: 'json',
+            }).always(function (result) {
+                var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,12^A3,45^FD" + result + " " + $("#quant").val() + "^FS^PQ1,0,1,Y^XZ"
+                zebraPrinter.send(labelCaixa);
+            })
+        }
+
+    })
+
+    $("#finalizar").on("click", function () {
+        erro = 0
+        for (i = 0; i < $('#quant').val(); i++) {
+            if ($("#serial1-" + i).hasClass("is-invalid")) {
+                $('#ModalSerialInvalido').modal('toggle')
+                i = quant
+                erro = 1
+            }
+            if ($("#serial2-" + i).val() == "") {
+                $('#ModalSerial2').modal('toggle')
+                i = quant
+                erro = 1
+            }
+            if ($("#smartcard-" + i).val() == "") {
+                $('#ModalSmartCard').modal('toggle')
+                i = quant
+                erro = 1
+            }
+        }
+
+        if (erro == 0) {
+            $('#ModalFinalizar').modal('toggle')
+        }
+
+    })
+
+    $("#btn_Confirmo").on("click", function () {
+        ///////////DESCOMENTAR/////////DESCOMENTAR <<<<<<<<<<<<<<-------------
+        /* var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,30^A3,50^FD" + $("#num_caixa_atual").html() + "^FS^PQ1,0,1,Y^XZ"
+        zebraPrinter.send(labelCaixa); */
+
+//////>>>>TESTAR ETIQUETA COM LOGO //////////////
+        /* var logo = "^XA^FO50,50^GFA,640,640,8,7LF80LFEMFC07KFEMFE07!NF01KFENF81KFENFC0KFENFE07JFEOF03JFEOF01JFEOF80JFEOFC07IFEOFE07IFEPF03IFEPF81IFEPF80IFEPFE07FFEPFE03FFEQF01FFEQF81FFEQFC0FFEQFE07FERF03FERF81FE7QF80FE3QFC07E1QFE03E0RF03E07QF81E03QFC0E03QFE0701QFE0380RF,C07QF8,E03QFC,F01QFE,F80RF,FC07QF8FE07QFCFE03QFCFF01QFEFF80!FFC07PFEFFE03PFEIF03PFEIF81PFEIFC0PFEIFC07OFEIFE03OFEJF01OFEJF80OFEJFC0OFEJFE07NFEJFE03NFEKF01NFEKF80NFEKFC07MFEKFE03MFELF03MFELF01MFELF80MFELFC07!LFE03!7KFE01LFE,::I0EK03038,F31F1F9FCFC7C79EF33F9FDFCFCFE79!F3319CE71CIE79EFB3198C71CDC679EFF319DC71C0C67DEFF319FC71C0C67FEFF319FC71C0C67!EF319DC71CDC67!EF3198C71CFC67F7EF3198C71CIEI7E73F9CC70FCFEI7E71F18E70FC7CI6I0EK030382,^FS"
+        var logoFinal = "^MMT^PW639^LL0240^LS0^FO150,60^A3,50^FD" + $("#num_caixa_atual").html() + "^FS^PQ1,0,1,Y^XZ"
+        zebraPrinter.send(logo + logoFinal) */
+        ///////////////////////////////////////
+
+        var seriais = []
+        var smartcards = []
+        for (i = 0; i < $("#quant").val(); i++) {
+            seriais[i] = $("#serial1-" + i).val()
+            smartcards[i] = $("#smartcard-" + i).val()
+        }
+
+        $.ajax({
+            url: 'busca_embalagem.php',
+            method: 'POST',
+            data: { n_caixa: $("#num_caixa_atual").html(), quant: $("#quant").val(), seriais, smartcards, acao: "atualiza_seriais" },
+            dataType: 'json',
+        }).always(function () {
+            $('#ModalFinalizar').modal('hide')
+            $("#embalagemOK").fadeTo(4000, 500).slideUp(500, function () {
+                $(".alert").slideUp(1000);
+                location.reload();
+            })
+        })
+
+
+    })
 
 })
+
+
 
 
 function numero_caixa() {
@@ -178,13 +272,18 @@ function numero_caixa() {
         data: { acao: "numero_caixa" },
         dataType: 'json',
     }).done(function (retorno) {
-        $('#caixa').html("Caixa nº <strong class='display-4'>" + retorno + "</strong>")
+        $('#caixa').html("Caixa nº <strong id='num_caixa_atual' class='display-4'>" + retorno + "</strong>")
         $('#criar_caixa').prop('disabled', true)
     })
 }
 
 
 function getserial(id) {
+    ///////Dá foco ao próximo input SMARTCARD quando houver
+    j = id.substring(8)
+    $("#smartcard-" + j).focus()
+    ///////////////////////////
+
     var serial1 = $("#" + id).val()
     var serial2 = id.replace("serial1", "serial2");
     if (serial1 == "") {
@@ -249,4 +348,10 @@ function getserial(id) {
 
     }
 
+}
+
+function tab(id) {
+    i = id.substring(10)
+    i++
+    $("#serial1-" + i).focus()
 }

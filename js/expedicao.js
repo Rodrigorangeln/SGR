@@ -1,4 +1,4 @@
-$('#menu_embalagem').addClass('active lead')
+$('#menu_expedicao').addClass('active lead')
 
 /* $(document).keypress(function(e) {
     //alert(event.keyCode)
@@ -30,10 +30,10 @@ $(document).ready(function () {
     ////////// FIM ZEBRA PRINTER ////////
 
 
-    $("#cliente").focus()
+    $("#nf").focus()
 
     ///* Evita digitação de letras na quantidade */////////    
-    $("#quant").keypress(function (e) {
+    $("#nf").keypress(function (e) {
         var chr = String.fromCharCode(e.which);
         if ("1234567890".indexOf(chr) < 0)
             return false;

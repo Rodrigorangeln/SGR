@@ -46,9 +46,13 @@ function produtividade($connect, $colab1, $colab2, $dtInicio, $dtFinal)
 function serial($connect, $serial)
 {
     $query_serial = "SELECT * FROM seriais WHERE serial1 = '$serial';";
-
     $resultQuery = mysqli_query($connect, $query_serial);
     $row_serial = mysqli_fetch_assoc($resultQuery);
+    
+    $caixa = $row_serial['n_caixa'];
+    $query_embalagem = "SELECT data, user FROM embalagem WHERE n_caixa = '$caixa';";
+    $sqlEmbalagem = mysqli_query($connect, $query_embalagem);
+    $row_embalagem = mysqli_fetch_assoc($sqlEmbalagem);
 
     $retorno_serial['rrm'] = $row_serial['rrm'];
     $retorno_serial['dt_input'] = $row_serial['dt_entr'];
@@ -61,6 +65,8 @@ function serial($connect, $serial)
     $retorno_serial['func_cosmetica'] = buscaColaborador($connect, $row_serial['user_cosmetica']);
     $retorno_serial['dt_testefinal'] = $row_serial['dt_testefinal'];
     $retorno_serial['func_testefinal'] = buscaColaborador($connect, $row_serial['user_testefinal']);
+    $retorno_serial['dt_embalagem'] = $row_embalagem['data'];
+    $retorno_serial['func_embalagem'] = buscaColaborador($connect, $row_embalagem['user']);
 
     return json_encode($retorno_serial);
 }

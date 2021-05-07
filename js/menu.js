@@ -16,8 +16,8 @@ function niveis_acesso(nivel) {
         $("#menu_teste").removeClass('disabled');
         $("#menu_cosmetica").removeClass('disabled');
         $("#menu_teste_final").removeClass('disabled');
-        //$("#menu_embalagem").removeClass('disabled'); DESABILITADO POIS FALTA CONCLUIR ESSAS TELAS
-        //$("#menu_expedicao").removeClass('disabled');
+        $("#menu_embalagem").removeClass('disabled');
+        $("#menu_expedicao").removeClass('disabled');
     }
     if (nivel == '0'){ 
         $(".nav-link").removeClass('disabled');

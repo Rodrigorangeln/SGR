@@ -29,8 +29,10 @@ $(document).ready(function () {
             $("#func_cosmetica").html(retorno['func_cosmetica'])
             $("#dt_testeFinal").html(retorno['dt_testefinal'])
             $("#func_testeFinal").html(retorno['func_testefinal'])
+            $("#dt_embalagem").html(retorno['dt_embalagem'])
+            $("#func_embalagem").html(retorno['func_embalagem'])
 
-            //FALTA POPULAR EMBALAGEM e EXPEDIÇÃO. Esses postos ainda não foram implementados.
+            //FALTA POPULAR EXPEDIÇÃO. Esses postos ainda não foram implementados.
 
         })
 

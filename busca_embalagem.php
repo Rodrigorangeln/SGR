@@ -1,4 +1,6 @@
 <?php
+session_start();
+$user = $_SESSION['user'];
 require_once 'db_connect.php';
 
 $acao = $_POST['acao'];
@@ -20,7 +22,7 @@ switch ($acao) {
         echo busca_modelo($_POST['cod'], $connect);
         break;
     case "atualiza_seriais":
-        atualiza_seriais($_POST['n_caixa'], $_POST['quant'], $_POST['seriais'], $_POST['smartcards'], $connect);
+        atualiza_seriais($user, $_POST['n_caixa'], $_POST['quant'], $_POST['seriais'], $_POST['smartcards'], $connect);
 }
 
 
@@ -121,7 +123,7 @@ function busca_modelo($cod, $connect)
 }
 
 
-function atualiza_seriais($n_caixa, $quant, $seriais, $smartcards, $connect)
+function atualiza_seriais($user, $n_caixa, $quant, $seriais, $smartcards, $connect)
 {
     $tamArray = count($seriais);
 
@@ -136,6 +138,6 @@ function atualiza_seriais($n_caixa, $quant, $seriais, $smartcards, $connect)
         $temSmart = 0;
     }
 
-    $sqlEmbalagem = "INSERT INTO embalagem SET n_caixa = '$n_caixa', quant = '$quant', smartcard = '$temSmart', data = now() ";
+    $sqlEmbalagem = "INSERT INTO embalagem SET user = $user, n_caixa = '$n_caixa', quant = '$quant', smartcard = '$temSmart', data = now() ";
     mysqli_query($connect, $sqlEmbalagem);
 }

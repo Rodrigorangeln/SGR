@@ -27,7 +27,7 @@
       <a class="nav-item nav-link disabled" id="menu_cosmetica" href="cosmetica.php">Cosmética</a>
       <a class="nav-item nav-link disabled" id="menu_teste_final" href="teste_final.php">Teste Final</a>
       <a class="nav-item nav-link disabled" id="menu_embalagem" href="embalagem.php">Embalagem</a>
-      <a class="nav-item nav-link disabled" id="menu_expedicao" href="#">Expedição</a>
+      <a class="nav-item nav-link disabled" id="menu_expedicao" href="expedicao.php">Expedição</a>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle disabled" data-toggle="dropdown" id="menu_relatorios" href="#">Consultas</a>
         <div class="dropdown-menu bg-primary">

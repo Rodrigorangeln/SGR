@@ -2,7 +2,7 @@
 
 session_start();
 
-if ((!isset($_SESSION['user']) == true) and (!isset($_SESSION['pass']) == true) or ($_SESSION['nivel'] <> '0')) {
+if ((!isset($_SESSION['user']) == true) and (!isset($_SESSION['pass']) == true)) {
     unset($_SESSION['user']);
     unset($_SESSION['pass']);
     header('location:index.php');

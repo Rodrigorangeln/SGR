@@ -33,9 +33,21 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
                         <!-- style='display: block' -->
                         <!-- none -->
                         <div class="form-group">
+                            <label>Selecione o posto:</label>
+                            <select id="posto" class="custom-select form-control">
+                                <option value="Recepção">Recepção</option>
+                                <option value="Teste Inicial">Teste Inicial</option>
+                                <option value="Elétrica">Elétrica</option>
+                                <option value="Cosmética">Cosmética</option>
+                                <option value="Teste Final">Teste Final</option>
+                                <!-- <option value="Embalagem">Embalagem</option> //NÃO FUNCIONANDO
+                                <option value="Expedição">Expedição</option> -->
+                            </select>
+                        </div>
+                        <div class="form-group mt-5">
                             <label>Selecione 1 ou 2 colaboradores:</label>
                             <select id="colaborador1" class="custom-select form-control">
-                                <option value="0" disabled selected >Colaborador 1</option>
+                                <option value="0" disabled selected>Colaborador 1</option>
                                 <?php while ($row = mysqli_fetch_assoc($resultQuery)) { ?>
                                     <option><?php echo $row["registration"] . " - " . $row["name"] ?></option>
                                 <?php } ?>
@@ -61,20 +73,20 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
                                 <input type="date" class="form-control col-sm-6 mt-2 ml-3" id="dt_final">
                             </div>
                         </div>
-                        <div class="mt-5 float-right">
+                        <div class="mt-4 float-right">
                             <button id="consultar" class="btn btn-primary" type="button">Consultar</button>
                         </div>
                     </div>
 
                     <div class="form-group col-md-6 mt-4 ml-5">
-                    <label id="label" hidden>Quantidade de equipamentos inseridos no sistema:</label>
-                        <div class="mt-4">
+                        <strong id="label" class="h1"></strong>
+                        <div class="mt-5">
                             <strong id="report_colab1"></strong>
-                            <strong class="h3" id="quant_colab1"></strong>
+                            <strong class="h2" id="quant_colab1"></strong>
                         </div>
                         <div class="mt-5">
                             <strong id="report_colab2"></strong>
-                            <strong class="h3" id="quant_colab2"></strong>
+                            <strong class="h2" id="quant_colab2"></strong>
                         </div>
                     </div>
 

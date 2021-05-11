@@ -29,9 +29,9 @@
       <a class="nav-item nav-link disabled" id="menu_embalagem" href="embalagem.php">Embalagem</a>
       <a class="nav-item nav-link disabled" id="menu_expedicao" href="expedicao.php">Expedição</a>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle disabled" data-toggle="dropdown" id="menu_relatorios" href="#">Consultas</a>
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="menu_relatorios" href="#">Consultas</a>
         <div class="dropdown-menu bg-primary">
-          <a class="dropdown-item bg-primary text-white" href="report_produtividade.php">Produtividade</a>
+          <a class="dropdown-item bg-primary text-white disabled" id="produtividade" href="report_produtividade.php">Produtividade</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item bg-primary text-white" href="report_serial.php">Serial</a>
         </div>

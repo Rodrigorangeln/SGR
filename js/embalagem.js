@@ -193,7 +193,7 @@ $(document).ready(function () {
                 data: { cod, acao: "busca_modelo" },
                 dataType: 'json',
             }).always(function (result) {
-                var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,12^A3,45^FD" + result + " " + $("#quant").val() + "^FS^PQ1,0,1,Y^XZ"
+                var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,12^A3,200^FD" + result + "    " + $("#quant").val() + "^FS^PQ1,0,1,Y^XZ"
                 zebraPrinter.send(labelCaixa);
             })
         }
@@ -227,7 +227,7 @@ $(document).ready(function () {
     })
 
     $("#btn_Confirmo").on("click", function () {
-        var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,30^A3,50^FD" + $("#num_caixa_atual").html() + "^FS^PQ1,0,1,Y^XZ"
+        var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,30^A3,200^FD" + $("#num_caixa_atual").html() + "^FS^PQ1,0,1,Y^XZ"
         zebraPrinter.send(labelCaixa);
 
 //////>>>>TESTAR ETIQUETA COM LOGO //////////////

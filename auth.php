@@ -29,8 +29,9 @@ if ($resultQuery->num_rows) {
     header('location:teste_inicial.php');
   } else if ($_SESSION['nivel'] == '0') {
     header('location:recep_NF.php');
+  } else if ($_SESSION['nivel'] == '3') {
+    header('location:recep_NF.php');
   }
-  
 } else {
   unset($_SESSION['user']);
   unset($_SESSION['pass']);

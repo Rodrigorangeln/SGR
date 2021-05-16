@@ -46,7 +46,6 @@ $(document).ready(function () {
         }
 
         if (erro == 0) {
-            alert($("#posto").val())
             $.ajax({
                 url: 'buscaReport.php',
                 method: 'POST',

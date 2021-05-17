@@ -85,7 +85,6 @@ $(document).ready(function () {
 
 
     $("#btn_imp_etiquetas").on("click", function () {
-        $("#auxGrava").val("")
         erro = 0
         caixas = []
         for (i = 0; i < $('#quant').val(); i++) {
@@ -138,6 +137,10 @@ $(document).ready(function () {
                 $("#expedicao").prop('hidden', false)
                 $("#date").focus()
 
+                for (i = 0; i < $('#quant').val(); i++) {
+                    $("#caixa-" + i).prop('disabled', true)
+                }
+
             })
         }
     })
@@ -153,12 +156,10 @@ $(document).ready(function () {
                 dataType: 'json',
             }).always(function () {
                 $('#ModalCaixaDespachada').modal('toggle')
-                
             })
         }
 
     })
-
 
     $('#ModalCaixaDespachada').on('hide.bs.modal', function (event) {
         location.reload();

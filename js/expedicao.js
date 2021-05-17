@@ -13,7 +13,6 @@ function maiuscula(z) {
     $(z).removeClass("is-invalid")
 }
 
-
 $(document).ready(function () {
     $(".alert").hide() //ESCONDE ALERTAS
     var zebraPrinter;
@@ -86,6 +85,7 @@ $(document).ready(function () {
 
 
     $("#btn_imp_etiquetas").on("click", function () {
+        $("#auxGrava").val("")
         erro = 0
         caixas = []
         for (i = 0; i < $('#quant').val(); i++) {
@@ -96,51 +96,79 @@ $(document).ready(function () {
                 erro = 1
             }
             caixas.push($("#caixa-" + i).val())
-        }
 
-        $.ajax({
-            url: 'busca_expedicao.php',
-            method: 'POST',
-            data: { caixas, acao: "busca_caixa" },
-            dataType: 'json',
-        }).done(function (retorno) {
-            if (retorno != "") {
-                erro = 1
-                for (i = 0; i < $('#quant').val(); i++) {
-                    if ($("#caixa-" + i).val() == retorno) {
-                        $("#caixa-" + i).addClass("is-invalid")
-                    }
-                }
-                $('#ModalCaixaErrada').modal('toggle')
-            }
-        })
+        }
 
         if (erro == 0) {
-            /* $.ajax({
-                url: 'geraEtiquetas.php',
+            $.ajax({
+                url: 'busca_expedicao.php',
                 method: 'POST',
-                data: { modelo: $("#modelo").val(), serial1: $("#serial1-0").val(), serial2: $("#serial2-0").val() },
+                data: { caixas, acao: "busca_caixa" },
                 dataType: 'json',
-            }).always(function () {
-                alert("Arquivo de etiquetas gerado")
-            }) */
-
-            var startLabel = "^XA^MMT^PW639^LL0240^LS0^FO20,12^A3,22"
-            var modelo = "^FDMODELO: " + $("#modelo").val() + "^FS^BY3,3,30^FT27,71^BCN,,Y,N"
-            var endLabel = "^FT27,124^A0N,17,19^FH\^FDSERIAL:^FS^FT26,211^A0N,16,16^FH\^FDCM MAC:^FS^PQ1,0,1,Y^XZ"
-
-            for (i = 0; i < $("#quant").val(); i++) {
-
-                var seriais = "^FD" + $("#serial1-" + i).val() + "^FS^BY3,3,34^FT27,176^BCN,,Y,N^FD" + $("#serial2-" + i).val() + "^FS"
-
-                zebraPrinter.send(startLabel + modelo + seriais + endLabel)
-            }
-
-
+                async: false  //AJAX síncrono pois é preciso aguardar retorno p continuar.
+            }).done(function (retorno) {
+                if (retorno != "") {
+                    for (i = 0; i < $('#quant').val(); i++) {
+                        if ($("#caixa-" + i).val() == retorno) {
+                            $("#caixa-" + i).addClass("is-invalid")
+                        }
+                    }
+                    $('#ModalCaixaErrada').modal('toggle')
+                    erro = 1
+                }
+            })
         }
 
 
+        if (erro == 0) {
+            $.ajax({
+                url: 'busca_expedicao.php',
+                method: 'POST',
+                data: { caixas, nf_saida: $('#nf').val(), acao: "grava_caixas" },
+                dataType: 'json',
+            }).always(function () {
+
+                for (i = 1; i <= $("#quant").val(); i++) {
+
+                    var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,30^A3,200^FD" + $("#nf").val() + "   " + i + "/" + $("#quant").val() + "^FS^PQ1,0,1,Y^XZ"
+                    zebraPrinter.send(labelCaixa);
+
+                }
+
+                $("#expedicao").prop('hidden', false)
+                $("#date").focus()
+
+            })
+        }
+    })
+
+
+
+    $("#btn-OK-expedicao").on("click", function () {
+        if ($("#date").val() != "") {
+            $.ajax({
+                url: 'busca_expedicao.php',
+                method: 'POST',
+                data: { nf_saida: $('#nf').val(), date: $('#date').val(), acao: "grava_data_expedicao" },
+                dataType: 'json',
+            }).always(function () {
+                $('#ModalCaixaDespachada').modal('toggle')
+                
+            })
+        }
 
     })
+
+
+    $('#ModalCaixaDespachada').on('hide.bs.modal', function (event) {
+        location.reload();
+    })
+
+
+
+
+
+
+
 
 })

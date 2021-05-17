@@ -66,13 +66,12 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
         <label>Data de expedição</label>
         <input type="date" class="form-control mt-2 " id="date" maxlength="10" data-toggle="tooltip" data-placement="right" title="Data de recolhimento pela transportadora">
         <small class="form-text text-muted">Pode ser informada posteriormente</small>
-        <button id="btn-OK" class="mt-4 btn btn-primary btn-block" type="button">OK</button>
+        <button id="btn-OK-expedicao" class="mt-4 btn btn-primary btn-block" type="button">OK</button>
       </div>
 
     </div>
 
   </div>
-
 
   </html>
 
@@ -108,8 +107,31 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
           </button>
         </div>
         <div class="modal-body">
-          <p>FOI DIGITADO CAIXA INEXISTENTE !</p>
+          <p>TEM CAIXA INEXISTENTE !</p>
           <p>Marquei p vc. 😉</p> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <!-- <button type="button" id="btn_Confirmo" class="btn btn-primary">Confirmo</button> -->
+          <!-- <button type="button" class="btn btn-primary">Salvar mudanças</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="ModalCaixaDespachada" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><strong>Finalizado !</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>CAIXAS DESPACHADAS ! 👍</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

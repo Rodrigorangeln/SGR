@@ -27,7 +27,7 @@ function busca_eletrica($s1, $connect)
 {
 	$query = "SELECT s.serial1, s.serial2, s.rrm, s.t_eletr1, s.t_eletr2, a.cod, a.modelo from seriais s, cd_aparelhos a, rrm r
 	where a.cod = s.cod_modelo and s.serial1 = '$s1' and r.aberta = '0' and s.local = '3'";
-
+	mysqli_set_charset($connect,"utf8");
 	$resultQuery = mysqli_query($connect, $query);
 	if ($resultQuery->num_rows) {
 		$row = mysqli_fetch_assoc($resultQuery);
@@ -47,7 +47,7 @@ function busca_eletrica($s1, $connect)
 function busca_componentes($cod_mod, $cod_sintoma, $connect)
 {
 	$query2 = "SELECT CREF, componente from cd_eletrica where cod_mod = '$cod_mod' and cod_sintoma = '$cod_sintoma' order by componente";
-
+	mysqli_set_charset($connect,"utf8");
 	$resultQuery2 = mysqli_query($connect, $query2);
 	$return = array();
 	while ($rows = mysqli_fetch_assoc($resultQuery2)) {

@@ -34,7 +34,7 @@ function busca_cliente($cliente, $connect)
     if ($resultQuery->num_rows) {
 
         $query = "SELECT DISTINCT s.cod_modelo, a.modelo FROM cd_aparelhos a, recep_nf r, seriais s WHERE s.cod_modelo = a.cod AND r.cod_cliente = '$cliente' AND r.rrm = s.rrm AND s.local = '6'";
-
+        mysqli_set_charset($connect,"utf8");
         $resultQuery2 = mysqli_query($connect, $query);
         $retorno = array();
         while ($rows = mysqli_fetch_assoc($resultQuery2)) {

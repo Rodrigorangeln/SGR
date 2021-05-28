@@ -45,7 +45,7 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
         <div class="row">
             <div class="col-sm-3">
 
-            <div id="caixa"></div>
+            <!-- <div id="caixa"></div> -->
             <!-- style='display: block' -->
                 <!-- none -->
                 <div class="form-group mt-4">
@@ -190,10 +190,10 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
 
 
 <div class="modal fade" id="ModalFinalizar" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title"><strong>Atenção</strong></h5>
+        <h5 class="modal-title"><strong>Atenção ⚠️</strong></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -202,7 +202,7 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
         <p><strong>CONFIRMA QUE JÁ IMPRIMIU TODAS AS ETIQUETAS ?</strong></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+        <button type="button" id="btn_ModalNao" class="btn btn-secondary" data-dismiss="modal">Não</button>
         <button type="button" id="btn_Confirmo" class="btn btn-primary">Confirmo</button>
         <!-- <button type="button" class="btn btn-primary">Salvar mudanças</button> -->
       </div>

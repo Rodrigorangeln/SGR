@@ -86,7 +86,7 @@ $(document).ready(function () {
             $("#btn_imp_etiquetas").prop('hidden', false)
             $("#finalizar").prop('hidden', false)
 
-            numero_caixa()
+            //alert (numero_caixa())
             var quant_seriais = $('#quant').val()
             var cont = 0
 
@@ -113,6 +113,7 @@ $(document).ready(function () {
             $('#quant').prop('disabled', true)
             $('#radio_s').prop('disabled', true)
             $('#radio_n').prop('disabled', true)
+            $('#criar_caixa').prop('disabled', true)
         }
     })
 
@@ -227,7 +228,12 @@ $(document).ready(function () {
     })
 
     $("#btn_Confirmo").on("click", function () {
-        var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,30^A3,200^FD" + $("#num_caixa_atual").html() + "^FS^PQ1,0,1,Y^XZ"
+        $("#btn_Confirmo").prop('hidden', true);
+        $("#btn_ModalNao").prop('hidden', true);
+
+        n_caixa = numero_caixa();
+
+        var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,30^A3,200^FD" + n_caixa + "^FS^PQ1,0,1,Y^XZ"
         zebraPrinter.send(labelCaixa);
 
 //////>>>>TESTAR ETIQUETA COM LOGO //////////////
@@ -236,7 +242,7 @@ $(document).ready(function () {
         zebraPrinter.send(logo + logoFinal) */
         ///////////////////////////////////////
 
-        $('#ModalFinalizar .modal-body').html('<strong>CRIANDO CAIXA ...</strong>');
+        $('#ModalFinalizar .modal-body').html('CRIANDO CAIXA <strong>' + n_caixa + ' </strong>...');
 
         var seriais = []
         var smartcards = []
@@ -248,12 +254,16 @@ $(document).ready(function () {
         $.ajax({
             url: 'busca_embalagem.php',
             method: 'POST',
-            data: { n_caixa: $("#num_caixa_atual").html(), quant: $("#quant").val(), seriais, smartcards, acao: "atualiza_seriais" },
+            data: { n_caixa, quant: $("#quant").val(), seriais, smartcards, acao: "atualiza_seriais" },
             dataType: 'json',
         }).always(function () {
-            $('#ModalFinalizar').modal('hide')
-            $("#embalagemOK").fadeTo(4000, 500).slideUp(500, function () {
+            //$('#ModalFinalizar').modal('hide')
+            $('#ModalFinalizar .modal-header').html('<h5><strong>Atenção ✔️</strong></h5>');
+            $('#ModalFinalizar .modal-body').html('CAIXA <strong>' + n_caixa + ' </strong>CRIADA.');
+            /* $("#embalagemOK").fadeTo(4000, 500).slideUp(500, function () {
                 $(".alert").slideUp(1000);
+            }) */
+            $('#ModalFinalizar').on('hidden.bs.modal', function (e) {
                 location.reload();
             })
         })
@@ -267,15 +277,19 @@ $(document).ready(function () {
 
 
 function numero_caixa() {
+    var retornoFunc;
     $.ajax({
         url: 'busca_embalagem.php',
         method: 'POST',
         data: { acao: "numero_caixa" },
         dataType: 'json',
+        async: false, //AGUARDA RETORNO DO BD
     }).done(function (retorno) {
-        $('#caixa').html("Caixa nº <strong id='num_caixa_atual' class='display-4'>" + retorno + "</strong>")
-        $('#criar_caixa').prop('disabled', true)
+        retornoFunc = retorno;
+        //$('#caixa').html("Caixa nº <strong id='num_caixa_atual' class='display-4'>" + retorno + "</strong>")
+        //$('#criar_caixa').prop('disabled', true)
     })
+    return retornoFunc;
 }
 
 

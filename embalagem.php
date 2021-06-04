@@ -16,7 +16,7 @@ if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['pass']) == true)
 include 'menu.php';
 require_once 'db_connect.php';
 
-$query = "SELECT cod_cliente, razao_social FROM cd_clientes";
+$query = "SELECT cod_cliente, fantasia FROM cd_clientes";
 mysqli_set_charset($connect,"utf8");
 $resultQuery = mysqli_query($connect, $query);
 
@@ -53,7 +53,7 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
                     <select id="cliente" class="form-control">
                         <option value = "0" disabled selected>Digite o código ou Selecione...</option>
                         <?php while ($row = mysqli_fetch_assoc($resultQuery)) { ?>
-                            <option><?php echo $row["cod_cliente"] . " - " . $row["razao_social"] ?></option>
+                            <option><?php echo $row["cod_cliente"] . " - " . $row["fantasia"] ?></option>
                         <?php }
                         mysqli_close($connect);
                         ?>

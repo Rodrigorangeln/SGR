@@ -29,6 +29,7 @@ function niveis_acesso(nivel) {
     if (nivel == '0'){ 
         $(".nav-link").removeClass('disabled');
         $("#produtividade").removeClass('disabled');
+        document.getElementById("adm").href="adm.php"; 
     }
 
 }

@@ -15,6 +15,10 @@ include 'menu.php';
 
         <script src="./js/report_serial.js"></script>
 
+        <div class="alert alert-danger text-center" id="erroserial">
+            <strong>SERIAL NÃO ENCONTRADO !</strong>
+        </div>
+
         <body>
 
             <div class="container-fluid mt-5 ml-4">
@@ -30,7 +34,8 @@ include 'menu.php';
                     </div>
 
                     <div class="col-md-8 ml-5">
-                        <table class="table table-striped"> <!-- hidden -->                            
+                        <table class="table table-striped">
+                            <!-- hidden -->
                             <thead>
                                 <tr>
                                     <th>RRM <span id="rrm"></span></th>

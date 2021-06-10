@@ -49,7 +49,7 @@ $(document).ready(function () {
         $('#ModalAlteraSerial .modal-title').html('Alteração do serial <strong id="altSerial">' + $("#1serial").val() + '</strong>');
         $('#ModalAlteraSerial').modal('show')
     })
-   
+
     $("#btn-serial2").on("click", function () {
         $('#ModalAlteraSerial .modal-title').html('Alteração do serial <strong id="altSerial">' + $("#2serial").val() + '</strong>');
         $('#ModalAlteraSerial').modal('show')
@@ -76,6 +76,9 @@ $(document).ready(function () {
                     dataType: 'json',
                 }).always(function () {
                     $('#ModalAlteraSerial .modal-body').html('<strong style="color:green">Serial alterado ! ✔️</strong>');
+                    $('#ModalAlteraSerial').on('hidden.bs.modal', function (e) {
+                        limpa_campos()
+                    })
                 })
             }
         })
@@ -85,7 +88,7 @@ $(document).ready(function () {
     $("#btn-inverte-seriais").on("click", function () {
         $('#ModalInverteSeriais').modal('show')
     })
-    
+
 
     //Botão do MODAL
     $("#btn_conf_inversao").on("click", function () {
@@ -97,20 +100,23 @@ $(document).ready(function () {
             dataType: 'json',
         }).always(function () {
             $('#ModalInverteSeriais .modal-title').html('<strong style="color:green">Seriais invertidos ! ✔️</strong>');
+            $('#ModalInverteSeriais').on('hidden.bs.modal', function (e) {
+                limpa_campos()
+            })
         })
     })
-    
-    
+
+
     ///////Ao fechar o Modal retorna o mesmo ao estado inicial
     $('#ModalAlteraSerial').on('hidden.bs.modal', function (e) {
         $("#btn_alterar").prop("disabled", false)
         $('#ModalAlteraSerial .modal-body').html('<input type="text" class="form-control" id="new-serial" maxlength="25" placeholder="Digite o novo serial" onkeyup="maiuscula(this)">');
     })
-    
+
     $('#ModalAlteraSerial').on('shown.bs.modal', function (e) {
         $("#new-serial").focus()
     })
-    
+
     $('#ModalInverteSeriais').on('hidden.bs.modal', function (e) {
         $("#btn_conf_inversao").prop("disabled", false)
         $('#ModalInverteSeriais .modal-title').html('Confirma inversão entre Serial 1 e Serial 2 ?');
@@ -126,6 +132,9 @@ function limpa_campos() {
     $("#2serial").val("")
     $("#cod_mod").val("")
     $("#modelo").val("")
+    $("#btn-serial1").prop("disabled", true)
+    $("#btn-serial2").prop("disabled", true)
+    $("#btn-inverte-seriais").prop("disabled", true)
 }
 
 

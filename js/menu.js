@@ -10,6 +10,13 @@
 function niveis_acesso(nivel) {
     if (nivel == '1'){
         $("#menu_eletrica").removeClass('disabled');
+        /////// ILHÉUS /////////////////////////
+        $("#menu_rrms_fechadas").removeClass('disabled');
+        $("#menu_teste").removeClass('disabled');
+        $("#menu_cosmetica").removeClass('disabled');
+        $("#menu_teste_final").removeClass('disabled');
+        //$("#menu_embalagem").removeClass('disabled');
+        /////////////////////////////////////////////
     }
     if (nivel == '2'){
         //$("#menu_recep").removeClass('disabled');

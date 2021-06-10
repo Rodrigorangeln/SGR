@@ -72,7 +72,11 @@ function alteraSerial($user, $oldSerial, $newSerial, $connect)
 function inverteSeriais($user, $s1, $s2, $connect)
 {
 	$queryInverte1 = "UPDATE seriais SET serial1 = '$s2' WHERE serial1 = '$s1'";
+	$queryLog1 = "INSERT INTO log_seriais VALUES ('$s1', '$s2', now(), '$user')";
 	$queryInverte2 = "UPDATE seriais SET serial2 = '$s1' WHERE serial1 = '$s1'";
+	$queryLog2 = "INSERT INTO log_seriais VALUES ('$s2', '$s1', now(), '$user')";
 	mysqli_query($connect, $queryInverte2);
 	mysqli_query($connect, $queryInverte1);
+	mysqli_query($connect, $queryLog1);
+	mysqli_query($connect, $queryLog2);
 }

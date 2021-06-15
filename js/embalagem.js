@@ -93,7 +93,7 @@ $(document).ready(function () {
             if ($("#radio_n").is(":checked")) {
                 while (cont < quant_seriais) {
                     //$("#serial1").append ('<input id = "serial1-'+cont+'" class="form-control mt-2" onblur="getserial(id); verifica_serial_cliente(id);" data-toggle="popover-cliente" data-trigger="manual" data-placement="right" data-html="true" data-content="<strong>Serial não é desse cliente</strong>"></input>')
-                    $("#serial1").append('<input id = "serial1-' + cont + '" class="form-control mt-2" maxlength="18" onblur="getserial(id)"; onkeyup="maiuscula(this)"></input>')
+                    $("#serial1").append('<input id = "serial1-' + cont + '" class="form-control mt-2" maxlength="25" onblur="getserial(id)"; onkeyup="maiuscula(this)"></input>')
                     $("#serial2").append('<input id = "serial2-' + cont + '"class="form-control mt-2" disabled></input>')
                     cont++
                 }
@@ -101,7 +101,7 @@ $(document).ready(function () {
                 $("#smartcard").prop('hidden', false)
                 while (cont < quant_seriais) {
                     //$("#serial1").append ('<input id = "serial1-'+cont+'" class="form-control mt-2" onblur="getserial(id); verifica_serial_cliente(id);" data-toggle="popover-cliente" data-trigger="manual" data-placement="right" data-html="true" data-content="<strong>Serial não é desse cliente</strong>"></input>')
-                    $("#serial1").append('<input id = "serial1-' + cont + '" class="form-control mt-2" maxlength="18" onblur="getserial(id)"; onkeyup="maiuscula(this)"></input>')
+                    $("#serial1").append('<input id = "serial1-' + cont + '" class="form-control mt-2" maxlength="25" onblur="getserial(id)"; onkeyup="maiuscula(this)"></input>')
                     $("#serial2").append('<input id = "serial2-' + cont + '"class="form-control mt-2" disabled></input>')
                     $("#smartcard").append('<input id = "smartcard-' + cont + '" class="form-control mt-2" onblur="tab(id)"; onkeyup="maiuscula(this)"></input>')
                     cont++
@@ -361,6 +361,8 @@ function getserial(id) {
         }
 
 
+    } else {
+        $("#" + id).addClass("is-invalid")
     }
 
 }

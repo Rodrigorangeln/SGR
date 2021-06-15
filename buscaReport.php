@@ -86,36 +86,67 @@ function serial($connect, $serial)
         $retorno_serial['rrm'] = $row_serial['rrm'];
         $retorno_serial['dt_input'] = $row_serial['dt_entr'];
         $retorno_serial['func_input'] = buscaColaborador($connect, $row_serial['user_entr']);
-        $retorno_serial['dt_testeinicial'] = $row_serial['dt_testeinicial'];
-        $retorno_serial['func_testeinicial'] = buscaColaborador($connect, $row_serial['user_testeinicial']);
-        $retorno_serial['dt_eletrica'] = $row_serial['dt_eletrica'];
-        $retorno_serial['func_eletrica'] = buscaColaborador($connect, $row_serial['user_eletrica']);
-        $retorno_serial['dt_cosmetica'] = $row_serial['dt_cosmetica'];
-        $retorno_serial['func_cosmetica'] = buscaColaborador($connect, $row_serial['user_cosmetica']);
-        $retorno_serial['dt_testefinal'] = $row_serial['dt_testefinal'];
-        $retorno_serial['func_testefinal'] = buscaColaborador($connect, $row_serial['user_testefinal']);
+
+        if ($row_serial['dt_testeinicial'] != null) {
+            $retorno_serial['dt_testeinicial'] = $row_serial['dt_testeinicial'];
+            $retorno_serial['func_testeinicial'] = buscaColaborador($connect, $row_serial['user_testeinicial']);
+        } else {
+            $retorno_serial['dt_testeinicial'] = '-';
+            $retorno_serial['func_testeinicial'] = '-';
+        }
+
+        if ($row_serial['dt_eletrica'] != null) {
+            $retorno_serial['dt_eletrica'] = $row_serial['dt_eletrica'];
+            $retorno_serial['func_eletrica'] = buscaColaborador($connect, $row_serial['user_eletrica']);
+        } else {
+            $retorno_serial['dt_eletrica'] = '-';
+            $retorno_serial['func_eletrica'] = '-';
+        }
+
+        if ($row_serial['dt_cosmetica'] != null) {
+            $retorno_serial['dt_cosmetica'] = $row_serial['dt_cosmetica'];
+            $retorno_serial['func_cosmetica'] = buscaColaborador($connect, $row_serial['user_cosmetica']);
+        } else {
+            $retorno_serial['dt_cosmetica'] = '-';
+            $retorno_serial['func_cosmetica'] = '-';
+        }
+
+        if ($row_serial['dt_testefinal'] != null) {
+            $retorno_serial['dt_testefinal'] = $row_serial['dt_testefinal'];
+            $retorno_serial['func_testefinal'] = buscaColaborador($connect, $row_serial['user_testefinal']);
+        } else {
+            $retorno_serial['dt_testefinal'] = '-';
+            $retorno_serial['func_testefinal'] = '-';
+        }
+
         $caixa = $row_serial['n_caixa'];
-        
+
         $query_embalagem = "SELECT data, user FROM embalagem WHERE n_caixa = '$caixa';";
         $sqlEmbalagem = mysqli_query($connect, $query_embalagem);
         if ($sqlEmbalagem->num_rows) {
             $row_embalagem = mysqli_fetch_assoc($sqlEmbalagem);
             $retorno_serial['dt_embalagem'] = $row_embalagem['data'];
             $retorno_serial['func_embalagem'] = buscaColaborador($connect, $row_embalagem['user']);
+        } else {
+            $retorno_serial['dt_embalagem'] = '-';
+            $retorno_serial['func_embalagem'] = '-';
         }
-        
+
         $query_expedicao = "SELECT data_expedicao, user FROM expedicao WHERE caixa = '$caixa';";
         $sqlExpedicao = mysqli_query($connect, $query_expedicao);
         if ($sqlExpedicao->num_rows) {
             $row_expedicao = mysqli_fetch_assoc($sqlExpedicao);
             $retorno_serial['dt_expedicao'] = $row_expedicao['data_expedicao'];
             $retorno_serial['func_expedicao'] = buscaColaborador($connect, $row_expedicao['user']);
+        } else {
+            $retorno_serial['dt_expedicao'] = '-';
+            $retorno_serial['func_expedicao'] = '-';
         }
-        
+
         return json_encode($retorno_serial);
-    } else {
+    } /* else {
         return json_encode('0');
-    }
+    } */
 }
 
 
@@ -123,6 +154,7 @@ function serial($connect, $serial)
 function buscaColaborador($connect, $registration)
 {
     $query_colab = "SELECT name FROM cd_usuarios WHERE registration = '$registration';";
+    mysqli_set_charset($connect,"utf8");
     $resultQuery_colab = mysqli_query($connect, $query_colab);
     $row_colab = mysqli_fetch_assoc($resultQuery_colab);
 

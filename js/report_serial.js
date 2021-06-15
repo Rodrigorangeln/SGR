@@ -10,35 +10,38 @@ $(document).ready(function () {
     $("#serial").focus()
 
     $("#consultar").on("click", function () {
-        $("#consultar").prop('disabled', true)
-        $("#consultar").html('Aguarde ...')
         $.ajax({
             url: 'buscaReport.php',
             method: 'POST',
             data: { serial: $("#serial").val(), acao: "serial" },
             dataType: 'json',
+            //async: false,
+            beforeSend: function () {
+                $("#consultar").prop('disabled', true)
+                $("#consultar").html('Aguarde ...')
+            }
         }).done(function (retorno) {
-            if (retorno != '0') {
-                $("#rrm").html(retorno['rrm'])
-                $("#dt_input").html(retorno['dt_input'])
-                $("#func_input").html(retorno['func_input'])
-                $("#dt_testeInicial").html(retorno['dt_testeinicial'])
-                $("#func_testeInicial").html(retorno['func_testeinicial'])
-                $("#dt_eletrica").html(retorno['dt_eletrica'])
-                $("#func_eletrica").html(retorno['func_eletrica'])
-                $("#dt_cosmetica").html(retorno['dt_cosmetica'])
-                $("#func_cosmetica").html(retorno['func_cosmetica'])
-                $("#dt_testeFinal").html(retorno['dt_testefinal'])
-                $("#func_testeFinal").html(retorno['func_testefinal'])
-                $("#dt_embalagem").html(retorno['dt_embalagem'])
-                $("#func_embalagem").html(retorno['func_embalagem'])
-                $("#dt_expedicao").html(retorno['dt_expedicao'])
-                $("#func_expedicao").html(retorno['func_expedicao'])
+            $("#rrm").html(retorno['rrm'])
+            $("#dt_input").html(retorno['dt_input'])
+            $("#func_input").html(retorno['func_input'])
+            $("#dt_testeInicial").html(retorno['dt_testeinicial'])
+            $("#func_testeInicial").html(retorno['func_testeinicial'])
+            $("#dt_eletrica").html(retorno['dt_eletrica'])
+            $("#func_eletrica").html(retorno['func_eletrica'])
+            $("#dt_cosmetica").html(retorno['dt_cosmetica'])
+            $("#func_cosmetica").html(retorno['func_cosmetica'])
+            $("#dt_testeFinal").html(retorno['dt_testefinal'])
+            $("#func_testeFinal").html(retorno['func_testefinal'])
+            $("#dt_embalagem").html(retorno['dt_embalagem'])
+            $("#func_embalagem").html(retorno['func_embalagem'])
+            $("#dt_expedicao").html(retorno['dt_expedicao'])
+            $("#func_expedicao").html(retorno['func_expedicao'])
 
-                $("#consultar").prop('disabled', false)
-                $("#consultar").html('Consultar')
-                $("#serial").focus()
-            } else {
+            $("#consultar").prop('disabled', false)
+            $("#consultar").html('Consultar')
+            $("#serial").focus()
+        })
+            .fail(function () {
                 $("#erroserial").fadeTo(2000, 500).slideUp(500, function () {
                     $(".alert").slideUp(1000);
                 })
@@ -47,10 +50,7 @@ $(document).ready(function () {
                 $("#serial").focus()
                 $("#serial").val('')
                 limpa()
-            }
-
-
-        })
+            });
 
     })
 

@@ -18,8 +18,6 @@ $(document).ready(function () {
     })
     //////////////////////////////////////////////////    
 
-
-
     $("#add_row").on("click", function () {
         // Dynamic Rows Code
 

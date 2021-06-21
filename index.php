@@ -2,7 +2,6 @@
 <script type="text/javascript" src="./js/index.js"></script>
 
 <!doctype html>
-<link rel="shortcut icon" href="./imagens/logo.ico" />
 
 <title>SGR - Nortcom</title>
 <link href="./css/signin.css" rel="stylesheet">
@@ -11,12 +10,15 @@
 <html lang="pt-br">
 
 <head>
+  <link rel="shortcut icon" href="./imagens/logo.ico" />
   <meta charset="utf-8">
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
 
 </head>
 
 <body class="text-center">
+  <!-- <div class="fixed-top"> <img src="./imagens/loader.gif" width="60" height="60"> </div> -->
+
   <form class="form-signin" action='auth.php' method="POST">
     <img class="mb-4" src="./imagens/logo.png" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Sistema de Gestão e Reparos</h1>
@@ -25,7 +27,7 @@
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" name="pass" class="form-control" placeholder="Senha" required>
 
-    <div class="alert alert-danger text-center" id="alertalogin">
+    <div class="alert alert-danger text-center position-absolute" style="width: 21%;" id="alertalogin">
       <strong>Usuário ou senha inválidos!</strong>
     </div>
 

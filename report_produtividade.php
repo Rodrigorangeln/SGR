@@ -40,8 +40,8 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
                                 <option value="Elétrica">Elétrica</option>
                                 <option value="Cosmética">Cosmética</option>
                                 <option value="Teste Final">Teste Final</option>
-                                <!-- <option value="Embalagem">Embalagem</option> //NÃO FUNCIONANDO
-                                <option value="Expedição">Expedição</option> -->
+                                <option value="Embalagem">Embalagem</option> 
+                                <!-- <option value="Expedição">Expedição</option> -->
                             </select>
                         </div>
                         <div class="form-group mt-5">

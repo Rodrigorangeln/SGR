@@ -1,4 +1,4 @@
-<script type="text/javascript" src="https://ff.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=wJDLrwBtaFFt6GNBXKNqHjlC8vqRTL2dSQ8yXJP7x06eWk0ZQDvSvX2o_bD1rDxDzTir9CqeIveNBF9o6qBW1IXlP__bmudzG7VZoOgoOywevyPNq6wP9Qd5b1UgMjok6bBkUp9jGj2IyvJe9ITW3kEonWZH5smFQeXg_vaJshBnTp_-fGzOvVgUwdAqgHDlPZZRkadvPpo69zhBr2Q6aw" charset="UTF-8"></script><!DOCTYPE html5>
+<!DOCTYPE html5>
 <link rel="shortcut icon" href="./imagens/logo.ico" />
 
   <title>SGR - Nortcom</title>
@@ -11,6 +11,8 @@
 </head>
 
 <body onload="niveis_acesso(<?php echo $_SESSION['nivel']; ?>)">
+
+<div id="load" class="position-absolute" style="top: 11%; left: 1%"> <img src="./imagens/loader.gif" width="60" height="60"> </div>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <!-- fixed-top -->

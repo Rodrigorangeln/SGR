@@ -41,9 +41,10 @@ include 'menu.php';
                                     <th>RRM <span id="rrm"></span></th>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="col-md-3">#</th>
-                                    <th scope="col" class="col-md-2">Data</th>
-                                    <th scope="col">Colaborador</th>
+                                    <th scope="col" class="col-md-1">#</th>
+                                    <th scope="col" class="col-md-1">Data</th>
+                                    <th scope="col" class="col-md-2">Colaborador</th>
+                                    <th scope="col" class="col-md-2">Observação</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,36 +52,43 @@ include 'menu.php';
                                     <th scope="row">Input</th>
                                     <td id="dt_input"></td>
                                     <td id="func_input"></td>
+                                    <td id="obs_input"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Teste Inicial</th>
                                     <td id="dt_testeInicial"></td>
                                     <td id="func_testeInicial"></td>
+                                    <td id="obs_testeInicial"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Elétrica</th>
                                     <td id="dt_eletrica"></td>
                                     <td id="func_eletrica"></td>
+                                    <td id="obs_eletrica"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Cosmética</th>
                                     <td id="dt_cosmetica"></td>
                                     <td id="func_cosmetica"></td>
+                                    <td id="obs_cosmetica"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Teste Final</th>
                                     <td id="dt_testeFinal"></td>
                                     <td id="func_testeFinal"></td>
+                                    <td id="obs_testeFinal"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Embalagem</th>
                                     <td id="dt_embalagem"></td>
                                     <td id="func_embalagem"></td>
+                                    <td id="obs_embalagem"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Expedição</th>
                                     <td id="dt_expedicao"></td>
                                     <td id="func_expedicao"></td>
+                                    <td id="obs_expedicao"></td>
                                 </tr>
                             </tbody>
                         </table>

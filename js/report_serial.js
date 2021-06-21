@@ -19,6 +19,7 @@ $(document).ready(function () {
             beforeSend: function () {
                 $("#consultar").prop('disabled', true)
                 $("#consultar").html('Aguarde ...')
+                $("#load").show();
             }
         }).done(function (retorno) {
             $("#rrm").html(retorno['rrm'])
@@ -34,12 +35,15 @@ $(document).ready(function () {
             $("#func_testeFinal").html(retorno['func_testefinal'])
             $("#dt_embalagem").html(retorno['dt_embalagem'])
             $("#func_embalagem").html(retorno['func_embalagem'])
+            $("#obs_embalagem").html("Caixa " + retorno['obs_embalagem'])
             $("#dt_expedicao").html(retorno['dt_expedicao'])
             $("#func_expedicao").html(retorno['func_expedicao'])
 
             $("#consultar").prop('disabled', false)
             $("#consultar").html('Consultar')
             $("#serial").focus()
+            
+            $("#load").hide();
         })
             .fail(function () {
                 $("#erroserial").fadeTo(2000, 500).slideUp(500, function () {

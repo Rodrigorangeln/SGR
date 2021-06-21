@@ -27,9 +27,12 @@ function produtividade($connect, $posto, $colab1, $colab2, $dtInicio, $dtFinal)
 
     $resultQuery = mysqli_query($connect, $query_prod);
     $row = mysqli_fetch_assoc($resultQuery);
-    $retorno_prod[0] = $row['count(serial1)'];
+    if ($retorno_prod[2] == "Embalagem") {
+        $retorno_prod[0] = $row['count(id)'];
+    } else
+        $retorno_prod[0] = $row['count(serial1)'];
 
-    if ($colab2 <> "") {
+    if ($colab2 <> "Colaborador 2") {
         $nome = Explode(" ", $colab2);
         $registration = $nome[0];
 
@@ -37,7 +40,10 @@ function produtividade($connect, $posto, $colab1, $colab2, $dtInicio, $dtFinal)
 
         $resultQuery = mysqli_query($connect, $query);
         $row = mysqli_fetch_assoc($resultQuery);
-        $retorno_prod[1] = $row['count(serial1)'];
+        if ($retorno_prod[2] == "Embalagem") {
+            $retorno_prod[1] = $row['count(id)'];
+        } else
+            $retorno_prod[1] = $row['count(serial1)'];
     }
 
     return json_encode($retorno_prod);
@@ -127,6 +133,7 @@ function serial($connect, $serial)
             $row_embalagem = mysqli_fetch_assoc($sqlEmbalagem);
             $retorno_serial['dt_embalagem'] = $row_embalagem['data'];
             $retorno_serial['func_embalagem'] = buscaColaborador($connect, $row_embalagem['user']);
+            $retorno_serial['obs_embalagem'] = $row_serial['n_caixa'];
         } else {
             $retorno_serial['dt_embalagem'] = '-';
             $retorno_serial['func_embalagem'] = '-';
@@ -154,7 +161,7 @@ function serial($connect, $serial)
 function buscaColaborador($connect, $registration)
 {
     $query_colab = "SELECT name FROM cd_usuarios WHERE registration = '$registration';";
-    mysqli_set_charset($connect,"utf8");
+    mysqli_set_charset($connect, "utf8");
     $resultQuery_colab = mysqli_query($connect, $query_colab);
     $row_colab = mysqli_fetch_assoc($resultQuery_colab);
 

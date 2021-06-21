@@ -6,9 +6,13 @@
 3: Somente Recepção e Expedição
  */
 
+$(document).ready(function () {
+    $('#load').hide();
+});
+
 
 function niveis_acesso(nivel) {
-    if (nivel == '1'){
+    if (nivel == '1') {
         $("#menu_eletrica").removeClass('disabled');
         /////// ILHÉUS /////////////////////////
         $("#menu_rrms_fechadas").removeClass('disabled');
@@ -18,7 +22,7 @@ function niveis_acesso(nivel) {
         //$("#menu_embalagem").removeClass('disabled');
         /////////////////////////////////////////////
     }
-    if (nivel == '2'){
+    if (nivel == '2') {
         //$("#menu_recep").removeClass('disabled');
         //$("#menu_rrms").removeClass('disabled');
         $("#menu_rrms_fechadas").removeClass('disabled');
@@ -28,15 +32,15 @@ function niveis_acesso(nivel) {
         $("#menu_embalagem").removeClass('disabled');
         //$("#menu_expedicao").removeClass('disabled');
     }
-    if (nivel == '3'){
+    if (nivel == '3') {
         $("#menu_recep").removeClass('disabled');
         $("#menu_rrms").removeClass('disabled');
         $("#menu_expedicao").removeClass('disabled');
     }
-    if (nivel == '0'){ 
+    if (nivel == '0') {
         $(".nav-link").removeClass('disabled');
         $("#produtividade").removeClass('disabled');
-        document.getElementById("adm").href="adm.php"; 
+        document.getElementById("adm").href = "adm.php";
     }
 
 }

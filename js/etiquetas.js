@@ -7,8 +7,9 @@ function maiuscula(z) {
 
 $(document).ready(function () {
     $(".alert").hide() //ESCONDE ALERTAS
-
+    var seriaisCaixa
     var zebraPrinter;
+    
     ///// ZEBRA PRINTER ////////////
     BrowserPrint.getDefaultDevice('printer', function (printer) {
         //alert(printer.name);
@@ -66,14 +67,16 @@ $(document).ready(function () {
                     $("#load").show();
                 }
             }).done(function (retorno) {
+                seriaisCaixa = retorno
+
                 if (retorno != "") {
                     document.getElementById("marca_todos").removeAttribute("hidden")
                     document.getElementById("btn_imp_etiquetas").removeAttribute("hidden")
                     document.getElementById("btn_imp_etiqueta_caixa").removeAttribute("hidden")
                     $("#checkTodos").prop('checked', false)
                     i = 0
-                    retorno.forEach(() => {
-                        $("#marca_todos").append('<div class="input-group mt-3" id="checkSerial' + i + '"><div class="input-group-text"><input type="checkbox"></div><input type="text" class="form-control" disabled id="serial' + i + '" value="' + retorno[i] + '"></div>')
+                    retorno['s1'].forEach(() => {
+                        $("#marca_todos").append('<div class="input-group mt-3" id="checkSerial' + i + '"><div class="input-group-text"><input type="checkbox" id="checkbox' + i + '"></div><input type="text" class="form-control" disabled id="serial' + i + '" value="' + retorno['s1'][i] + '"></div>')
                         i++
                     });
                 } else {
@@ -100,7 +103,19 @@ $(document).ready(function () {
     })
 
     $("#btn_imp_etiquetas").on("click", function () {
-        
+
+        var startLabel = "^XA^MMT^PW639^LL0240^LS0^FO20,12^A3,22"
+        var modelo = "^FDMODELO: " + seriaisCaixa['cod_mod'] + "^FS^BY3,3,30^FT27,71^BCN,,Y,N"
+        var endLabel = "^FT27,124^A0N,17,19^FH\^FDSERIAL:^FS^FT26,211^A0N,16,16^FH\^FDCM MAC:^FS^PQ1,0,1,Y^XZ"
+
+        i = 0
+        while ($("#checkbox" + i).length) {
+            if ($("#checkbox" + i).prop('checked')) {
+                var seriais = "^FD" + seriaisCaixa['s1'][i] + "^FS^BY3,3,34^FT27,176^BCN,,Y,N^FD" + seriaisCaixa['s2'][i] + "^FS"
+                zebraPrinter.send(startLabel + modelo + seriais + endLabel)
+            }
+            i++
+        }
     })
 
 })

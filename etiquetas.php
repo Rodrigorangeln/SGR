@@ -40,7 +40,7 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
                     <!-- none -->
                     <div class="form-group mt-4">
                         <label>Caixa</label>
-                        <input class="form-control col-sm-5" id="caixa" maxlength="5" onkeyup="maiuscula(this)">
+                        <input class="form-control col-sm-5" id="caixa" maxlength="5" placeholder="5 dígitos" onkeyup="maiuscula(this)">
                     </div>
                     <button id="buscar_caixa" class="btn btn-outline-primary" type="button">Buscar</button>
                 </div>

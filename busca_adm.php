@@ -85,13 +85,23 @@ function inverteSeriais($user, $s1, $s2, $connect)
 
 function buscaCaixa($caixa, $connect)
 {
-	$query = "SELECT serial1 FROM seriais WHERE n_caixa = '$caixa'";
+	$query = "SELECT serial1, serial2, cod_modelo FROM seriais WHERE n_caixa = '$caixa'";
 	$resultQuery = mysqli_query($connect, $query);
-	$retorno = array();
+	$retorno['s1'] = array();
+	$retorno['s2'] = array();
+	$retorno['cod_mod'] = array();
+	$cod = 0;
+
 	while ($rows = mysqli_fetch_assoc($resultQuery)) {
-		$seriais = $rows['serial1'];
-		array_push($retorno, $seriais);
+		array_push($retorno['s1'], $rows['serial1']);
+		array_push($retorno['s2'], $rows['serial2']);
+		$cod = $rows['cod_modelo'];
 	}
+
+	$query = "SELECT cod_mod FROM cd_aparelhos WHERE cod = '$cod'";
+    $resultQuery_aparelho = mysqli_query($connect, $query);
+    $row = mysqli_fetch_assoc($resultQuery_aparelho);
+	array_push($retorno['cod_mod'], $row['cod_mod']);
 
 	return json_encode($retorno);
 }

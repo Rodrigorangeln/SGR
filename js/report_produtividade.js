@@ -51,16 +51,19 @@ $(document).ready(function () {
                 method: 'POST',
                 data: { posto: $("#posto").val(), colab1: $("#colaborador1").val(), colab2: $("#colaborador2").val(), dtInicio: $("#dt_inicio").val(), dtFinal: $("#dt_final").val(), acao: "produtividade" },
                 dataType: 'json',
+                beforeSend: function () {
+                    $("#load").show();
+                }
             }).done(function (retorno) {
                 $("#label").html(retorno[2])
                 $("#report_colab1").html($("#colaborador1").val())
                 $("#quant_colab1").html("-> " + retorno[0])
-
+                
                 if ($("#colaborador2").val() != "0") {
                     $("#report_colab2").html($("#colaborador2").val())
                     $("#quant_colab2").html("-> " + retorno[1])
                 }
-
+                $("#load").hide();
             })
         }
     })

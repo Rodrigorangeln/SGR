@@ -13,7 +13,7 @@ if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['pass']) == true)
 
 include 'menu.php';
 ?>
-
+<!-- <span class="d-block p-2 bg-primary text-white text-center">>>> RRMs FECHADAS <<< </span> -->
 <script src="./js/rrms_fechadas.js"></script>
 
 

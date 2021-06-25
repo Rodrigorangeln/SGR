@@ -133,10 +133,11 @@ function serial($connect, $serial)
             $row_embalagem = mysqli_fetch_assoc($sqlEmbalagem);
             $retorno_serial['dt_embalagem'] = $row_embalagem['data'];
             $retorno_serial['func_embalagem'] = buscaColaborador($connect, $row_embalagem['user']);
-            $retorno_serial['obs_embalagem'] = $row_serial['n_caixa'];
+            $retorno_serial['obs_embalagem'] = "Caixa " . $row_serial['n_caixa'];
         } else {
             $retorno_serial['dt_embalagem'] = '-';
             $retorno_serial['func_embalagem'] = '-';
+            $retorno_serial['obs_embalagem'] = '-';
         }
 
         $query_expedicao = "SELECT data_expedicao, user FROM expedicao WHERE caixa = '$caixa';";

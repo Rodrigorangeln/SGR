@@ -2,7 +2,8 @@
 
 session_start();
 
-if ((!isset($_SESSION['user']) == true) and (!isset($_SESSION['pass']) == true)) {
+if ((!isset($_SESSION['user']) == true) and (!isset($_SESSION['pass']) == true) or ($_SESSION['nivel'] <> '0'))
+{
   unset($_SESSION['user']);
   unset($_SESSION['pass']);
   header('location:index.php');
@@ -15,9 +16,9 @@ require_once 'db_connect.php';
 
 ?>
 
-<script src="./js/adm.js"></script>
+<script src="./js/alteraSerial.js"></script>
 
-<span class="d-block p-2 bg-primary text-white text-center">>>> ADMINISTRATIVO <<< </span>
+<span class="d-block p-2 bg-primary text-white text-center">>>> MANUTENÇÃO de SERIAL <<< </span>
 
     <div class="alert alert-danger text-center" id="erroserial">
       <strong>SERIAL NÃO ENCONTRADO.</strong>

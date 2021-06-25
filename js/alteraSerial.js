@@ -1,3 +1,5 @@
+$('#menuAdm').addClass('active lead')
+
 function maiuscula(z) {
     v = z.value.toUpperCase().trim();
     z.value = v;

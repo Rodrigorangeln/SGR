@@ -1,4 +1,6 @@
-$('#menu_rrms_fechadas').addClass('active lead')
+document.title = "RRMs FECHADAS"
+
+$('#menu_dropdown_rrms').addClass('active lead')
 
 function ModalRRMFechada(rrm){
     $.ajax({

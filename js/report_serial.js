@@ -35,7 +35,7 @@ $(document).ready(function () {
             $("#func_testeFinal").html(retorno['func_testefinal'])
             $("#dt_embalagem").html(retorno['dt_embalagem'])
             $("#func_embalagem").html(retorno['func_embalagem'])
-            $("#obs_embalagem").html("Caixa " + retorno['obs_embalagem'])
+            $("#obs_embalagem").html(retorno['obs_embalagem'])
             $("#dt_expedicao").html(retorno['dt_expedicao'])
             $("#func_expedicao").html(retorno['func_expedicao'])
 
@@ -46,6 +46,7 @@ $(document).ready(function () {
             $("#load").hide();
         })
             .fail(function () {
+                $("#load").hide();
                 $("#erroserial").fadeTo(2000, 500).slideUp(500, function () {
                     $(".alert").slideUp(1000);
                 })
@@ -74,6 +75,7 @@ function limpa() {
     $("#func_testeFinal").html('')
     $("#dt_embalagem").html('')
     $("#func_embalagem").html('')
+    $("#obs_embalagem").html('')
     $("#dt_expedicao").html('')
     $("#func_expedicao").html('')
 }

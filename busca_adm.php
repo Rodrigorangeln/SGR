@@ -19,6 +19,9 @@ switch ($acao) {
 	case "inverteSeriais":
 		inverteSeriais($user, $_POST['s1'], $_POST['s2'], $connect);
 		break;
+	case "buscaCaixa":
+		echo buscaCaixa($_POST['caixa'], $connect);
+		break;
 }
 
 
@@ -27,7 +30,7 @@ function busca_serial($s1, $connect)
 {
 	$query = "SELECT s.serial1, s.serial2, s.rrm, s.t_eletr1, a.cod, a.modelo from seriais s, cd_aparelhos a
 	where a.cod = s.cod_modelo and s.serial1 = '$s1'";
-	mysqli_set_charset($connect,"utf8");
+	mysqli_set_charset($connect, "utf8");
 	$resultQuery = mysqli_query($connect, $query);
 	if ($resultQuery->num_rows) {
 		$row = mysqli_fetch_assoc($resultQuery);
@@ -60,13 +63,12 @@ function alteraSerial($user, $oldSerial, $newSerial, $connect)
 
 	$query = "UPDATE seriais SET serial1 = '$newSerial' WHERE serial1 = '$oldSerial'";
 	mysqli_query($connect, $query);
-	
+
 	$query2 = "UPDATE seriais SET serial2 = '$newSerial' WHERE serial2 = '$oldSerial'";
 	mysqli_query($connect, $query2);
-	
+
 	$query3 = "INSERT INTO log_seriais VALUES ('$oldSerial', '$newSerial', now(), '$user')";
 	mysqli_query($connect, $query3);
-
 }
 
 function inverteSeriais($user, $s1, $s2, $connect)
@@ -79,4 +81,17 @@ function inverteSeriais($user, $s1, $s2, $connect)
 	mysqli_query($connect, $queryInverte1);
 	mysqli_query($connect, $queryLog1);
 	mysqli_query($connect, $queryLog2);
+}
+
+function buscaCaixa($caixa, $connect)
+{
+	$query = "SELECT serial1 FROM seriais WHERE n_caixa = '$caixa'";
+	$resultQuery = mysqli_query($connect, $query);
+	$retorno = array();
+	while ($rows = mysqli_fetch_assoc($resultQuery)) {
+		$seriais = $rows['serial1'];
+		array_push($retorno, $seriais);
+	}
+
+	return json_encode($retorno);
 }

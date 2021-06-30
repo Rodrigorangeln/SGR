@@ -54,6 +54,8 @@
           <a class="dropdown-item bg-primary text-white" id="alteraSerial" href="alteraSerial.php">Alterar Serial</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item bg-primary text-white" id="etiquetas" href="etiquetas.php">Etiquetas</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item bg-primary text-white" id="admUser" href="usuarios.php">Usuários</a>
         </div>
       </li>
 

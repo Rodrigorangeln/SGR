@@ -98,10 +98,12 @@ function buscaCaixa($caixa, $connect)
 		$cod = $rows['cod_modelo'];
 	}
 
-	$query = "SELECT cod_mod FROM cd_aparelhos WHERE cod = '$cod'";
-    $resultQuery_aparelho = mysqli_query($connect, $query);
-    $row = mysqli_fetch_assoc($resultQuery_aparelho);
-	array_push($retorno['cod_mod'], $row['cod_mod']);
+	if ($cod != 0){
+		$query = "SELECT cod_mod FROM cd_aparelhos WHERE cod = '$cod'";
+		$resultQuery_aparelho = mysqli_query($connect, $query);
+		$row = mysqli_fetch_assoc($resultQuery_aparelho);
+		array_push($retorno['cod_mod'], $row['cod_mod']);
+	}
 
 	return json_encode($retorno);
 }

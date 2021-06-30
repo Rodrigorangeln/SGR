@@ -9,7 +9,7 @@ $(document).ready(function () {
     $(".alert").hide() //ESCONDE ALERTAS
     var seriaisCaixa
     var zebraPrinter;
-    
+
     ///// ZEBRA PRINTER ////////////
     BrowserPrint.getDefaultDevice('printer', function (printer) {
         //alert(printer.name);
@@ -25,6 +25,10 @@ $(document).ready(function () {
     ////////// FIM ZEBRA PRINTER ////////
 
     $("#caixa").focus()
+
+    $("#caixa").blur(function () {
+        this.value = ("00000" + this.value).slice(-5)
+    });
 
     $("#caixa").on("keydown", function () {
         $("#caixa").removeClass("is-invalid")
@@ -43,7 +47,8 @@ $(document).ready(function () {
     $("#buscar_caixa").on("click", function () {
         //$("#marca_todos").prop('hidden', false)
 
-        if (($("#caixa").val()) == "") {
+        if (($("#caixa").val()) == "00000") {
+            $("#caixa").val("")
             $("#caixa").focus()
             $("#caixa").addClass("is-invalid")
 
@@ -69,7 +74,7 @@ $(document).ready(function () {
             }).done(function (retorno) {
                 seriaisCaixa = retorno
 
-                if (retorno != "") {
+                if (retorno['s1'] != "") {
                     document.getElementById("marca_todos").removeAttribute("hidden")
                     document.getElementById("btn_imp_etiquetas").removeAttribute("hidden")
                     document.getElementById("btn_imp_etiqueta_caixa").removeAttribute("hidden")
@@ -83,6 +88,8 @@ $(document).ready(function () {
                     $("#caixa").focus()
                     $("#errocaixa").fadeTo(1500, 500).slideUp(1000, function () {
                         $(".alert").slideUp(1000);
+                        $("#caixa").val("")
+                        $("#caixa").focus()
                     })
 
                     document.getElementById("marca_todos").setAttribute("hidden", "true")

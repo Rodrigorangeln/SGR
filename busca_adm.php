@@ -22,6 +22,24 @@ switch ($acao) {
 	case "buscaCaixa":
 		echo buscaCaixa($_POST['caixa'], $connect);
 		break;
+	case "usuariosInativos":
+		echo usuariosInativos($connect);
+		break;
+	case "usuariosAtivos":
+		echo usuariosAtivos($connect);
+		break;
+	case "ativarUsuario":
+		echo ativarUsuario($_POST['matricula'], $connect);
+		break;
+	case "inativarUsuario":
+		echo inativarUsuario($_POST['matricula'], $connect);
+		break;
+	case "cadastraUsuario":
+		echo cadastraUsuario($_POST['matricula'], $_POST['nome'], $_POST['nivel'], $_POST['pass'], $connect);
+		break;
+	case "alteraSenha":
+		echo alteraSenha($_POST['matricula'], $_POST['newpass'], $connect);
+		break;
 }
 
 
@@ -98,7 +116,7 @@ function buscaCaixa($caixa, $connect)
 		$cod = $rows['cod_modelo'];
 	}
 
-	if ($cod != 0){
+	if ($cod != 0) {
 		$query = "SELECT cod_mod FROM cd_aparelhos WHERE cod = '$cod'";
 		$resultQuery_aparelho = mysqli_query($connect, $query);
 		$row = mysqli_fetch_assoc($resultQuery_aparelho);
@@ -106,4 +124,68 @@ function buscaCaixa($caixa, $connect)
 	}
 
 	return json_encode($retorno);
+}
+
+function usuariosInativos($connect)
+{
+	$query = "SELECT * FROM cd_usuarios where ativo = '0' ORDER BY name";
+	$resultQuery = mysqli_query($connect, $query);
+	$retorno['matricula'] = array();
+	$retorno['name'] = array();
+	$retorno['nivel'] = array();
+	while ($rows = mysqli_fetch_assoc($resultQuery)) {
+		array_push($retorno['matricula'], $rows['registration']);
+		array_push($retorno['name'], $rows['name']);
+		array_push($retorno['nivel'], $rows['nivel']);
+	}
+
+	return json_encode($retorno);
+}
+
+function usuariosAtivos($connect)
+{
+	$query = "SELECT * FROM cd_usuarios where ativo = '1' ORDER BY name";
+	$resultQuery = mysqli_query($connect, $query);
+	$retorno['matricula'] = array();
+	$retorno['name'] = array();
+	$retorno['nivel'] = array();
+	while ($rows = mysqli_fetch_assoc($resultQuery)) {
+		array_push($retorno['matricula'], $rows['registration']);
+		array_push($retorno['name'], $rows['name']);
+		array_push($retorno['nivel'], $rows['nivel']);
+	}
+
+	return json_encode($retorno);
+}
+
+function ativarUsuario($matricula, $connect)
+{
+	$query = "UPDATE cd_usuarios SET ativo = '1' WHERE registration = '$matricula'";
+	mysqli_query($connect, $query);
+}
+
+function inativarUsuario($matricula, $connect)
+{
+	$query = "UPDATE cd_usuarios SET ativo = '0' WHERE registration = '$matricula'";
+	mysqli_query($connect, $query);
+}
+
+function cadastraUsuario($matricula, $nome, $nivel, $pass, $connect)
+{
+	$query = "SELECT registration FROM cd_usuarios where registration = '$matricula'";
+	$resultQuery = mysqli_query($connect, $query);
+	if ($resultQuery->num_rows) {
+		$retorno = "erro";
+	} else {
+		$queryInsert = "INSERT INTO cd_usuarios VALUES ('$matricula', '$nome', '$pass', '$nivel', '1')";
+		$resultQuery = mysqli_query($connect, $queryInsert);
+		$retorno = "ok";
+	}
+	return json_encode($retorno);
+}
+
+function alteraSenha($matricula, $newpass, $connect)
+{
+	$query = "UPDATE cd_usuarios SET pass = '$newpass' WHERE registration = '$matricula'";
+	mysqli_query($connect, $query);
 }

@@ -7,6 +7,8 @@ $('#menu_teste').addClass('active lead')
     }    
 }); */
 
+
+
 function maiuscula(z) {
     v = z.value.toUpperCase().trim();
     z.value = v;
@@ -92,44 +94,64 @@ $(document).ready(function () {
     })
 
 
-    $("#confirmar").on("click", function () {
-        if ($("#1serial").val() != "" && ($("#2serial").val() != "" && $("select[name=def_cosm0]").val() != "" && $("select[name=def_elet0]").val() != "")) {
-            var serial1 = $("#1serial").val()
-            var rrm = $("#rrm").val()
-            var cosm1 = $("select[name=def_cosm0]").val()
-            var cosm2 = $("select[name=def_cosm1]").val()
-            var cosm3 = $("select[name=def_cosm2]").val()
-            var cosm4 = $("select[name=def_cosm3]").val()
-            var elet1 = $("select[name=def_elet0]").val()
-            var elet2 = $("select[name=def_elet1]").val()
+    $("#confirmar").on("click", confirmar())
 
-            $.ajax({
-                url: 'grava_testeinicial.php',
-                method: 'POST',
-                data: { serial1, rrm, cosm1, cosm2, cosm3, cosm4, elet1, elet2 },
-                dataType: 'json',
-                /* success: (function(){
-                    $("#testeok").fadeTo(2000, 500).slideUp(500, function(){
-                    $(".alert").slideUp(1000);
-                    })
-                    $("#1serial").val("")
-                    limpa_campos()
-                    $("#1serial").focus()
-                    }) */
-            })
-            $("#testeok").fadeTo(2000, 500).slideUp(500, function () {
-                $(".alert").slideUp(1000);
-            })
-            $("#1serial").val("")
-            limpa_campos()
-            $("#1serial").focus()
+    // PARA EVITAR O USO DO TECLADO
+    // O FOCO ESTANDO NO BUTTON CONFIRMAR ELE SERÁ ACIONADO AO SER DIGITADO QUALQUER CARACTER OU BIPADO QUALQUER CÓDIGO.
+    $("#confirmar").on("keydown", function (e) {
+        // use which ou charCode ou e.keyCode, dependendo do navegador
+        var key = e.which || e.charCode || e.keyCode;
+        // 9 é o caracter Unicode da tecla TAB
+        if (key === 9) {
+            //if (e.preventDefault) {
+            e.preventDefault();
+            // }
+            //return false;
         }
-    })
+        confirmar();
+    });
 
 })
 
+
+function confirmar() {
+    if ($("#1serial").val() != "" && ($("#2serial").val() != "" && $("select[name=def_cosm0]").val() != "" && $("select[name=def_elet0]").val() != "")) {
+        var serial1 = $("#1serial").val()
+        var rrm = $("#rrm").val()
+        var cosm1 = $("select[name=def_cosm0]").val()
+        var cosm2 = $("select[name=def_cosm1]").val()
+        var cosm3 = $("select[name=def_cosm2]").val()
+        var cosm4 = $("select[name=def_cosm3]").val()
+        var elet1 = $("select[name=def_elet0]").val()
+        var elet2 = $("select[name=def_elet1]").val()
+
+        $.ajax({
+            url: 'grava_testeinicial.php',
+            method: 'POST',
+            data: { serial1, rrm, cosm1, cosm2, cosm3, cosm4, elet1, elet2 },
+            dataType: 'json',
+            /* success: (function(){
+                $("#testeok").fadeTo(2000, 500).slideUp(500, function(){
+                $(".alert").slideUp(1000);
+                })
+                $("#1serial").val("")
+                limpa_campos()
+                $("#1serial").focus()
+                }) */
+        })
+        $("#testeok").fadeTo(2000, 500).slideUp(500, function () {
+            $(".alert").slideUp(1000);
+        })
+        //$("#1serial").val("")
+        setTimeout(limpa_campos, 1000);
+    }
+}
+
+
+
 function limpa_campos() {
-    //$("#1serial").val("")
+    $("#1serial").focus()
+    $("#1serial").val("")
     $("#2serial").val("")
     $("#rrm").val("")
     $("#cod_mod").val("")

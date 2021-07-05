@@ -231,18 +231,21 @@ $(document).ready(function () {
         $("#btn_Confirmo").prop('hidden', true);
         $("#btn_ModalNao").prop('hidden', true);
 
+        $('#ModalFinalizar .modal-body').html('AGUARDE. CRIANDO CAIXA ...');
+        
         n_caixa = numero_caixa();
+
+        //$('#ModalFinalizar .modal-body').html('CRIANDO CAIXA <strong>' + n_caixa + ' </strong>...');
 
         var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,30^A3,200^FD" + n_caixa + "^FS^PQ1,0,1,Y^XZ"
         zebraPrinter.send(labelCaixa);
 
-//////>>>>TESTAR ETIQUETA COM LOGO //////////////
+        //////>>>>TESTAR ETIQUETA COM LOGO //////////////
         /* var logo = "^XA^FO50,50^GFA,640,640,8,7LF80LFEMFC07KFEMFE07!NF01KFENF81KFENFC0KFENFE07JFEOF03JFEOF01JFEOF80JFEOFC07IFEOFE07IFEPF03IFEPF81IFEPF80IFEPFE07FFEPFE03FFEQF01FFEQF81FFEQFC0FFEQFE07FERF03FERF81FE7QF80FE3QFC07E1QFE03E0RF03E07QF81E03QFC0E03QFE0701QFE0380RF,C07QF8,E03QFC,F01QFE,F80RF,FC07QF8FE07QFCFE03QFCFF01QFEFF80!FFC07PFEFFE03PFEIF03PFEIF81PFEIFC0PFEIFC07OFEIFE03OFEJF01OFEJF80OFEJFC0OFEJFE07NFEJFE03NFEKF01NFEKF80NFEKFC07MFEKFE03MFELF03MFELF01MFELF80MFELFC07!LFE03!7KFE01LFE,::I0EK03038,F31F1F9FCFC7C79EF33F9FDFCFCFE79!F3319CE71CIE79EFB3198C71CDC679EFF319DC71C0C67DEFF319FC71C0C67FEFF319FC71C0C67!EF319DC71CDC67!EF3198C71CFC67F7EF3198C71CIEI7E73F9CC70FCFEI7E71F18E70FC7CI6I0EK030382,^FS"
         var logoFinal = "^MMT^PW639^LL0240^LS0^FO150,60^A3,50^FD" + $("#num_caixa_atual").html() + "^FS^PQ1,0,1,Y^XZ"
         zebraPrinter.send(logo + logoFinal) */
         ///////////////////////////////////////
 
-        $('#ModalFinalizar .modal-body').html('CRIANDO CAIXA <strong>' + n_caixa + ' </strong>...');
 
         var seriais = []
         var smartcards = []
@@ -256,6 +259,10 @@ $(document).ready(function () {
             method: 'POST',
             data: { n_caixa, quant: $("#quant").val(), seriais, smartcards, acao: "atualiza_seriais" },
             dataType: 'json',
+            async: false, //AGUARDA RETORNO DO BD
+            /* beforeSend: function () {
+                $("#load").show();
+            } */
         }).always(function () {
             //$('#ModalFinalizar').modal('hide')
             $('#ModalFinalizar .modal-header').html('<h5><strong>Atenção ✔️</strong></h5>');
@@ -266,8 +273,8 @@ $(document).ready(function () {
             $('#ModalFinalizar').on('hidden.bs.modal', function (e) {
                 location.reload();
             })
+            $("#load").hide();
         })
-
 
     })
 
@@ -284,6 +291,9 @@ function numero_caixa() {
         data: { acao: "numero_caixa" },
         dataType: 'json',
         async: false, //AGUARDA RETORNO DO BD
+        beforeSend: function () {
+            $("#load").show();
+        }
     }).done(function (retorno) {
         retornoFunc = retorno;
         //$('#caixa').html("Caixa nº <strong id='num_caixa_atual' class='display-4'>" + retorno + "</strong>")

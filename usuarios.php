@@ -14,7 +14,7 @@ if ((!isset($_SESSION['user']) == true) and (!isset($_SESSION['pass']) == true) 
 include 'menu.php';
 require_once 'db_connect.php';
 
-$query = "SELECT * FROM cd_usuarios";
+$query = "SELECT * FROM cd_usuarios where ativo = '1'";
 //mysqli_set_charset($connect, "utf8");
 $resultQuery = mysqli_query($connect, $query);
 
@@ -23,15 +23,25 @@ $resultQuery = mysqli_query($connect, $query);
 <!-- <span class="d-block p-2 bg-primary text-white text-center">>>> USUÁRIOS <<< </span> -->
 <script src="./js/usuarios.js"></script>
 
-  <button id="incluirUsuario" class="btn btn-outline-primary align-items-start ml-4 mt-3" type="button">Incluir usuário</button>
+<button id="incluirUsuario" class="btn btn-outline-primary align-items-start ml-4 mt-3" type="button">Incluir usuário</button>
 
-  <small class="form-text text-muted border border-primary float-right position-fixed" style="top: 60px; right: 1%;">
+<div class="form-check form-check-inline align-bottom ml-5">Listar: &nbsp;
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioAtivos" checked>
+  <label class="form-check-label" for="radioAtivos">Ativos</label>
+</div>
+<div class="form-check form-check-inline align-bottom">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioInativos" >
+  <label class="form-check-label" for="radioInativos">Inativos</label>
+</div>
+
+
+<small class="form-text text-muted border border-primary float-right position-fixed" style="top: 60px; right: 1%;">
   &nbsp;Níveis de acesso: <br>
   &nbsp;0: &nbsp; Sem restrição. <br>
-  &nbsp;1: &nbsp; RRMs Fechadas, Teste Inicial/ Final, Elétrica e Cosmética. <br>
-  &nbsp;2: &nbsp; Nível 1 + Embalagem (-) Elétrica. (PRODUÇÃO) <br>
-  &nbsp;3: &nbsp; Receção, RRms Abertas e Expedição. <br>
-  </small>
+  &nbsp;1: &nbsp; Elétrica. <br>
+  &nbsp;2: &nbsp; Produção. <br>
+  &nbsp;3: &nbsp; Recepção e Expedição. &nbsp;
+</small>
 
 <table class="table table-hover mt-3">
   <thead>
@@ -44,57 +54,67 @@ $resultQuery = mysqli_query($connect, $query);
     </tr>
   </thead>
 
-  <tbody>
+  <tbody id="body">
 
     <?php
     require_once 'db_connect.php';
 
-    while ($row = mysqli_fetch_assoc($resultQuery)) {
-      //echo ("<tr onclick=ModalRRMFechada($rrm)>");
-      echo ("<tr>");
-      /* echo ("<tr data-toggle='modal' data-target='#ModalRRMFechado'>") ; */
-      echo ("<td>") . $row["registration"] . ("</td>");
-      echo ("<td>") . $row["name"] . ("</td>");
-      echo ("<td>") . $row["nivel"] . ("</td>");
-      echo ("<td>
-      <div class='btn-group btn-group-toggle' data-toggle='buttons'>
-      <label class='btn btn-outline-primary btn-sm active'>
-      <input type='radio' name='options' id='option1' autocomplete='off' checked> Ativo
-      </label>
-      <label class='btn btn-outline-danger btn-sm'>
-      <input type='radio' name='options' id='option2' autocomplete='off'> Inativo
-      </label>
-      </div>
-      </td>");
-      echo ("<td><button id='alterarSenha' class='btn btn-sm btn-outline-primary' type='button'>Alterar Senha</button></td>");
-      /* echo ("<td>").$rowrrm["nf"].("</td>");
-  echo ("<td>").$rowrrm["nf_emissao"].("</td>"); */
-      echo ("</tr>");
-    };
-    //mysqli_close($connect);
+    
     ?>
 
   </tbody>
 </table>
 
-
+</html>
 
 <div class="modal fade" id="modalIncluiUsuario" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Cadastro de usuário</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>...</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <!-- <button type="button" class="btn btn-primary">Salvar mudanças</button> -->
-            </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cadastro de usuário</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <input class="form-control col-md-5 mb-2" id="inputMat" placeholder="Matrícula">
+      <input class="form-control mb-2" id="inputNome" placeholder="Nome">
+      <select id="selectNivel" class="form-control col-md-5 mb-2">
+      <option selected disabled>Nível de acesso</option>
+      <option>0</option>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <input type="password"class="form-control col-md-5 mb-2" id="inputPass" placeholder="Senha">
+      </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnCadastrar" class="btn btn-primary">Cadastrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <!-- <button type="button" class="btn btn-primary">Salvar mudanças</button> -->
+      </div>
     </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modalAlteraSenha" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Alterar senha</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <input type="password" class="form-control col-md-5" id="newpass" placeholder="Digite a nova senha">
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAlterarSenha" class="btn btn-primary">Alterar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <!-- <button type="button" class="btn btn-primary">Salvar mudanças</button> -->
+      </div>
+    </div>
+  </div>
 </div>

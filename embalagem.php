@@ -74,7 +74,7 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
                         <input type="radio" name="radio" id="radio_n" class="ml-3"><label class="ml-2">Não</label></input>
                     </div>
                 </div>
-                <button id="criar_caixa" class="btn btn-primary" type="button">Criar caixa</button>
+                <button id="criar_caixa" class="btn btn-primary" type="button">Preparar caixa</button>
             </div>
 
             <div class="ml-1 col-sm-3">
@@ -88,7 +88,7 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
             <div class="ml-2 col-sm-3">
                 <strong id = "serial2" hidden>Serial 2:</strong>
                 <div class="d-flex flex-row-reverse mt-5 justify-content-between">
-                    <button id="finalizar" class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="Gera um nº de caixa" hidden>Finalizar</button>
+                    <button id="finalizar" class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="Gera um nº de caixa" hidden>Finalizar caixa</button>
                     <button id="btn_imp_etiqueta_caixa" class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="Etiqueta com Modelo e quantidade de equipamentos" hidden>Imp. Etiqueta da Caixa</button>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="utf-8">
 
 </head>
 <?php
@@ -94,7 +93,7 @@ $nextRRM = $row["RRM"] + 1;
 
     <!-- COMBO BOX -->
     <select required name="cod_cliente" class="form-control">
-    <option disabled selected hidden>Digite o código ou Selecione...</option>
+    <option disabled selected hidden value="">Digite o código ou Selecione...</option>
     <?php while($row = mysqli_fetch_assoc($resultQuery)) { ?>
     <option><?php echo $row["cod_cliente"]." - ".$row["fantasia"] ?></option>
     <?php }
@@ -193,5 +192,4 @@ $nextRRM = $row["RRM"] + 1;
 </fieldset>
 </form>
 
-</body>
 </html>

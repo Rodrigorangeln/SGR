@@ -47,7 +47,7 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
                         <div class="form-group mt-5">
                             <label>Selecione 1 ou 2 colaboradores:</label>
                             <select id="colaborador1" class="custom-select form-control">
-                                <option value="0" disabled selected>Colaborador 1</option>
+                                <option value="0" selected>Colaborador 1</option>
                                 <?php while ($row = mysqli_fetch_assoc($resultQuery)) { ?>
                                     <option><?php echo $row["registration"] . " - " . $row["name"] ?></option>
                                 <?php } ?>

@@ -53,7 +53,7 @@ function busca_cliente($cliente, $connect)
 
 function cria_caixa($connect)
 {
-    $query = "select n_caixa from embalagem ORDER BY id DESC limit 1";
+    $query = "select n_caixa from embalagem ORDER BY n_caixa DESC limit 1";
 
     $resultQuery3 = mysqli_query($connect, $query);
     $row = mysqli_fetch_assoc($resultQuery3);

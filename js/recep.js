@@ -113,9 +113,8 @@ $(document).ready(function () {
 
     $("#btn_Cadastrar").on("click", function (e) {
         if ($("input[name='quant0']").val() == "") e.preventDefault()
-        if (($("select.input[name='cod0'] select").val() == ""))
-            e.preventDefault()
-
+        if (($("select.input[name='cod0'] select").val() == "")) e.preventDefault()
+        if (($("select.input[name='cod_cliente'] select").val() == "")) e.preventDefault()
     });
 
 

@@ -8,6 +8,9 @@ switch ($acao) {
     case "produtividade":
         echo produtividade($connect, $_POST['posto'], $_POST['colab1'], $_POST['colab2'], $_POST['dtInicio'], $_POST['dtFinal']);
         break;
+    case "produtividadeGeral":
+        echo produtividadeGeral($connect, $_POST['posto'], $_POST['dtInicio'], $_POST['dtFinal']);
+        break;
     case "serial":
         echo serial($connect, $_POST['serial']);
         break;
@@ -48,6 +51,59 @@ function produtividade($connect, $posto, $colab1, $colab2, $dtInicio, $dtFinal)
 
     return json_encode($retorno_prod);
 }
+
+
+function produtividadeGeral($connect, $posto, $dtInicio, $dtFinal)
+{
+    $retorno_prod[2] = $posto;
+
+    $query_prod = postoProdGeral($posto, $dtInicio, $dtFinal);
+
+
+    $resultQuery = mysqli_query($connect, $query_prod);
+    $row = mysqli_fetch_assoc($resultQuery);
+    if ($retorno_prod[2] == "Embalagem") {
+        $retorno_prod[0] = $row['count(id)'];
+    } else
+        $retorno_prod[0] = $row['count(serial1)'];
+
+    return json_encode($retorno_prod);
+}
+
+
+function postoProdGeral($posto, $dtInicio, $dtFinal)
+{
+    if ($posto == "Recepção") {
+        $sql = "SELECT count(serial1) FROM seriais 
+        WHERE dt_entr BETWEEN '$dtInicio' AND '$dtFinal';";
+    }
+    if ($posto == "Teste Inicial") {
+        $sql = "SELECT count(serial1) FROM seriais 
+        WHERE dt_testeinicial BETWEEN '$dtInicio' AND '$dtFinal';";
+    }
+    if ($posto == "Elétrica") {
+        $sql = "SELECT count(serial1) FROM seriais 
+        WHERE dt_eletrica BETWEEN '$dtInicio' AND '$dtFinal';";
+    }
+    if ($posto == "Cosmética") {
+        $sql = "SELECT count(serial1) FROM seriais 
+        WHERE dt_cosmetica BETWEEN '$dtInicio' AND '$dtFinal';";
+    }
+    if ($posto == "Teste Final") {
+        $sql = "SELECT count(serial1) FROM seriais 
+        WHERE dt_testefinal BETWEEN '$dtInicio' AND '$dtFinal';";
+    }
+    if ($posto == "Embalagem") {
+        $sql = "SELECT count(id) FROM embalagem 
+        WHERE data BETWEEN '$dtInicio' AND '$dtFinal';";
+    }
+    if ($posto == "Expedição") {
+        $sql = "SELECT count(caixa) FROM expedicao 
+        WHERE data BETWEEN '$dtInicio' AND '$dtFinal';";
+    }
+    return ($sql);
+}
+
 
 function posto($posto, $registration, $dtInicio, $dtFinal)
 {

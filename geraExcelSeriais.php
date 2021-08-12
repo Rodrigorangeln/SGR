@@ -1,14 +1,6 @@
-<html lang="pt-br">
-
-<head>
-    <meta charset="utf-8">
-    <title>Seriais</title>
-
-</head>
-<body>
-
 <?php
-
+require_once 'db_connect.php';
+require 'vendor/autoload.php';
 session_start();
 
 /* if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['pass']) == true))
@@ -22,66 +14,86 @@ $cliente = $_GET['cliente'];
 $nf = $_GET['nf'];
 $rrm = $_GET['rrm'];
 
-?>
+$htmlString = "
+<tr>
+    <td>Cliente: <strong>" . $cliente ."  ". $nf . "</strong></td>
+</tr>
 
-<div class="text-primary">
-    Cliente:
-    <span id="cliente"><strong><?php echo $cliente; ?></strong></span>
-    &nbsp &nbsp &nbsp &nbsp
-    <span id="NF"><strong><?php echo $nf; ?></strong></span>
-</div>
-
-
-<table border="1">
+<table>
     <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Cód. Modelo</th>
-            <th scope="col">Modelo</th>
-            <th scope="col">Serial 1</th>
-            <th scope="col">Serial 2</th>
-            <th scope="col">Bipado em</th>
+            <th>#</th>
+            <th>Cód. Modelo</th>
+            <th>Modelo</th>
+            <th>Serial 1</th>
+            <th>Serial 2</th>
+            <th>Bipado em</th>
         </tr>
-    </thead>
-    <tbody>
+    </thead>";
 
-        <?php
-        require_once 'db_connect.php';
-        
-        $query = "SELECT s.cod_modelo, s.serial1, s.serial2, m.modelo, s.dt_entr FROM seriais s, cd_aparelhos m WHERE s.rrm = '$rrm' and s.cod_modelo = m.cod";
-        $resultQuery = mysqli_query($connect, $query);
-        
-        $i = 1;
-        while ($row = mysqli_fetch_assoc($resultQuery)) {
-            echo ("<tr>");
-            echo ("<th>" . $i . "</th>");
-            echo ("<td>") . $row["cod_modelo"] . ("</td>");
-            echo ("<td>") . $row["modelo"] . ("</td>");
-            echo ("<td>") . $row["serial1"] . ("</td>");
-            echo ("<td>") . $row["serial2"] . ("</td>");
-            echo ("<td>") . $row["dt_entr"] . ("</td>");
-            echo ("</tr>");
-            $i++;
-        };
-        ?>
-    </tbody>
-</table>
 
-<?php
+$query = "SELECT s.cod_modelo, s.serial1, s.serial2, m.modelo, s.dt_entr FROM seriais s, cd_aparelhos m WHERE s.rrm = '$rrm' and s.cod_modelo = m.cod";
+$resultQuery = mysqli_query($connect, $query);
 
-/* header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
-header("Cache-Control: no-cache, must-revalidate");
-header("Pragma: no-cache"); */
-header("Content-type: application/x-msexcel");
-//header ("Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-header("Content-Disposition: attachment; filename=\"seriais.xls\"");
-//header ("Content-ContentEncoding: System.Text.Encoding.Default");
-//header ("Content-Description: PHP Generated Data" );
+$i = 1;
+while ($row = mysqli_fetch_assoc($resultQuery)) {
+    $htmlString .=  "<tr>";
+    $htmlString .=  "<th>" . $i . "</th>";
+    $htmlString .=  "<td>" . $row["cod_modelo"] . "</td>";
+    $htmlString .=  "<td>" . $row["modelo"] . "</td>";
+    $htmlString .=  "<td>" . $row["serial1"] . "</td>";
+    $htmlString .=  "<td>" . $row["serial2"] . "</td>";
+    $htmlString .=  "<td>" . $row["dt_entr"] . "</td>";
+    $htmlString .=  "</tr>";
+    $i++;
+};
+$htmlString .=  "</table>";
 
-//echo $html;
+
+$reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+$spreadsheet = $reader->loadFromString($htmlString);
+$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+$writer->save('zseriaisRRM'.$rrm.'.xls');
+//$writer->save('seriaisRRM'.$rrm.'.xls');
+
+/* header("Content-type: application/x-msexcel");
+header("Content-Disposition: attachment; filename=\"write.xls\""); */
+
+
+    // Define o tempo máximo de execução em 0 para as conexões lentas
+    set_time_limit(0);
+    // Arqui você faz as validações e/ou pega os dados do banco de dados
+    $arquivoNome = 'zseriaisRRM'.$rrm.'.xls'; // nome do arquivo que será enviado p/ download
+   
+    //$arquivoLocal = './xls/'.$arquivoNome; // caminho absoluto do arquivo
+    $arquivoLocal = $arquivoNome; // caminho absoluto do arquivo
+
+    // Verifica se o arquivo não existe
+    if (!file_exists($arquivoLocal)) {
+    // Exiba uma mensagem de erro caso ele não exista
+    exit;
+    }
+    // Aqui você pode aumentar o contador de downloads
+    // Definimos o novo nome do arquivo
+    $novoNome = 'seriaisRRM'.$rrm.'.xls';
+    // Configuramos os headers que serão enviados para o browser
+    header('Content-Description: File Transfer');
+    header('Content-Disposition: attachment; filename="'.$novoNome.'"');
+    header('Content-Type: application/octet-stream');
+    header('Content-Transfer-Encoding: binary');
+    header('Content-Length: ' . filesize($arquivoNome));
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Pragma: public');
+    header('Expires: 0');
+    // Envia o arquivo para o cliente
+    readfile($arquivoNome);
+
 ?>
 
-</body>
 
-</html>
+<!-- <script>
+     window.location.href = "rrms_fechadas.php"
+</script> -->
+
+
+

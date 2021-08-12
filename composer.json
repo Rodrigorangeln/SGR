@@ -1,0 +1,19 @@
+{
+    "name": "vendor/sgr",
+    "type": "project",
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.18",
+        "ext-gd": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vendor\\Sgr\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rodrigo",
+            "email": "rodrigorangeln@gmail.com"
+        }
+    ]
+}

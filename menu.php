@@ -56,6 +56,8 @@
           <a class="dropdown-item bg-primary text-white" id="etiquetas" href="etiquetas.php">Etiquetas</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item bg-primary text-white" id="admUser" href="usuarios.php">Usuários</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item bg-primary text-white" id="admSeriais" href="reportAdmSeriais.php">Relatório Seriais</a>
         </div>
       </li>
 

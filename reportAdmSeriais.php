@@ -37,13 +37,13 @@ require_once 'db_connect.php';
       </div>
     </div>
 
-    <div class="mt-5 col-sm-2">
+    <div class="mt-5 col-sm-3">
       <button id="btn_excel" class="btn btn-outline-primary" type="button">Gerar Excel</button>
+      <small class="mt-5 form-text text-muted">Obs.: Evite período superior a 7 dias.</small>
     </div>
-
-    </di>
-
-  </div>
+  </di>
+  
+</div>
 </body>
 
 </html>

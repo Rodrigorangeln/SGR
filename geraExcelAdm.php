@@ -53,7 +53,7 @@ $sheet->setCellValue('AD1', 'Usuário - Expedição');
 $sheet->setCellValue('AE1', 'Data Expedição');
 $sheet->setCellValue('AF1', 'NF Expedição');
 
-$query = "SELECT * FROM seriais where dt_entr BETWEEN '$de' AND '$ate'";
+$query = "SELECT * FROM seriais where dt_entr BETWEEN '$de' AND '$ate'"; // limit 5
 $resultQuery = mysqli_query($connect, $query);
 
 $queryUsuarios = "SELECT registration, name FROM cd_usuarios";
@@ -211,8 +211,9 @@ function local($id)
 function usuario($registration, $arrayMatricula, $arrayName)
 {
     $i = 0;
-    while ($registration != $arrayMatricula[$i]) {
+    while (($registration != $arrayMatricula[$i]) && ($i < 200)) { // < 200 p evitar loop infinito em caso de usuário inválido no BD.
         $i++;
     }
     return $arrayName[$i];
 }
+

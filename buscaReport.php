@@ -181,6 +181,15 @@ function serial($connect, $serial)
             $retorno_serial['func_testefinal'] = '-';
         }
 
+        ///// INCLUI OBSERVAÇÃO 'SUCATA' QUANDO FOR O CASO
+        if (($row_serial['dt_cosmetica'] == null) && ($row_serial['local'] == 6)){
+            $retorno_serial['obs_eletrica'] = 'SUCATA';
+        }
+        if (($row_serial['dt_cosmetica'] == null) && ($row_serial['n_caixa'] != null)){
+            $retorno_serial['obs_eletrica'] = 'SUCATA';
+        }
+        ////////////////////////////////////////////////////////////////
+        
         $caixa = $row_serial['n_caixa'];
 
         $query_embalagem = "SELECT data, user FROM embalagem WHERE n_caixa = '$caixa';";

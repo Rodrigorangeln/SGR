@@ -2,12 +2,11 @@
 
 session_start();
 
-if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['pass']) == true))
-{
+if ((!isset($_SESSION['user']) == true) and (!isset($_SESSION['pass']) == true)) {
   unset($_SESSION['user']);
   unset($_SESSION['pass']);
   header('location:index.php');
-  }
+}
 
 include 'menu.php';
 
@@ -17,12 +16,12 @@ $rrm = $_GET['rrm'];
 
 ?>
 
-
 <div class="text-primary">
-Cliente: 
-<span id="cliente"><strong><?php echo $cliente; ?></strong></span>
-&nbsp &nbsp &nbsp &nbsp 
-<span id="NF"><strong><?php echo $nf; ?></strong></span>
+  <button type="button" class="btn btn-primary btn-sm mt-1 ml-1" onClick="history.go(-1);"><<</button>
+  Cliente:
+  <span id="cliente"><strong><?php echo $cliente; ?></strong></span>
+  &nbsp &nbsp &nbsp &nbsp
+  <span id="NF"><strong><?php echo $nf; ?></strong></span>
 </div>
 
 
@@ -36,23 +35,23 @@ Cliente:
     </tr>
   </thead>
   <tbody>
-   
-<?php
-require_once 'db_connect.php';
 
-$query = "SELECT s.cod_modelo, s.serial1, s.serial2, m.modelo FROM seriais s, cd_aparelhos m WHERE s.rrm = '$rrm' and s.cod_modelo = m.cod";
-$resultQuery = mysqli_query($connect, $query);
+    <?php
+    require_once 'db_connect.php';
 
-$i=1;
-while($row = mysqli_fetch_assoc($resultQuery)) { 
-  echo ("<tr>");
-  echo ("<th style='width: 3%'>".$i."</th>");
-  echo ("<td class='col-sm-4'>").$row["cod_modelo"]." - ".$row["modelo"].("</td>");
-  echo ("<td>").$row["serial1"].("</td>");
-  echo ("<td>").$row["serial2"].("</td>");
-  echo ("</tr>");
-  $i++;
-};
-?>
+    $query = "SELECT s.cod_modelo, s.serial1, s.serial2, m.modelo FROM seriais s, cd_aparelhos m WHERE s.rrm = '$rrm' and s.cod_modelo = m.cod";
+    $resultQuery = mysqli_query($connect, $query);
+
+    $i = 1;
+    while ($row = mysqli_fetch_assoc($resultQuery)) {
+      echo ("<tr>");
+      echo ("<th style='width: 3%'>" . $i . "</th>");
+      echo ("<td class='col-sm-4'>") . $row["cod_modelo"] . " - " . $row["modelo"] . ("</td>");
+      echo ("<td>") . $row["serial1"] . ("</td>");
+      echo ("<td>") . $row["serial2"] . ("</td>");
+      echo ("</tr>");
+      $i++;
+    };
+    ?>
   </tbody>
 </table>

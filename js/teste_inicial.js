@@ -61,6 +61,8 @@ $(document).ready(function () {
                         })
                     }
                     else {
+                        $("#local").html(result[1])
+                        $("#alertaRRM").html(result[2])
                         $("#erroserial").fadeTo(2000, 500).slideUp(500, function () {
                             $(".alert").slideUp(1000);
                         })

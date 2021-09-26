@@ -98,11 +98,14 @@ $(document).ready(function () {
 
                     }
                     else {
+                        $("#local").html(result[1])
+                        $("#alertaRRM").html(result[2])
                         $("#erroserial").fadeTo(2000, 500).slideUp(500, function () {
                             $(".alert").slideUp(1000);
                         })
                         limpa_campos()
                         $("#1serial").focus()
+                        $("#1serial").val("")
                     }
                 })
             })
@@ -259,6 +262,8 @@ $(document).ready(function () {
 
 
 function limpa_campos() {
+   /*  $("#1serial").focus()
+    $("#1serial").val("") */
     $("#2serial").val("")
     $("#rrm").val("")
     $("#cod_mod").val("")

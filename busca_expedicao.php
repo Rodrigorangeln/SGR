@@ -27,9 +27,9 @@ function busca_nf($nf, $connect)
     $query = "SELECT nf_saida FROM expedicao WHERE nf_saida = '$nf'";
     $resultQuery = mysqli_query($connect, $query);
     if ($resultQuery->num_rows) {
-        $retorno = '1';
+        $retorno = 1;
     } else {
-        $retorno = '0';
+        $retorno = 0;
     }
     return json_encode($retorno);
 }
@@ -43,6 +43,8 @@ function busca_caixa($caixas, $connect)
         if (!$resultQuery->num_rows) {
             $retorno = $cx;
         }
+        else 
+        $retorno['0'] = null;
     }
     return json_encode($retorno);
 }

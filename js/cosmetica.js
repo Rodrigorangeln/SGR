@@ -55,6 +55,8 @@ $(document).ready(function () {
                         $("#checkcosm0").focus()
 
                     } else {
+                        $("#local").html(result[1])
+                        $("#alertaRRM").html(result[2])
                         $("#erroserial").fadeTo(2000, 500).slideUp(500, function () {
                             $(".alert").slideUp(1000);
                         })
@@ -159,6 +161,8 @@ $(document).ready(function () {
 
 
 function limpa_campos() {
+/*     $("#1serial").focus()
+    $("#1serial").val("") */
     $("#2serial").val("")
     $("#rrm").val("")
     $("#cod_mod").val("")

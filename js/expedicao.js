@@ -13,6 +13,11 @@ function maiuscula(z) {
     $(z).removeClass("is-invalid")
 }
 
+function preencher(y) {
+    //this.value = ("00000" + this.value).slice(-5)
+    y.value = ("00000" + y.value).slice(-5)
+}
+
 $(document).ready(function () {
     $(".alert").hide() //ESCONDE ALERTAS
     var zebraPrinter;
@@ -47,9 +52,9 @@ $(document).ready(function () {
     //////////////////////////////////////////////////    
 
     $("#btn-OK").on("click", function () {
-        if (($('#nf').val() == "0") || ($('#nf').val() == "")) {
+        if (($('#nf').val() < 1) || ($('#nf').val() == "")) {
             $('#nf').focus()
-        } else if (($('#quant').val() == "0") || ($('#quant').val() == "")) {
+        } else if (($('#quant').val() < 1) || ($('#quant').val() == "")) {
             $('#quant').focus()
         }
         else {
@@ -59,7 +64,7 @@ $(document).ready(function () {
                 data: { nf: $("#nf").val(), acao: "busca_nf" },
                 dataType: 'json',
             }).done(function (retorno) {
-                if (retorno == '0') {
+                if (retorno == 0) {
                     $("#informe").prop('hidden', false)
                     $("#btn-OK").prop('disabled', true)
                     $("#nf").prop('disabled', true)
@@ -68,17 +73,19 @@ $(document).ready(function () {
                     var quant_caixas = $('#quant').val();
                     var cont = 0;
                     while (cont < quant_caixas) {
-                        $("#informe").append('<input id = "caixa-' + cont + '" class="form-control mt-3 mb-3" maxlength="5" onkeyup="maiuscula(this)"></input>')
+                        $("#informe").append('<input id = "caixa-' + cont + '" class="form-control mt-3 mb-3" maxlength="5" onblur="preencher(this)" onkeyup="maiuscula(this)"></input>')
                         cont++
                     }
+                    $("#caixa-0").focus()
                 } else {
+                    $("#btn-OK").prop('disabled', true)
+                    $("#nf").prop('disabled', true)
+                    $("#quant").prop('disabled', true)
                     $("#expedicao").prop('hidden', false)
                 }
             })
 
-
         }
-        $("#caixa-0").focus()
 
     })
 
@@ -87,6 +94,7 @@ $(document).ready(function () {
     $("#btn_imp_etiquetas").on("click", function () {
         erro = 0
         caixas = []
+        /// VERIFICA SE EXISTE ALGUMA CAIXA NÃO PREENCHIDA
         for (i = 0; i < $('#quant').val(); i++) {
             if ($("#caixa-" + i).val() == "") {
                 $("#caixa-" + i).addClass("is-invalid")
@@ -95,8 +103,8 @@ $(document).ready(function () {
                 erro = 1
             }
             caixas.push($("#caixa-" + i).val())
-
         }
+        ////////////
 
         if (erro == 0) {
             $.ajax({
@@ -106,7 +114,7 @@ $(document).ready(function () {
                 dataType: 'json',
                 async: false  //AJAX síncrono pois é preciso aguardar retorno p continuar.
             }).done(function (retorno) {
-                if (retorno != "") {
+                if (retorno['0'] != null) {
                     for (i = 0; i < $('#quant').val(); i++) {
                         if ($("#caixa-" + i).val() == retorno) {
                             $("#caixa-" + i).addClass("is-invalid")
@@ -130,6 +138,8 @@ $(document).ready(function () {
                 for (i = 1; i <= $("#quant").val(); i++) {
 
                     var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,30^A3,200^FD" + $("#nf").val() + "   " + i + "/" + $("#quant").val() + "^FS^PQ1,0,1,Y^XZ"
+
+                    //if (zebraPrinter != null) //Continua mesmo que não tenha Zebra Browser Printer instalado. 
                     zebraPrinter.send(labelCaixa);
 
                 }

@@ -29,6 +29,7 @@ $(document).ready(function () {
             $("#func_testeInicial").html(retorno['func_testeinicial'])
             $("#dt_eletrica").html(retorno['dt_eletrica'])
             $("#func_eletrica").html(retorno['func_eletrica'])
+            $("#obs_eletrica").html(retorno['obs_eletrica'])
             $("#dt_cosmetica").html(retorno['dt_cosmetica'])
             $("#func_cosmetica").html(retorno['func_cosmetica'])
             $("#dt_testeFinal").html(retorno['dt_testefinal'])

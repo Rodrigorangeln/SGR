@@ -53,7 +53,7 @@ $sheet->setCellValue('AD1', 'Usuário - Expedição');
 $sheet->setCellValue('AE1', 'Data Expedição');
 $sheet->setCellValue('AF1', 'NF Expedição');
 
-$query = "SELECT * FROM seriais where dt_entr BETWEEN '$de' AND '$ate'"; // limit 5
+$query = "SELECT * FROM seriais where dt_entr BETWEEN '$de' AND '$ate'";
 $resultQuery = mysqli_query($connect, $query);
 
 $queryUsuarios = "SELECT registration, name FROM cd_usuarios";
@@ -66,6 +66,24 @@ while ($rows = mysqli_fetch_assoc($resultQueryUsuarios)) {
     $name = $rows['name'];
     array_push($arrayMatricula, $matricula);
     array_push($arrayName, $name);
+}
+
+$queryEmbalagem = "SELECT n_caixa, quant, data, user FROM embalagem";
+$resultQueryEmbalagem = mysqli_query($connect, $queryEmbalagem);
+$arrayN_caixa = array();
+$arrayQuant = array();
+$arrayData = array();
+$arrayUser = array();
+while ($rowEmbalagem = mysqli_fetch_assoc($resultQueryEmbalagem)) {
+    //array_push ($retorno_mod, $rows['cod_modelo']." - ".$rows["modelo"]);
+    $n_caixa = $rowEmbalagem['n_caixa'];
+    $quant = $rowEmbalagem['quant'];
+    $data = $rowEmbalagem['data'];
+    $user = $rowEmbalagem['user'];
+    array_push($arrayN_caixa, $n_caixa);
+    array_push($arrayQuant, $quant);
+    array_push($arrayData, $data);
+    array_push($arrayUser, $user);
 }
 
 $i = 2;
@@ -124,10 +142,25 @@ while ($row = mysqli_fetch_assoc($resultQuery)) {
     }
     
     $sheet->setCellValue('Y' . $i, $row["dt_testefinal"]);
-    
+
+
+    if ($row["n_caixa"] != ""){
+        //$sheet->setCellValue('Z' . $i, usuarioEmbalagem($row["n_caixa"], $arrayN_caixa, $arrayUser));
+        $sheet->setCellValue('Z' . $i, usuario(usuarioEmbalagem($row["n_caixa"], $arrayN_caixa, $arrayUser), $arrayMatricula, $arrayName));
+    } else {
+        $sheet->setCellValue('Z' . $i, "-");
+    }
     //$sheet->setCellValue('Z' . $i, 'Usuário Embalagem');
+
     $sheet->setCellValue('AA' . $i, $row["smartcard"]);
+
+    if ($row["n_caixa"] != ""){
+        $sheet->setCellValue('AB' . $i, dataEmbalagem($row["n_caixa"], $arrayN_caixa, $arrayData));
+    } else {
+        $sheet->setCellValue('AB' . $i, "-");
+    }
     //$sheet->setCellValue('AB' . $i, 'Data embalagem');
+    
     $sheet->setCellValue('AC' . $i, $row["n_caixa"]);
     //$sheet->setCellValue('AD' . $i, 'Usuário Expedição');
     //$sheet->setCellValue('AE' . $i, 'Data Expedição');
@@ -215,5 +248,23 @@ function usuario($registration, $arrayMatricula, $arrayName)
         $i++;
     }
     return $arrayName[$i];
+}
+
+function usuarioEmbalagem($n_caixa, $arrayN_caixa, $arrayUser)
+{
+    $i = 0;
+    while ($n_caixa != $arrayN_caixa[$i]){// && ($i < 999999)) {
+        $i++;
+    }
+    return $arrayUser[$i];
+}
+
+function dataEmbalagem($n_caixa, $arrayN_caixa, $arrayData)
+{
+    $i = 0;
+    while ($n_caixa != $arrayN_caixa[$i]){// && ($i < 999999)) {
+        $i++;
+    }
+    return $arrayData[$i];
 }
 

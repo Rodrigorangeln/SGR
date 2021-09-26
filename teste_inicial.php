@@ -30,8 +30,9 @@ $resultQueryEletr = mysqli_query($connect, $queryE); */
 <br> -->
 
 <div class="alert alert-danger text-center" id="erroserial">
-  <strong>SERIAL NÃO ESTÁ NO TESTE INICIAL.</strong>
+  <strong><span id='local'></span>. <span id='alertaRRM'></span></strong>
 </div>
+
 
 <div class="alert alert-success text-center" id="testeok">
   <strong>TESTE INICIAL REALIZADO.</strong>

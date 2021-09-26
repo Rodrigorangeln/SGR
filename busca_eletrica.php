@@ -39,6 +39,38 @@ function busca_eletrica($s1, $connect)
 		$retorno[5] = $row['t_eletr2'];
 	} else {
 		$retorno[0] = 'Serial não encontrado';
+		$query = "SELECT rrm, local from seriais where serial1 = '$s1'";
+		$resultQuery = mysqli_query($connect, $query);
+
+		if ($resultQuery->num_rows) {
+			$row = mysqli_fetch_assoc($resultQuery);
+			switch ($row['local']) {
+				case "1":
+					$retorno[1] = "Serial está na RECEPÇÃO";
+					break;
+				case "2":
+					$retorno[1] = "Serial está no TESTE INICIAL";
+					break;
+				case "4":
+					$retorno[1] = "Serial está na COSMÉTICA";
+					break;
+				case "5":
+					$retorno[1] = "Serial está no TESTE FINAL";
+					break;
+				case "6":
+					$retorno[1] = "Serial está na EMBALAGEM";
+					break;
+				case "7":
+					$retorno[1] = "Serial está na EXPEDIÇÃO";
+					break;
+			}
+			$retorno[2] = "RRM " . $row['rrm'];
+		} else {
+			$retorno[1] = "Serial INEXISTENTE";
+			$retorno[2] = "";
+
+		}
+
 	}
 	return json_encode($retorno);
 }

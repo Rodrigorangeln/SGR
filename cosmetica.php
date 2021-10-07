@@ -2,12 +2,11 @@
 
 session_start();
 
-if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['pass']) == true))
-{
-  unset($_SESSION['user']);
-  unset($_SESSION['pass']);
-  header('location:index.php');
-  }
+if ((!isset($_SESSION['user']) == true) and (!isset($_SESSION['pass']) == true)) {
+    unset($_SESSION['user']);
+    unset($_SESSION['pass']);
+    header('location:index.php');
+}
 
 //$logged = $_SESSION['name'];
 
@@ -27,7 +26,7 @@ $resultQueryCosm = mysqli_query($connect, $queryC);
 <br> -->
 
 <div class="alert alert-danger text-center" id="erroserial">
-  <strong><span id='local'></span>. <span id='alertaRRM'></span></strong>
+    <strong><span id='local'></span>. <span id='alertaRRM'></span></strong>
 </div>
 
 <div class="alert alert-success text-center" id="cosmeticaok">
@@ -36,6 +35,7 @@ $resultQueryCosm = mysqli_query($connect, $queryC);
 
 <body>
 
+    <span id="reprovado" class="ml-4 p-1 bg-danger text-white position-absolute mt-1" hidden>Serial reprovado</span>
     <div class="container mt-5 ml-4">
         <div class="row">
             <div class="col-sm-5">
@@ -100,28 +100,28 @@ $resultQueryCosm = mysqli_query($connect, $queryC);
                 </div>
 
                 <select name="def_cosm0" class="form-control mt-2" hidden tabindex="-1">
-                    <option value = "0">Selecione...</option>
+                    <option value="0">Selecione...</option>
                     <?php while ($row = mysqli_fetch_assoc($resultQueryCosm)) { ?>
                         <option><?php echo $row["cod"] . " - " . $row["descr"] ?></option>
                     <?php }
                     $resultQueryCosm = mysqli_query($connect, $queryC); ?>
                 </select>
                 <select name="def_cosm1" class="form-control mt-2" hidden tabindex="-1">
-                    <option value = "0">Selecione...</option>
+                    <option value="0">Selecione...</option>
                     <?php while ($row = mysqli_fetch_assoc($resultQueryCosm)) { ?>
                         <option><?php echo $row["cod"] . " - " . $row["descr"] ?></option>
                     <?php }
                     $resultQueryCosm = mysqli_query($connect, $queryC); ?>
                 </select>
                 <select name="def_cosm2" class="form-control mt-2" hidden tabindex="-1">
-                    <option value = "0">Selecione...</option>
+                    <option value="0">Selecione...</option>
                     <?php while ($row = mysqli_fetch_assoc($resultQueryCosm)) { ?>
                         <option><?php echo $row["cod"] . " - " . $row["descr"] ?></option>
                     <?php }
                     $resultQueryCosm = mysqli_query($connect, $queryC); ?>
                 </select>
                 <select name="def_cosm3" class="form-control mt-2" hidden tabindex="-1">
-                    <option value = "0">Selecione...</option>
+                    <option value="0">Selecione...</option>
                     <?php while ($row = mysqli_fetch_assoc($resultQueryCosm)) { ?>
                         <option><?php echo $row["cod"] . " - " . $row["descr"] ?></option>
                     <?php }

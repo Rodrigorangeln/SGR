@@ -45,6 +45,7 @@ $resultQueryCosm = mysqli_query($connect, $queryC);
 
 <body>
 
+    <span id="reprovado" class="ml-4 p-1 bg-danger text-white position-absolute mt-1" hidden>Serial reprovado</span>
     <div class="container mt-5 ml-4">
         <div class="row">
             <div class="col-sm-5">

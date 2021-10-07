@@ -30,6 +30,10 @@ $resultQueryEletr = mysqli_query($connect, $queryE); */
   <strong><span id='local'></span>. <span id='alertaRRM'></span></strong>
 </div>
 
+<div class="alert alert-danger text-center" id="alertReprovado">
+  <strong>REPROVADO !</strong>
+</div>
+
 <div class="alert alert-success text-center" id="testeok">
   <strong>TESTE FINAL REALIZADO.</strong>
 </div>
@@ -64,7 +68,7 @@ $resultQueryEletr = mysqli_query($connect, $queryE); */
     <div class="ml-1 col-sm-3">
         <strong>Defeito COSMÉTICO:</strong>
         <select name="def_cosm0" class="form-control mt-2"tabindex="-1"> <!-- tabindex="-1" temporário -->
-            <option></option>
+            <!-- <option></option> -->
             <option value="0" selected>0000 - sem defeito</option>  <!-- SELECTED temporário. Enquanto "Confirmar" não é implementado -->
             <?php while($row = mysqli_fetch_assoc($resultQueryCosm)) { ?>
             <option><?php echo $row["cod"]." - ".$row["descr"]?></option>
@@ -98,16 +102,16 @@ $resultQueryEletr = mysqli_query($connect, $queryE); */
     <div class="ml-3 col-sm-3">
     <strong>Defeito ELÉTRICO:</strong>
     <select id="def_elet0" name="def_elet0" class="form-control mt-2" tabindex="-1"> <!-- tabindex="-1" temporário -->
-        <option></option>
-        <option value="0">0000 - sem defeito</option>
+        <!-- <option></option> -->
+        <option value="0" selected>0000 - sem defeito</option>
     </select>
     <select id="def_elet1" name="def_elet1" class="form-control mt-2" tabindex="-1" disabled> <!-- DISABLED temporário -->
         <option></option>
     </select>
     <div class="d-flex flex-row-reverse mt-5">        
-        <button id="aprovado" class="btn btn-success" type="button">Aprovado</button> <!-- Incluir DISABLED -->
+        <button id="aprovar" class="btn btn-success" type="button">Aprovar</button> <!-- Incluir DISABLED -->
         &nbsp &nbsp
-        <button id="confirmar" class="btn btn-primary" type="button" disabled>Confirmar</button>
+        <button id="reprovar" class="btn btn-danger" type="button" disabled>Reprovar</button>
     </div>
     
     </div>

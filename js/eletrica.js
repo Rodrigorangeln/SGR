@@ -13,7 +13,9 @@ $(document).ready(function () {
     $("#1serial").on("blur", function () {
         if ($("#1serial").val() == "") {
             limpa_campos()
+            $("#reprovado").attr("hidden", true);
         } else {
+            $("#reprovado").attr("hidden", true);
 
             $.ajax({
                 url: 'busca_eletrica.php',
@@ -29,6 +31,10 @@ $(document).ready(function () {
                         $("#cod_mod").val(result[3])
                         $("#elet0").val(result[4])
                         $("#elet1").val(result[5])
+
+                        if (result['reprovado'] == 1) {
+                            $("#reprovado").attr("hidden", false);
+                        }
 
 
                         $.ajax({
@@ -211,11 +217,16 @@ $(document).ready(function () {
 
 
         if (erro == "0") {
+            reprovado = 0
+            if ($("#reprovado").prop("hidden") == false) {
+                reprovado = 1
+            }
+
             $.ajax({
                 url: 'busca_eletrica.php',
                 method: 'POST',
                 data: {
-                    s1: $("#1serial").val(), rrm: $("#rrm").val(), defeito1, defeito2, defeito3, componente1, componente2, componente3, radio1, radio2, radio3,
+                    s1: $("#1serial").val(), rrm: $("#rrm").val(), defeito1, defeito2, defeito3, componente1, componente2, componente3, radio1, radio2, radio3, reprovado,
                     acao: "grava_eletrica"
                 },
                 dataType: 'json',
@@ -227,6 +238,7 @@ $(document).ready(function () {
                 $("#1serial").val("")
                 $("#1serial").focus()
             })
+            $("#reprovado").attr("hidden", true);
         }
 
     })
@@ -262,8 +274,8 @@ $(document).ready(function () {
 
 
 function limpa_campos() {
-   /*  $("#1serial").focus()
-    $("#1serial").val("") */
+    /*  $("#1serial").focus()
+     $("#1serial").val("") */
     $("#2serial").val("")
     $("#rrm").val("")
     $("#cod_mod").val("")

@@ -14,8 +14,9 @@ $(document).ready(function () {
 
         if ($("#1serial").val() == "") {
             limpa_campos()
+            $("#reprovado").attr("hidden", true);
         } else {
-
+            $("#reprovado").attr("hidden", true);
             $.ajax({
                 url: 'busca_cosmetica.php',
                 method: 'POST',
@@ -32,6 +33,11 @@ $(document).ready(function () {
                         $("#cosm1").val(result[5])
                         $("#cosm2").val(result[6])
                         $("#cosm3").val(result[7])
+
+                        if (result['reprovado'] == 1) {
+                            $("#reprovado").attr("hidden", false);
+                        }
+
                         if ($("#cosm0").val() == "") {
                             $("select[name=def_cosm0]").removeAttr('hidden')
                         } else
@@ -71,6 +77,11 @@ $(document).ready(function () {
 
 
     $("#confirmar").on("click", function () {
+        reprovado = 0
+            if ($("#reprovado").prop("hidden") == false) {
+                reprovado = 1
+            }
+
         var verificador_checkbox = 1
         if ($("#cosm0").val() != "" && $("#checkcosm0").is(":checked") == false) {
             verificador_checkbox = 0
@@ -133,7 +144,7 @@ $(document).ready(function () {
                 url: 'busca_cosmetica.php',
                 method: 'POST',
                 data: {
-                    s1: $("#1serial").val(), rrm: $("#rrm").val(), cosm0, cosm1, cosm2, cosm3, selec_cosm0, selec_cosm1, selec_cosm2, selec_cosm3,
+                    s1: $("#1serial").val(), rrm: $("#rrm").val(), cosm0, cosm1, cosm2, cosm3, selec_cosm0, selec_cosm1, selec_cosm2, selec_cosm3, reprovado, 
                     acao: "grava_cosmetica"
                 },
                 dataType: 'json',
@@ -145,7 +156,7 @@ $(document).ready(function () {
                 $("#1serial").val("")
                 $("#1serial").focus()
             })
-
+            $("#reprovado").attr("hidden", true);
             /* if ($("#2serial").val() != "" ){
                 $("#cosmeticaok").fadeTo(2000, 500).slideUp(500, function(){
                     $(".alert").slideUp(1000);

@@ -20,7 +20,7 @@ $(document).ready(function () {
 
     $("#1serial").on("blur", function () {
         if ($("#1serial").val() == "") {
-            //limpa_campos()
+            limpa_campos()
             $("#aprovar").prop('disabled', true)
             $("#reprovar").prop('disabled', true)
         } else {
@@ -37,7 +37,7 @@ $(document).ready(function () {
                         $("#modelo").val(result[2])
                         $("#cod_mod").val(result[3])
 
-                        $("#aprovar").prop('disabled', false)
+                        //$("#aprovar").prop('disabled', false)
 
                         $.ajax({
                             url: 'busca_testefinal.php',
@@ -47,8 +47,8 @@ $(document).ready(function () {
                             success: (function (resultSintomas) {
 
                                 document.querySelectorAll('#def_elet0 option').forEach(option => option.remove())
-                                /* $('#def_elet0').append('<option></option>'); */
-                                $('#def_elet0').append('<option value="0" selected>0000 - sem defeito</option>'); //SELECTED temporário
+                                $('#def_elet0').append('<option></option>');
+                                $('#def_elet0').append('<option value="0" >0000 - sem defeito</option>'); //SELECTED temporário
 
                                 document.querySelectorAll('#def_elet1 option').forEach(option => option.remove())
                                 $('#def_elet1').append('<option></option>');
@@ -79,30 +79,40 @@ $(document).ready(function () {
 
     })
 
+
     $("select[name=def_cosm0]").on("change", function () {
-        if (($("select[name=def_cosm0]").val() != "0") || ($("select[name=def_cosm2]").val() != "") || ($("select[name=def_cosm3]").val() != "") || ($("select[name=def_elet0]").val() != "0") || ($("select[name=def_elet1]").val() != "")) {
-            $("#aprovar").prop('disabled', true)
-            $("#reprovar").prop('disabled', false)
-        } else {
-            $("#aprovar").prop('disabled', false)
-            $("#reprovar").prop('disabled', true)
-        }
-        if ($("select[name=def_cosm0]").val() == "0") {
-            $("select[name=def_cosm1]").prop('disabled', true)
-            $("select[name=def_cosm2]").prop('disabled', true)
-            $("select[name=def_cosm3]").prop('disabled', true)
+        if ($("#rrm").val() != '') {
+            if (($("select[name=def_cosm0]").val() != "0") || ($("select[name=def_cosm2]").val() != "") || ($("select[name=def_cosm3]").val() != "") || ($("select[name=def_elet0]").val() != "0") || ($("select[name=def_elet1]").val() != "")) {
+                $("#aprovar").prop('disabled', true)
+                $("#reprovar").prop('disabled', false)
+            } else {
+                $("#aprovar").prop('disabled', false)
+                $("#reprovar").prop('disabled', true)
+            }
+            if (($("select[name=def_cosm0]").val() == "0") || ($("select[name=def_cosm0]").val() == "")) {
+                $("select[name=def_cosm1]").prop('disabled', true)
+                $("select[name=def_cosm2]").prop('disabled', true)
+                $("select[name=def_cosm3]").prop('disabled', true)
 
-            $("select[name=def_cosm1]").val('')
-            $("select[name=def_cosm2]").val('')
-            $("select[name=def_cosm3]").val('')
-        } else {
-            $("select[name=def_cosm1]").prop('disabled', false)
-            $("select[name=def_cosm2]").prop('disabled', false)
-            $("select[name=def_cosm3]").prop('disabled', false)
+                $("select[name=def_cosm1]").val('')
+                $("select[name=def_cosm2]").val('')
+                $("select[name=def_cosm3]").val('')
+            } else {
+                $("select[name=def_cosm1]").prop('disabled', false)
+                $("select[name=def_cosm2]").prop('disabled', false)
+                $("select[name=def_cosm3]").prop('disabled', false)
+            }
+            if (($("select[name=def_cosm0]").val() == "") && ($("select[name=def_elet0]").val() == "")){
+                $("#aprovar").prop('disabled', true)
+                $("#reprovar").prop('disabled', true)
+            }
+            if (($("select[name=def_cosm0]").val() == "0") && ($("select[name=def_elet0]").val() == "") || ($("select[name=def_cosm0]").val() == "") && ($("select[name=def_elet0]").val() == "0")){
+                $("#aprovar").prop('disabled', true)
+                $("#reprovar").prop('disabled', true)
+            }
         }
-
     })
-    $("select[name=def_cosm1]").on("change", function () {
+/*     $("select[name=def_cosm1]").on("change", function () {
         if (($("select[name=def_cosm0]").val() != "0") || ($("select[name=def_cosm2]").val() != "") || ($("select[name=def_cosm3]").val() != "") || ($("select[name=def_elet0]").val() != "0") || ($("select[name=def_elet1]").val() != "")) {
             $("#aprovar").prop('disabled', true)
             $("#reprovar").prop('disabled', false)
@@ -128,8 +138,34 @@ $(document).ready(function () {
             $("#aprovar").prop('disabled', false)
             $("#reprovar").prop('disabled', true)
         }
-    })
+    }) */
     $("select[name=def_elet0]").on("change", function () {
+        if ($("#rrm").val() != '') {
+            if (($("select[name=def_cosm0]").val() != "0") || ($("select[name=def_cosm2]").val() != "") || ($("select[name=def_cosm3]").val() != "") || ($("select[name=def_elet0]").val() != "0") || ($("select[name=def_elet1]").val() != "")) {
+                $("#aprovar").prop('disabled', true)
+                $("#reprovar").prop('disabled', false)
+            } else {
+                $("#aprovar").prop('disabled', false)
+                $("#reprovar").prop('disabled', true)
+            }
+            if (($("select[name=def_elet0").val() == "0") || ($("select[name=def_elet0").val() == "")) {
+                $("select[name=def_elet1]").prop('disabled', true)
+
+                $("select[name=def_elet1]").val('')
+            } else {
+                $("select[name=def_elet1]").prop('disabled', false)
+            }
+            if (($("select[name=def_cosm0]").val() == "") && ($("select[name=def_elet0]").val() == "")){
+                $("#aprovar").prop('disabled', true)
+                $("#reprovar").prop('disabled', true)
+            }
+            if (($("select[name=def_cosm0]").val() == "") && ($("select[name=def_elet0]").val() == "0") || ($("select[name=def_cosm0]").val() == "0") && ($("select[name=def_elet0]").val() == "")){
+                $("#aprovar").prop('disabled', true)
+                $("#reprovar").prop('disabled', true)
+            }
+        }
+    })
+/*     $("select[name=def_elet1]").on("change", function () {
         if (($("select[name=def_cosm0]").val() != "0") || ($("select[name=def_cosm2]").val() != "") || ($("select[name=def_cosm3]").val() != "") || ($("select[name=def_elet0]").val() != "0") || ($("select[name=def_elet1]").val() != "")) {
             $("#aprovar").prop('disabled', true)
             $("#reprovar").prop('disabled', false)
@@ -137,24 +173,8 @@ $(document).ready(function () {
             $("#aprovar").prop('disabled', false)
             $("#reprovar").prop('disabled', true)
         }
-        if ($("select[name=def_elet0").val() == "0") {
-            $("select[name=def_elet1]").prop('disabled', true)
+    }) */
 
-            $("select[name=def_elet1]").val('')
-        } else {
-            $("select[name=def_elet1]").prop('disabled', false)
-        }
-
-    })
-    $("select[name=def_elet1]").on("change", function () {
-        if (($("select[name=def_cosm0]").val() != "0") || ($("select[name=def_cosm2]").val() != "") || ($("select[name=def_cosm3]").val() != "") || ($("select[name=def_elet0]").val() != "0") || ($("select[name=def_elet1]").val() != "")) {
-            $("#aprovar").prop('disabled', true)
-            $("#reprovar").prop('disabled', false)
-        } else {
-            $("#aprovar").prop('disabled', false)
-            $("#reprovar").prop('disabled', true)
-        }
-    })
 
 
 

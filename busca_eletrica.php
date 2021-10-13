@@ -38,7 +38,7 @@ function busca_eletrica($s1, $connect)
 		$retorno[4] = $row['t_eletr1'];
 		$retorno[5] = $row['t_eletr2'];
 
-		$queryReprov = "SELECT * FROM reprov WHERE serial = '$s1' and rrm = '$retorno[1]' ORDER BY id DESC LIMIT 1";
+		$queryReprov = "SELECT * FROM reprov WHERE serial = '$s1' AND rrm = '$retorno[1]' AND eletr1 != '' ORDER BY id DESC LIMIT 1";
 		$resultQueryReprov = mysqli_query($connect, $queryReprov);
 		$rowreprov = mysqli_fetch_assoc($resultQueryReprov);
 		if ($resultQueryReprov->num_rows) {

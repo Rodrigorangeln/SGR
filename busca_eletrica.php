@@ -2,6 +2,7 @@
 session_start();
 $user = $_SESSION['user'];
 require_once 'db_connect.php';
+date_default_timezone_set('Brazil/East');
 
 $acao = $_POST['acao'];
 //$cod_mod = $_POST['cod_mod'];
@@ -100,7 +101,7 @@ function busca_componentes($cod_mod, $cod_sintoma, $connect)
 function grava_eletrica($user, $s1, $rrm, $defeito1, $defeito2, $defeito3, $componente1, $componente2, $componente3, $radio1, $radio2, $radio3, $reprovado, $connect)
 {
 	if ($reprovado == 0) {
-		$query3 = "UPDATE seriais SET user_eletrica = '$user', dt_eletrica = now(), t_eletr1 = '$defeito1', eletr1comp = '$componente1', eletr1interv = '$radio1', local = '4' WHERE serial1 = '$s1' and rrm = '$rrm'";
+		/* $query3 = "UPDATE seriais SET user_eletrica = '$user', dt_eletrica = now(), t_eletr1 = '$defeito1', eletr1comp = '$componente1', eletr1interv = '$radio1', local = '4' WHERE serial1 = '$s1' and rrm = '$rrm'";
 		mysqli_query($connect, $query3);
 
 		if ($defeito2 <> "") {
@@ -109,7 +110,44 @@ function grava_eletrica($user, $s1, $rrm, $defeito1, $defeito2, $defeito3, $comp
 		} else {
 			$query3 = "UPDATE seriais SET t_eletr2 = '$defeito3', eletr2comp = '$componente3', eletr2interv = '$radio3', local = '4' WHERE serial1 = '$s1' and rrm = '$rrm'";
 			mysqli_query($connect, $query3);
+		} */
+		$queryInsert = "INSERT INTO reparo_eletrico SET
+		rrm = '$rrm',
+		serial1 = '$s1',
+		defeito = '$defeito1',
+		componente = '$componente1',
+		intervencao = '$radio1',
+		date = now(),
+		user = '$user'";
+		mysqli_query($connect, $queryInsert);
+
+		if ($defeito2 <> "") {
+			$queryInsert = "INSERT INTO reparo_eletrico SET
+		rrm = '$rrm',
+		serial1 = '$s1',
+		defeito = '$defeito2',
+		componente = '$componente2',
+		intervencao = '$radio2',
+		date = now(),
+		user = '$user'";
+			mysqli_query($connect, $queryInsert);
 		}
+
+		if ($defeito3 <> "") {
+			$queryInsert = "INSERT INTO reparo_eletrico SET
+		rrm = '$rrm',
+		serial1 = '$s1',
+		defeito = '$defeito3',
+		componente = '$componente3',
+		intervencao = '$radio3',
+		date = now(),
+		user = '$user'";
+		mysqli_query($connect, $queryInsert);
+	}
+	
+	$queryLocal = "UPDATE seriais SET local = '4' WHERE serial1 = '$s1' and rrm = '$rrm'";
+	mysqli_query($connect, $queryLocal);
+
 	} else {
 		$query = "INSERT INTO reprov SET 
 		posto = 'eletrica', 
@@ -140,6 +178,6 @@ function grava_eletrica($user, $s1, $rrm, $defeito1, $defeito2, $defeito3, $comp
 
 function semconserto($user, $s1, $rrm, $connect)
 {
-	$query_semconserto = "UPDATE seriais SET local = '6', user_eletrica = '$user', dt_eletrica = now() WHERE serial1 = '$s1' and rrm = '$rrm' ";
+	$query_semconserto = "UPDATE seriais SET local = '6', semconserto = 'eletrica', user_semconserto = '$user', dt_semconserto = now() WHERE serial1 = '$s1' and rrm = '$rrm' ";
 	mysqli_query($connect, $query_semconserto);
 }

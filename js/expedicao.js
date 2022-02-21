@@ -54,9 +54,10 @@ $(document).ready(function () {
     $("#btn-OK").on("click", function () {
         if (($('#nf').val() < 1) || ($('#nf').val() == "")) {
             $('#nf').focus()
-        } else if (($('#quant').val() < 1) || ($('#quant').val() == "")) {
-            $('#quant').focus()
         }
+         /*else if (($('#quant').val() < 1) || ($('#quant').val() == "")) {
+            $('#quant').focus()
+        }*/
         else {
             $.ajax({
                 url: 'busca_expedicao.php',
@@ -66,17 +67,19 @@ $(document).ready(function () {
             }).done(function (retorno) {
                 if (retorno == 0) {
                     $("#informe").prop('hidden', false)
+                    $("#list").prop('hidden', false)
+                    $("#infoList").prop('hidden', false)
                     $("#btn-OK").prop('disabled', true)
                     $("#nf").prop('disabled', true)
                     $("#quant").prop('disabled', true)
                     $("#btn_imp_etiquetas").prop('hidden', false)
                     var quant_caixas = $('#quant').val();
                     var cont = 0;
-                    while (cont < quant_caixas) {
+                    /*while (cont < quant_caixas) {
                         $("#informe").append('<input id = "caixa-' + cont + '" class="form-control mt-3 mb-3" maxlength="5" onblur="preencher(this)" onkeyup="maiuscula(this)"></input>')
                         cont++
                     }
-                    $("#caixa-0").focus()
+                    $("#caixa-0").focus()*/
                 } else {
                     $("#btn-OK").prop('disabled', true)
                     $("#nf").prop('disabled', true)
@@ -92,7 +95,58 @@ $(document).ready(function () {
 
 
     $("#btn_imp_etiquetas").on("click", function () {
-        erro = 0
+        caixas = [];
+        caixas = $('#list').val();
+
+        //for (i = 0; i <  caixas.length; i++) {}
+
+        $.ajax({
+            url: 'busca_expedicao.php',
+            method: 'POST',
+            data: { caixas, acao: "busca_caixa" },
+            dataType: 'json',
+            async: false  //AJAX síncrono pois é preciso aguardar retorno p continuar.
+        })
+        /* .done(function (retorno) {
+            if (retorno['0'] != null) {
+                for (i = 0; i < $('#quant').val(); i++) {
+                    if ($("#caixa-" + i).val() == retorno) {
+                        $("#caixa-" + i).addClass("is-invalid")
+                    }
+                }
+                $('#ModalCaixaErrada').modal('toggle')
+                erro = 1
+            }
+        }) */
+
+            $.ajax({
+                url: 'busca_expedicao.php',
+                method: 'POST',
+                data: { caixas, nf_saida: $('#nf').val(), acao: "grava_caixas" },
+                dataType: 'json',
+            }).always(function () {
+
+                for (i = 1; i <= $("#quant").val(); i++) {
+
+                    var labelCaixa = "^XA^MMT^PW639^LL0240^LS0^FO20,30^A3,200^FD" + $("#nf").val() + "   " + i + "/" + $("#quant").val() + "^FS^PQ1,0,1,Y^XZ"
+
+                    //if (zebraPrinter != null) //Continua mesmo que não tenha Zebra Browser Printer instalado. 
+                    zebraPrinter.send(labelCaixa);
+
+                }
+
+                $("#expedicao").prop('hidden', false)
+                $("#date").focus()
+
+                /* for (i = 0; i < $('#quant').val(); i++) {
+                    $("#caixa-" + i).prop('disabled', true)
+                } */
+                $('#list').prop('disabled', true);
+
+            })
+        
+        
+       /*  erro = 0
         caixas = []
         /// VERIFICA SE EXISTE ALGUMA CAIXA NÃO PREENCHIDA
         for (i = 0; i < $('#quant').val(); i++) {
@@ -152,7 +206,7 @@ $(document).ready(function () {
                 }
 
             })
-        }
+        } */
     })
 
 

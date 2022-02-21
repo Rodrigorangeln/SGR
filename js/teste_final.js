@@ -21,8 +21,12 @@ $(document).ready(function () {
     $("#1serial").on("blur", function () {
         if ($("#1serial").val() == "") {
             limpa_campos()
+            $("#reprovado").attr("hidden", true);
+
             $("#aprovar").prop('disabled', true)
+            $("#reprovar").attr("hidden", false);
             $("#reprovar").prop('disabled', true)
+            $("#semConserto").attr("hidden", true);
         } else {
 
             $.ajax({
@@ -36,6 +40,13 @@ $(document).ready(function () {
                         $("#rrm").val(result[1])
                         $("#modelo").val(result[2])
                         $("#cod_mod").val(result[3])
+
+                        if (result['reprovado'] == 1) {
+                            $("#reprovado").attr("hidden", false);
+                            $("#reprovar").attr("hidden", true);
+                            $("#semConserto").attr("hidden", false);
+
+                        }
 
                         //$("#aprovar").prop('disabled', false)
 
@@ -248,6 +259,37 @@ $(document).ready(function () {
                 $("select[name=def_elet0]").val("")
             })
         }
+    })
+
+    $("#semConserto").on("click", function () {
+        if ($('#rrm').val() != '') {
+            $('#ModalSemConserto').modal('toggle')
+            $('#serial').html($('#1serial').val())
+        }
+    })
+
+    // BOTÃO CONFIRMAR DO MODAL SEM CONSERTO
+    $("#btn_confirmar").on("click", function () { 
+        $('#ModalSemConserto .modal-body').html('<strong>CONFIRMANDO ...</strong>');
+        //setTimeout(function () { $('#ModalSemConserto').modal('hide'); }, 2000);
+
+        $.ajax({
+            url: 'busca_testefinal.php',
+            method: 'POST',
+            data: { s1: $("#1serial").val(), rrm: $("#rrm").val(), acao: "semConserto" },
+            dataType: 'json',
+        }).always(function () {
+            $('#ModalSemConserto .modal-body').html('<strong style="color:green">CONFIRMADO !!!</strong>');
+            setTimeout(function () { $('#ModalSemConserto').modal('hide'); }, 2000);
+            $("#1serial").val("")
+            limpa_campos();
+            $("#reprovado").attr("hidden", true);
+
+            $("#aprovar").prop('disabled', true)
+            $("#reprovar").attr("hidden", false);
+            $("#reprovar").prop('disabled', true)
+            $("#semConserto").attr("hidden", true);
+        })
     })
 
 

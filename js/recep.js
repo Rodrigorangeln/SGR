@@ -31,11 +31,14 @@ $(document).ready(function () {
 
         newid++;
 
+        
+
         var tr = $("<tr></tr>", {
             id: "addr" + newid,
             "data-id": newid
 
         });
+
 
 
         // loop through each td and create new elements with name of newid
@@ -109,15 +112,25 @@ $(document).ready(function () {
 
         calculaTotal()
 
+        
+        $("input[name='item" + aux + "']").val(newid) //Implementa número do item.
+
     });
 
     $("#btn_Cadastrar").on("click", function (e) {
         if ($("input[name='quant0']").val() == "") e.preventDefault()
         if (($("select.input[name='cod0'] select").val() == "")) e.preventDefault()
         if (($("select.input[name='cod_cliente'] select").val() == "")) e.preventDefault()
+        if ($('#dt_emissao').hasClass("is-invalid")) e.preventDefault()
     });
 
+    $("#dt_emissao").on("blur", function (e) {
+        if ($('#dt_emissao').val() > $('#dt_entrada').val())
+            $('#dt_emissao').addClass("is-invalid")
+         else
+            $('#dt_emissao').removeClass("is-invalid")
 
+    });
 
 
     // Sortable Code

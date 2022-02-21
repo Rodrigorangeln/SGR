@@ -40,6 +40,7 @@ $resultQueryEletr = mysqli_query($connect, $queryE); */
 
 <body>
 
+<span id="reprovado" class="ml-4 p-1 bg-danger text-white position-absolute mt-1" hidden>Serial reprovado</span>
 <div class="container mt-5 ml-4">
   <div class="row">
     <div class="col-sm-5">
@@ -112,6 +113,7 @@ $resultQueryEletr = mysqli_query($connect, $queryE); */
         <button id="aprovar" class="btn btn-success" type="button" disabled>Aprovar</button> <!-- Incluir DISABLED -->
         &nbsp &nbsp
         <button id="reprovar" class="btn btn-danger" type="button" disabled>Reprovar</button>
+        <button id="semConserto" class="btn btn-danger" type="button" tabindex="-1" hidden>Sem Conserto</button>
     </div>
     
     </div>
@@ -120,6 +122,26 @@ $resultQueryEletr = mysqli_query($connect, $queryE); */
 
 </body>
 </html>
+
+<div class="modal fade" id="ModalSemConserto" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModal">Sem conserto?</h5>
+<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body">
+        Confirma que serial <strong><span id="serial"></span></strong> não tem conserto?
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn_confirmar" class="btn btn-primary">Confirmo</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

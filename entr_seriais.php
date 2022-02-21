@@ -111,26 +111,27 @@ $cli_atual = $row["cod_cliente"];
           $i=0;
           while($rowmodelos = mysqli_fetch_assoc($resultQueryMod)) {
             $codmod = $rowmodelos["cod_modelo"];
+            $item = $rowmodelos["item"];
             $sql = "SELECT cod, modelo FROM cd_aparelhos WHERE cod = $codmod";
             $resultsql = mysqli_query($connect, $sql);
             $rowsql = mysqli_fetch_assoc($resultsql);
 
             //CALCULA A QUANTIDADE DE SERIAIS QUE FALTA DAR ENTRADA
-            $sqlcount = "SELECT COUNT(rrm) FROM seriais WHERE rrm = $rrm_atual and cod_modelo = $codmod";
+            $sqlcount = "SELECT COUNT(rrm) FROM seriais WHERE rrm = $rrm_atual and cod_modelo = $codmod AND item = '$item'";
             $resultsqlcount = mysqli_query($connect, $sqlcount);
             $rowsqlcount = mysqli_fetch_assoc($resultsqlcount);
             $falta = ($rowmodelos["quant"] - $rowsqlcount["COUNT(rrm)"]);
             ///////////////////////////////////////////////////////////////
-            
-            echo ("<tr onclick=modeloAtual($rowsql[cod])>");
+
+            echo ("<tr onclick=modeloAtual($rowmodelos[item]$rowsql[cod])>");
             
             echo ("<th scope='row'>".$rowmodelos["cod_modelo"]."</th>");
 
             echo ("<td>".$rowsql["modelo"]."</td>");
 
-            echo ("<td id='tdcountt$i'>".$rowmodelos["quant"]."</td>");
+            echo ("<td id='tdcountt$rowmodelos[item]'>".$rowmodelos["quant"]."</td>");
 
-            echo ("<td id='tdcountdown$i'>".$falta."</td>");
+            echo ("<td id='tdcountdown$rowmodelos[item]'>".$falta."</td>");
 
             //echo ("<td><input id='checkbox' type='checkbox' onclick=verificaCheckbox()></td>");
             echo ("<td><input id=check$i type='checkbox' onclick=verificaCheckbox()></td>");
@@ -144,6 +145,7 @@ $cli_atual = $row["cod_cliente"];
       </table>
 
       <div style="text-align: right;">
+        <input name="aux_item" hidden>  
         <input name="aux_codmod" hidden>  <!-- INPUT P AUXILIAR O UPDATE DO CÓDIGO DO MODELO -->
         <button hidden type="button" id="add_row" name="add_row" class="btn btn-primary">add</button>
         <button type="button" id="btn_report_seriais" class="btn btn-primary">Relatório</button>

@@ -48,15 +48,55 @@ $resultqueryAparelhos = mysqli_query($connect, $queryAparelhos); */
         <input class="form-control mt-2 col-sm-6" id="nf" maxlength="7" required data-toggle="tooltip" data-placement="right" title="INFORME A NF de SAÍDA">
       </div>
       <div class="form-group">
-        <label>Quant. de Caixas</label>
-        <input class="form-control col-sm-6" id="quant" maxlength="5" required data-toggle="tooltip" data-placement="right" title="INFORME a QUANTIDADE de CAIXAS na NF">
+        <label hidden>Quant. de Caixas</label>
+        <input class="form-control col-sm-6" id="quant" maxlength="5" required data-toggle="tooltip" data-placement="right" title="INFORME a QUANTIDADE de CAIXAS na NF" hidden>
         <button id="btn-OK" class="mt-4 btn btn-primary col-sm-6" type="button">OK</button>
       </div>
     </div>
 
-    <div class="row col-md-3 mt-4 justify-content-center">
+    <div class="row col-md-2 mt-4 justify-content-center">
       <strong id="informe" hidden>Informe quais caixas irão nessa NF:</strong>
       <div>
+
+      <select id="list" class="form-control mt-2" tabindex="-1" multiple hidden> 
+            <?php
+            $queryEmb = "SELECT n_caixa FROM embalagem";
+            $queryExp = "SELECT caixa FROM expedicao";
+            mysqli_set_charset($connect,"utf8");
+            $caixasDisponiveis = array();
+            $caixasEmb = array();
+            $caixasExp = array();
+
+            $resultQueryEmb = mysqli_query($connect, $queryEmb);
+            $resultQueryExp = mysqli_query($connect, $queryExp);
+
+            while ($row = mysqli_fetch_assoc($resultQueryEmb)) {
+              array_push($caixasEmb, $row['n_caixa']);
+            }
+            while ($row = mysqli_fetch_assoc($resultQueryExp)) {
+              array_push($caixasExp, $row['caixa']);
+            }
+
+            $caixasDisponiveis = array_diff($caixasEmb, $caixasExp);
+            $caixasDisponiveis = array_values(array_filter($caixasDisponiveis));
+
+            if(sizeof($caixasDisponiveis) != 0){
+              for ($i = 0; $i <  sizeof($caixasDisponiveis); $i++) {
+                ?>
+                <option><?php echo $caixasDisponiveis[$i]?></option>;
+                <?php
+              }
+            } else {
+              ?>
+              <option><?php echo "Não há caixas"?></option>;
+              <?php
+            }
+
+            ?>
+        </select>
+        <small id="infoList" class="form-text text-muted" hidden>Para selecionar mais de uma caixa, mantanha a tecla CTRL pressionada enquanto clica.</small>
+
+
         <button id="btn_imp_etiquetas" class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="Uma etiqueta p cada CAIXA" hidden>Imp. Etiquetas da caixa</button>
       </div>
     </div>

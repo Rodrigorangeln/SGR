@@ -97,13 +97,17 @@ $(document).ready(function () {
                             $("#componente2").prop('disabled', true)
                             $("#radioelet1sub").prop('disabled', true)
                             $("#radioelet1res").prop('disabled', true)
-
+                            
                             $("#sintoma_extra").removeAttr('hidden')
-
-                        }
+                            
+                            $("#grupo_elet1").prop('hidden', true)
+                        } else
+                        $("#grupo_elet1").removeAttr('hidden')
 
                     }
                     else {
+                        //$("#grupo_elet1").removeAttr(hidden)
+
                         $("#local").html(result[1])
                         $("#alertaRRM").html(result[2])
                         $("#erroserial").fadeTo(2000, 500).slideUp(500, function () {
@@ -243,15 +247,15 @@ $(document).ready(function () {
 
     })
 
-    $("#sconserto").on("click", function () {
-        if ($('#2serial').val() != '') {
+    $("#semconserto").on("click", function () {
+        if ($('#rrm').val() != '') {
             $('#ModalSemConserto').modal('toggle')
             $('#serial').html($('#1serial').val())
         }
     })
 
-
-    $("#btn_confirmar").on("click", function () {
+// BOTÃO CONFIRMAR DO MODAL SEM CONSERTO
+    $("#btn_confirmar").on("click", function () { 
         $('#ModalSemConserto .modal-body').html('<strong>CONFIRMANDO ...</strong>');
         //setTimeout(function () { $('#ModalSemConserto').modal('hide'); }, 2000);
 

@@ -8,7 +8,7 @@ $acao = $_POST['acao'];
 
 switch ($acao) {
 	case "buscaSerial":
-		echo busca_testeinicial($_POST['s1'], $connect);
+		echo busca_teste($_POST['s1'], $connect);
 		break;
 	case "buscaSintomas":
 		echo busca_sintomas($_POST['cod_mod'], $connect);
@@ -19,12 +19,15 @@ switch ($acao) {
 	case "reprovar":
 		reprovado($user, $_POST['s1'], $_POST['rrm'], $_POST['def_eletrico'], $_POST['cosm0'], $_POST['cosm1'], $_POST['cosm2'], $_POST['cosm3'], $_POST['elet0'], $_POST['elet1'], $connect);
 		break;
+	case "semConserto":
+		semConserto($user, $_POST['s1'], $_POST['rrm'], $connect);
+		break;
 }
 
 
 
 
-function busca_testeinicial($s1, $connect)
+function busca_teste($s1, $connect)
 {
 	$query = "SELECT s.serial1, s.serial2, s.rrm, a.cod, a.modelo from seriais s, cd_aparelhos a, rrm r
 	where a.cod = s.cod_modelo and s.serial1 = '$s1' and r.aberta = '0' and s.local = '5'";
@@ -36,6 +39,11 @@ function busca_testeinicial($s1, $connect)
 		$retorno[1] = $row['rrm'];
 		$retorno[2] = $row['modelo'];
 		$retorno[3] = $row['cod'];
+
+		$queryReprov = "SELECT * FROM reprov WHERE serial = '$s1' AND rrm = '$retorno[1]' ORDER BY id DESC LIMIT 1";
+		$resultQueryReprov = mysqli_query($connect, $queryReprov);
+		if ($resultQueryReprov->num_rows)
+			$retorno['reprovado'] = 1;
 	} else {
 		$retorno[0] = 'Serial não encontrado';
 		$query = "SELECT rrm, local from seriais where serial1 = '$s1'";
@@ -116,4 +124,10 @@ function reprovado($user, $s1, $rrm, $def_eletrico, $cosm0, $cosm1, $cosm2, $cos
 		$query = "UPDATE seriais SET local = '4' WHERE serial1 = '$s1'";
 		mysqli_query($connect, $query);
 	}
+}
+
+function semconserto($user, $s1, $rrm, $connect)
+{
+	$query_semconserto = "UPDATE seriais SET local = '6', semconserto = 'teste final', user_semconserto = '$user', dt_semconserto = now() WHERE serial1 = '$s1' and rrm = '$rrm' ";
+	mysqli_query($connect, $query_semconserto);
 }

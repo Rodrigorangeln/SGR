@@ -88,6 +88,7 @@ $resultQueryCosm = mysqli_query($connect, $queryC);
 
                 </div>
 
+                <div id="grupo_elet1">
                 <div class="input-group mt-2">
                     <input type="text" id="elet1" class="form-control" readonly tabindex="-1">
                 </div>
@@ -99,7 +100,7 @@ $resultQueryCosm = mysqli_query($connect, $queryC);
                         <input type="radio" name="radio2" id="radioelet1sub"><label class="ml-2">Substituído</label></input>
                         <input type="radio" name="radio2" id="radioelet1res" class="ml-3"><label class="ml-2">Ressoldado</label></input>
                     </div>
-
+                </div>
                 </div>
 
                 <div id="sintoma_extra" hidden>
@@ -141,7 +142,7 @@ $resultQueryCosm = mysqli_query($connect, $queryC);
                     <button id="confirmar" class="btn btn-primary" type="button">Confirmar</button>
                 </div>
                 <div class="d-flex flex-row-reverse mt-4">
-                    <button id="sconserto" class="btn btn-danger" type="button">Sem conserto</button>
+                    <button id="semconserto" class="btn btn-danger" type="button">Sem conserto</button>
                 </div>
             </div>
 

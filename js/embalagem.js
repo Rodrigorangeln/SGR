@@ -273,7 +273,32 @@ $(document).ready(function () {
                 $(".alert").slideUp(1000);
             }) */
             $('#ModalFinalizar').on('hidden.bs.modal', function (e) {
-                location.reload();
+                //location.reload();
+                $('#cliente').prop('disabled', false)
+                $('#modelo').prop('disabled', false)
+                $('#quant').prop('disabled', false)
+                $('#radio_s').prop('disabled', false)
+                $('#radio_n').prop('disabled', false)
+                $('#criar_caixa').prop('disabled', false)
+
+                $("#serial1").prop('hidden', true)
+                $("#serial2").prop('hidden', true)
+                $("#btn_imp_etiqueta_caixa").prop('hidden', true)
+                $("#btn_imp_etiquetas").prop('hidden', true)
+                $("#finalizar").prop('hidden', true)
+
+                var quant_seriais = $('#quant').val()
+                var cont = 0
+
+                while (cont < quant_seriais) {
+                    //$("#serial1").append ('<input id = "serial1-'+cont+'" class="form-control mt-2" onblur="getserial(id); verifica_serial_cliente(id);" data-toggle="popover-cliente" data-trigger="manual" data-placement="right" data-html="true" data-content="<strong>Serial não é desse cliente</strong>"></input>')
+                    $("#serial1-"+ cont).remove();
+                    $("#serial2-"+ cont).remove();
+                    $("#smartcard"+cont).remove();
+                    cont++
+                }
+
+
             })
             $("#load").hide();
         })

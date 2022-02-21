@@ -1,5 +1,13 @@
+
 function modeloAtual(cod) {
+
+    cod = cod.toString();
+    var item = cod.substring(0, 1);
+    var cod = cod.substr(1)
+
     $("input[name='aux_codmod']").val(cod);
+    $("input[name='aux_item']").val(item);
+
     $.ajax({
         url: 'buscaModelo.php',
         method: 'POST',
@@ -274,7 +282,8 @@ function gravaSeriais(name) {
                 $.ajax({
                     url: 'gravaSeriais.php',
                     method: 'POST',
-                    data: { serial1, serial2, rrm: $("input[name=num_rrm]").val(), cod_m: $("input[name='aux_codmod']").val() },
+                    async: false,
+                    data: { serial1, serial2, rrm: $("input[name=num_rrm]").val(), cod_m: $("input[name='aux_codmod']").val(), item: $("input[name='aux_item']").val() },
                     dataType: 'json',
                 })
 
@@ -323,7 +332,7 @@ function gravaSerial(name) {
                 $.ajax({
                     url: 'gravaSeriais.php',
                     method: 'POST',
-                    data: { serial1, serial2: "-", rrm: $("input[name=num_rrm]").val(), cod_m: $("input[name='aux_codmod']").val() },
+                    data: { serial1, serial2: "-", rrm: $("input[name=num_rrm]").val(), cod_m: $("input[name='aux_codmod']").val(), item: $("input[name='aux_item']").val() },
                     dataType: 'json',
                 })
 
@@ -340,15 +349,16 @@ function gravaSerial(name) {
 
 function conta_seriais() {
     //var i = 0
+    item = $("input[name='aux_item']").val()
     $.ajax({
         url: 'conta_seriais.php',
         method: 'POST',
-        data: { rrm: $("input[name=num_rrm]").val(), cod_m: $("input[name='aux_codmod']").val() },
+        data: { rrm: $("input[name=num_rrm]").val(), cod_m: $("input[name='aux_codmod']").val(), item: $("input[name='aux_item']").val() },
         dataType: 'json',
         success: (function (result) {
-            aux = $('.table-info td[id^="tdcountt"]').text() - result
-            $('.table-info td[id^="tdcountdown"]').text(aux)
-        })
+            aux = $('.table-info td[id^="tdcountt'+item+'"]').text() - result
+            $('.table-info td[id^="tdcountdown'+item+'"]').text(aux)
+        }) 
     })
 }
 

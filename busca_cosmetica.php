@@ -2,6 +2,7 @@
 session_start();
 $user = $_SESSION['user'];
 require_once 'db_connect.php';
+date_default_timezone_set('Brazil/East');
 
 $acao = $_POST['acao'];
 //$cod_mod = $_POST['cod_mod'];
@@ -11,11 +12,9 @@ switch ($acao) {
 		echo busca_cosmetica($_POST['s1'], $connect);
 		break;
 	case "grava_cosmetica":
-		grava_cosmetica($user, $connect, $_POST['rrm'], $_POST['s1'], $_POST['cosm0'], $_POST['cosm1'], $_POST['cosm2'], $_POST['cosm3'],	$_POST['selec_cosm0'], $_POST['selec_cosm1'], $_POST['selec_cosm2'], $_POST['selec_cosm3'], $_POST['reprovado']);
+		grava_cosmetica($user, $connect, $_POST['rrm'], $_POST['s1'], $_POST['cosm0'], $_POST['cosm1'], $_POST['cosm2'], $_POST['cosm3'], $_POST['selec_cosm0'], $_POST['selec_cosm1'], $_POST['selec_cosm2'], $_POST['selec_cosm3'], $_POST['reprovado']);
 		break;
 }
-
-
 
 
 function busca_cosmetica($s1, $connect)
@@ -87,39 +86,96 @@ function grava_cosmetica($user, $connect, $rrm, $s1, $cosm0, $cosm1, $cosm2, $co
 	if ($reprovado == 0) {
 
 		if ($cosm0 <> "") {
-			$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), local = '5' WHERE serial1 = '$s1' and rrm = '$rrm'";
+			//$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), local = '5' WHERE serial1 = '$s1' and rrm = '$rrm'";
+			$query2 = "INSERT INTO reparo_cosmetico SET
+		rrm = '$rrm',
+		serial1 = '$s1',
+		defeito = '$cosm0',
+		date = now(),
+		user = '$user'";
+
 			mysqli_query($connect, $query2);
 		}
 		if ($cosm1 <> "") {
-			$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			//$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			$query2 = "INSERT INTO reparo_cosmetico SET
+		rrm = '$rrm',
+		serial1 = '$s1',
+		defeito = '$cosm1',
+		date = now(),
+		user = '$user'";
 			mysqli_query($connect, $query2);
 		}
 		if ($cosm2 <> "") {
-			$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			//$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			$query2 = "INSERT INTO reparo_cosmetico SET
+		rrm = '$rrm',
+		serial1 = '$s1',
+		defeito = '$cosm2',
+		date = now(),
+		user = '$user'";
 			mysqli_query($connect, $query2);
 		}
 		if ($cosm3 <> "") {
-			$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			//$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			$query2 = "INSERT INTO reparo_cosmetico SET
+		rrm = '$rrm',
+		serial1 = '$s1',
+		defeito = '$cosm3',
+		date = now(),
+		user = '$user'";
 			mysqli_query($connect, $query2);
 		}
 
 		if ($selec_cosm0 <> "") {
-			$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), t_cosm1 = '$selec_cosm0', local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			//$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), t_cosm1 = '$selec_cosm0', local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			$query2 = "INSERT INTO reparo_cosmetico SET
+		rrm = '$rrm',
+		serial1 = '$s1',
+		defeito = '$selec_cosm0',
+		date = now(),
+		user = '$user'";
 			mysqli_query($connect, $query2);
 		}
 		if ($selec_cosm1 <> "") {
-			$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), t_cosm2 = '$selec_cosm1', local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			//$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), t_cosm2 = '$selec_cosm1', local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			$query2 = "INSERT INTO reparo_cosmetico SET
+		rrm = '$rrm',
+		serial1 = '$s1',
+		defeito = '$selec_cosm1',
+		date = now(),
+		user = '$user'";
 			mysqli_query($connect, $query2);
 		}
 		if ($selec_cosm2 <> "") {
-			$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), t_cosm3 = '$selec_cosm2', local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			//$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), t_cosm3 = '$selec_cosm2', local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			$query2 = "INSERT INTO reparo_cosmetico SET
+		rrm = '$rrm',
+		serial1 = '$s1',
+		defeito = '$selec_cosm2',
+		date = now(),
+		user = '$user'";
 			mysqli_query($connect, $query2);
 		}
 		if ($selec_cosm3 <> "") {
-			$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), t_cosm4 = '$selec_cosm3', local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			//$query2 = "UPDATE seriais SET user_cosmetica = '$user', dt_cosmetica = now(), t_cosm4 = '$selec_cosm3', local = '5'  WHERE serial1 = '$s1' and rrm = '$rrm'";
+			$query2 = "INSERT INTO reparo_cosmetico SET
+		rrm = '$rrm',
+		serial1 = '$s1',
+		defeito = '$selec_cosm3',
+		date = now(),
+		user = '$user'";
 			mysqli_query($connect, $query2);
 		}
+
+		$queryLocal = "UPDATE seriais SET local = '5' WHERE serial1 = '$s1' and rrm = '$rrm'";
+		mysqli_query($connect, $queryLocal);
+
 	} else {
+		if ($cosm1 == "") $cosm1 = $selec_cosm1;
+		if ($cosm2 == "") $cosm2 = $selec_cosm2;
+		if ($cosm3 == "") $cosm3 = $selec_cosm3;
+
 		$query = "INSERT INTO reprov SET 
 		posto = 'cosmetica', 
 		serial = '$s1', 

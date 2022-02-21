@@ -4,7 +4,7 @@
 
 </head>
 <?php
-
+date_default_timezone_set('Brazil/East');
 session_start();
 
 if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['pass']) == true))
@@ -78,7 +78,7 @@ $nextRRM = $row["RRM"] + 1;
 
     <label for="dt_entrada" class="col-sm-1 col-form-label">Entrada</label>
     <div class="col-sm-2">
-      <input type="date" class="form-control" name="dt_entrada" id="dt_entrada" required maxlength="10" tabindex="-1" value='<?php echo date('Y-m-d'); ?>'>
+      <input type="date" class="form-control" name="dt_entrada" id="dt_entrada" required maxlength="10" disabled value='<?php echo date('Y-m-d'); ?>'>
     </div> 
   </div>
 
@@ -147,11 +147,15 @@ $nextRRM = $row["RRM"] + 1;
 
 <div class="container">
     <div class="row clearfix">
-    	<div class="col-md-9 table-responsive">
+    	<div class="col-md-10 table-responsive">
 			<table class="table table-bordered table-hover table-sortable" id="tab_logic">
 
 				<tbody>
     				<tr id='addr0' data-id="0" class="hidden">
+              <td data-name="item" class="col-sm-1">
+                  <input type="text" name='item0' class="form-control" readonly tabindex="-1"/>
+              </td>
+
               <td data-name="cod" class="col-sm-3">
                   <!-- <input type="text" name='cod0' placeholder='Cód modelo' class="form-control" onblur="getModelo(name)"/> -->
 
@@ -169,7 +173,7 @@ $nextRRM = $row["RRM"] + 1;
                    
 
               </td>
-              <td data-name="modelo" class="col-sm-7">
+              <td data-name="modelo" class="col-sm-6">
                   <input type="text" name='modelo0' placeholder='Modelo' class="form-control" readonly tabindex="-1"/>
               </td>
               <td data-name="quant" class="col-sm-2">
